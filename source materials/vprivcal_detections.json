@@ -1,0 +1,758 @@
+{
+  "schemaVersion": "1.0.0",
+  "study": {
+    "method": "VPrivCal",
+    "component": "VPrivCal-Probe",
+    "stimulusSet": "private-public-semi-public-v1",
+    "description": "Researcher-defined detections for three synthetic egocentric scenes. All identifiers and records are fictional.",
+    "askAllAvailableCategories": true,
+    "initialDetectionOverlaysHidden": true,
+    "participantPointingEnabled": true
+  },
+  "coordinateSystem": {
+    "type": "normalized_xywh",
+    "origin": "top-left",
+    "range": [
+      0,
+      1
+    ],
+    "imageAspectRatio": "1448:1086",
+    "hitPadding": 0.012
+  },
+  "categories": [
+    {
+      "id": "biometric_data",
+      "label": "Biometric Data",
+      "description": "Faces and other distinctive physical features that can identify a person."
+    },
+    {
+      "id": "children_images",
+      "label": "Children Images",
+      "description": "Images or activities involving children."
+    },
+    {
+      "id": "pii",
+      "label": "Personally Identifiable Information (PII)",
+      "description": "Names, contact details, legal identifiers, digital identifiers, financial information, medical information, location information, and related records."
+    },
+    {
+      "id": "legal_sensitivity_information",
+      "label": "Legal Sensitivity Information",
+      "description": "Nudity, violent or unlawful acts, weapons, and other legally or culturally sensitive content."
+    },
+    {
+      "id": "personal_life",
+      "label": "Personal Life",
+      "description": "Home interiors, relationships, personal belongings, family activities, routines, and location context."
+    },
+    {
+      "id": "background_individuals",
+      "label": "Background Individuals",
+      "description": "Bystanders, passersby, staff, patrons, or other people incidentally captured."
+    }
+  ],
+  "probeQuestions": {
+    "awarenessStatus": {
+      "id": "awareness_status",
+      "prompt": "Before this content was highlighted, which best describes your experience?",
+      "options": [
+        {
+          "value": 1,
+          "label": "I had already noticed it and considered the privacy implication."
+        },
+        {
+          "value": 2,
+          "label": "I noticed it but had not considered the privacy implication."
+        },
+        {
+          "value": 3,
+          "label": "I had not noticed it, or I did not realize the VLM could detect or infer it."
+        },
+        {
+          "value": 4,
+          "label": "I do not consider it a privacy concern in this situation."
+        }
+      ]
+    },
+    "preferredAction": {
+      "id": "preferred_action",
+      "prompt": "When similar content appears in the future, what should the assistant do?",
+      "options": [
+        {
+          "value": 0,
+          "label": "No intervention"
+        },
+        {
+          "value": 1,
+          "label": "Handle it silently"
+        },
+        {
+          "value": 2,
+          "label": "Give a brief reminder"
+        },
+        {
+          "value": 3,
+          "label": "Ask before using it"
+        },
+        {
+          "value": 4,
+          "label": "Avoid using it unless I explicitly request it"
+        }
+      ]
+    }
+  },
+  "images": [
+    {
+      "id": "scene_private_family_party",
+      "fileName": "family_party_private.png",
+      "sourceFileName": "家庭聚会的温馨时刻.png",
+      "assetPath": "/assets/images/family_party_private.png",
+      "width": 1448,
+      "height": 1086,
+      "scenarioType": "private",
+      "title": "Indoor family party",
+      "context": "A first-person view during a family birthday gathering inside a home.",
+      "availableCategoryIds": [
+        "biometric_data",
+        "children_images",
+        "pii",
+        "legal_sensitivity_information",
+        "personal_life"
+      ],
+      "categoryEvidence": [
+        {
+          "categoryId": "biometric_data",
+          "detectionIds": [
+            "home_adult_faces",
+            "home_child_face",
+            "home_family_photos"
+          ]
+        },
+        {
+          "categoryId": "children_images",
+          "detectionIds": [
+            "home_child_person",
+            "home_report_card_child_photo"
+          ]
+        },
+        {
+          "categoryId": "pii",
+          "detectionIds": [
+            "home_report_card"
+          ]
+        },
+        {
+          "categoryId": "legal_sensitivity_information",
+          "detectionIds": [
+            "home_wall_rifle"
+          ]
+        },
+        {
+          "categoryId": "personal_life",
+          "detectionIds": [
+            "home_family_gathering",
+            "home_family_photos",
+            "home_birthday_sign",
+            "home_child_toys"
+          ]
+        }
+      ],
+      "detections": [
+        {
+          "id": "home_adult_faces",
+          "label": "Visible adult family-member faces",
+          "primaryCategoryId": "biometric_data",
+          "categoryIds": [
+            "biometric_data",
+            "personal_life"
+          ],
+          "subcategory": "faces",
+          "bbox": {
+            "x": 0.0,
+            "y": 0.055,
+            "width": 0.585,
+            "height": 0.385
+          },
+          "salience": "high",
+          "sceneLocation": "upper-left and center",
+          "vlmConfidence": null,
+          "researcherVerified": true,
+          "clickable": true,
+          "description": "Several clearly identifiable adult faces participating in the gathering.",
+          "confidenceSource": "not_available_researcher_defined",
+          "detectionSource": "researcher_defined_for_synthetic_stimulus"
+        },
+        {
+          "id": "home_child_person",
+          "label": "Child at the party",
+          "primaryCategoryId": "children_images",
+          "categoryIds": [
+            "children_images",
+            "biometric_data",
+            "personal_life"
+          ],
+          "subcategory": "child",
+          "bbox": {
+            "x": 0.758,
+            "y": 0.235,
+            "width": 0.224,
+            "height": 0.383
+          },
+          "salience": "medium",
+          "sceneLocation": "right side",
+          "vlmConfidence": null,
+          "researcherVerified": true,
+          "clickable": true,
+          "description": "An identifiable child is visible playing on the floor.",
+          "confidenceSource": "not_available_researcher_defined",
+          "detectionSource": "researcher_defined_for_synthetic_stimulus"
+        },
+        {
+          "id": "home_child_face",
+          "label": "Child's visible face",
+          "primaryCategoryId": "biometric_data",
+          "categoryIds": [
+            "biometric_data",
+            "children_images"
+          ],
+          "subcategory": "face",
+          "bbox": {
+            "x": 0.825,
+            "y": 0.27,
+            "width": 0.105,
+            "height": 0.125
+          },
+          "salience": "medium",
+          "sceneLocation": "right side",
+          "vlmConfidence": null,
+          "researcherVerified": true,
+          "clickable": true,
+          "description": "The child's face is sufficiently visible to support identification.",
+          "confidenceSource": "not_available_researcher_defined",
+          "detectionSource": "researcher_defined_for_synthetic_stimulus"
+        },
+        {
+          "id": "home_report_card",
+          "label": "School report card with student details",
+          "primaryCategoryId": "pii",
+          "categoryIds": [
+            "pii",
+            "children_images",
+            "personal_life"
+          ],
+          "subcategory": "education record / legal identifier",
+          "bbox": {
+            "x": 0.283,
+            "y": 0.575,
+            "width": 0.245,
+            "height": 0.282
+          },
+          "salience": "high",
+          "sceneLocation": "foreground center",
+          "vlmConfidence": null,
+          "researcherVerified": true,
+          "clickable": true,
+          "containsSyntheticPII": true,
+          "description": "A school report card shows a fictional student's name, school, grade, teacher, and performance.",
+          "confidenceSource": "not_available_researcher_defined",
+          "detectionSource": "researcher_defined_for_synthetic_stimulus"
+        },
+        {
+          "id": "home_report_card_child_photo",
+          "label": "Child-related school record",
+          "primaryCategoryId": "children_images",
+          "categoryIds": [
+            "children_images",
+            "pii"
+          ],
+          "subcategory": "child education record",
+          "bbox": {
+            "x": 0.283,
+            "y": 0.575,
+            "width": 0.245,
+            "height": 0.282
+          },
+          "salience": "high",
+          "sceneLocation": "foreground center",
+          "vlmConfidence": null,
+          "researcherVerified": true,
+          "clickable": false,
+          "description": "The report card is explicitly associated with a child.",
+          "confidenceSource": "not_available_researcher_defined",
+          "detectionSource": "researcher_defined_for_synthetic_stimulus"
+        },
+        {
+          "id": "home_wall_rifle",
+          "label": "Wall-mounted rifle",
+          "primaryCategoryId": "legal_sensitivity_information",
+          "categoryIds": [
+            "legal_sensitivity_information"
+          ],
+          "subcategory": "weapon",
+          "bbox": {
+            "x": 0.338,
+            "y": 0.028,
+            "width": 0.225,
+            "height": 0.09
+          },
+          "salience": "low",
+          "sceneLocation": "upper-center background",
+          "vlmConfidence": null,
+          "researcherVerified": true,
+          "clickable": true,
+          "description": "A rifle is mounted on the wall in the background.",
+          "confidenceSource": "not_available_researcher_defined",
+          "detectionSource": "researcher_defined_for_synthetic_stimulus"
+        },
+        {
+          "id": "home_family_photos",
+          "label": "Family photographs",
+          "primaryCategoryId": "personal_life",
+          "categoryIds": [
+            "personal_life",
+            "biometric_data"
+          ],
+          "subcategory": "personal context / faces",
+          "bbox": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 0.23,
+            "height": 0.18
+          },
+          "salience": "low",
+          "sceneLocation": "upper-left wall",
+          "vlmConfidence": null,
+          "researcherVerified": true,
+          "clickable": true,
+          "description": "Framed family photographs disclose relationships and facial information.",
+          "confidenceSource": "not_available_researcher_defined",
+          "detectionSource": "researcher_defined_for_synthetic_stimulus"
+        },
+        {
+          "id": "home_birthday_sign",
+          "label": "Birthday message for a family member",
+          "primaryCategoryId": "personal_life",
+          "categoryIds": [
+            "personal_life"
+          ],
+          "subcategory": "family occasion",
+          "bbox": {
+            "x": 0.785,
+            "y": 0.0,
+            "width": 0.165,
+            "height": 0.21
+          },
+          "salience": "low",
+          "sceneLocation": "upper-right wall",
+          "vlmConfidence": null,
+          "researcherVerified": true,
+          "clickable": true,
+          "description": "A birthday sign reveals a family occasion and relationship context.",
+          "confidenceSource": "not_available_researcher_defined",
+          "detectionSource": "researcher_defined_for_synthetic_stimulus"
+        },
+        {
+          "id": "home_child_toys",
+          "label": "Child's toys and play area",
+          "primaryCategoryId": "personal_life",
+          "categoryIds": [
+            "personal_life",
+            "children_images"
+          ],
+          "subcategory": "personal items",
+          "bbox": {
+            "x": 0.7,
+            "y": 0.33,
+            "width": 0.288,
+            "height": 0.31
+          },
+          "salience": "medium",
+          "sceneLocation": "right side",
+          "vlmConfidence": null,
+          "researcherVerified": true,
+          "clickable": true,
+          "description": "Toys and the play area reveal household and child-related personal context.",
+          "confidenceSource": "not_available_researcher_defined",
+          "detectionSource": "researcher_defined_for_synthetic_stimulus"
+        },
+        {
+          "id": "home_family_gathering",
+          "label": "Family gathering and home interior",
+          "primaryCategoryId": "personal_life",
+          "categoryIds": [
+            "personal_life"
+          ],
+          "subcategory": "home interior / relationships / occasion",
+          "bbox": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 0.66
+          },
+          "salience": "high",
+          "sceneLocation": "scene-level",
+          "vlmConfidence": null,
+          "researcherVerified": true,
+          "clickable": false,
+          "description": "The overall scene reveals a private home interior, family relationships, and a birthday gathering.",
+          "confidenceSource": "not_available_researcher_defined",
+          "detectionSource": "researcher_defined_for_synthetic_stimulus"
+        }
+      ]
+    },
+    {
+      "id": "scene_public_cafe",
+      "fileName": "public_cafe.png",
+      "sourceFileName": "温馨咖啡馆中的午后时光.png",
+      "assetPath": "/assets/images/public_cafe.png",
+      "width": 1448,
+      "height": 1086,
+      "scenarioType": "public",
+      "title": "Busy public cafe",
+      "context": "A first-person view while using a laptop and writing notes in a crowded cafe.",
+      "availableCategoryIds": [
+        "biometric_data",
+        "children_images",
+        "pii",
+        "background_individuals"
+      ],
+      "categoryEvidence": [
+        {
+          "categoryId": "biometric_data",
+          "detectionIds": [
+            "cafe_visible_faces"
+          ]
+        },
+        {
+          "categoryId": "children_images",
+          "detectionIds": [
+            "cafe_child"
+          ]
+        },
+        {
+          "categoryId": "pii",
+          "detectionIds": [
+            "cafe_laptop_email",
+            "cafe_phone_contact",
+            "cafe_receipt"
+          ]
+        },
+        {
+          "categoryId": "background_individuals",
+          "detectionIds": [
+            "cafe_bystanders"
+          ]
+        }
+      ],
+      "detections": [
+        {
+          "id": "cafe_visible_faces",
+          "label": "Visible patron faces",
+          "primaryCategoryId": "biometric_data",
+          "categoryIds": [
+            "biometric_data",
+            "background_individuals",
+            "children_images"
+          ],
+          "subcategory": "faces",
+          "bbox": {
+            "x": 0.0,
+            "y": 0.07,
+            "width": 1.0,
+            "height": 0.37
+          },
+          "salience": "medium",
+          "sceneLocation": "background across scene",
+          "vlmConfidence": null,
+          "researcherVerified": true,
+          "clickable": true,
+          "description": "Multiple identifiable patron faces are visible throughout the cafe.",
+          "confidenceSource": "not_available_researcher_defined",
+          "detectionSource": "researcher_defined_for_synthetic_stimulus"
+        },
+        {
+          "id": "cafe_child",
+          "label": "Child seated in the cafe",
+          "primaryCategoryId": "children_images",
+          "categoryIds": [
+            "children_images",
+            "biometric_data",
+            "background_individuals"
+          ],
+          "subcategory": "child",
+          "bbox": {
+            "x": 0.865,
+            "y": 0.165,
+            "width": 0.125,
+            "height": 0.27
+          },
+          "salience": "medium",
+          "sceneLocation": "upper-right",
+          "vlmConfidence": null,
+          "researcherVerified": true,
+          "clickable": true,
+          "description": "An identifiable child is incidentally captured at a nearby table.",
+          "confidenceSource": "not_available_researcher_defined",
+          "detectionSource": "researcher_defined_for_synthetic_stimulus"
+        },
+        {
+          "id": "cafe_laptop_email",
+          "label": "Visible work email on laptop",
+          "primaryCategoryId": "pii",
+          "categoryIds": [
+            "pii"
+          ],
+          "subcategory": "digital identifiers / private communication",
+          "bbox": {
+            "x": 0.0,
+            "y": 0.355,
+            "width": 0.39,
+            "height": 0.39
+          },
+          "salience": "high",
+          "sceneLocation": "foreground left",
+          "vlmConfidence": null,
+          "researcherVerified": true,
+          "clickable": true,
+          "containsSyntheticPII": true,
+          "description": "The laptop displays fictional work email content and identifiable names.",
+          "confidenceSource": "not_available_researcher_defined",
+          "detectionSource": "researcher_defined_for_synthetic_stimulus"
+        },
+        {
+          "id": "cafe_phone_contact",
+          "label": "Phone contact details",
+          "primaryCategoryId": "pii",
+          "categoryIds": [
+            "pii"
+          ],
+          "subcategory": "name / email / address / phone",
+          "bbox": {
+            "x": 0.49,
+            "y": 0.69,
+            "width": 0.15,
+            "height": 0.285
+          },
+          "salience": "high",
+          "sceneLocation": "foreground center",
+          "vlmConfidence": null,
+          "researcherVerified": true,
+          "clickable": true,
+          "containsSyntheticPII": true,
+          "description": "The phone displays a fictional name, email address, phone number, and street address.",
+          "confidenceSource": "not_available_researcher_defined",
+          "detectionSource": "researcher_defined_for_synthetic_stimulus"
+        },
+        {
+          "id": "cafe_receipt",
+          "label": "Cafe receipt",
+          "primaryCategoryId": "pii",
+          "categoryIds": [
+            "pii"
+          ],
+          "subcategory": "financial / transactional information",
+          "bbox": {
+            "x": 0.483,
+            "y": 0.575,
+            "width": 0.095,
+            "height": 0.135
+          },
+          "salience": "low",
+          "sceneLocation": "center table",
+          "vlmConfidence": null,
+          "researcherVerified": true,
+          "clickable": true,
+          "containsSyntheticPII": true,
+          "description": "A receipt reveals transaction details and potentially time/location information.",
+          "confidenceSource": "not_available_researcher_defined",
+          "detectionSource": "researcher_defined_for_synthetic_stimulus"
+        },
+        {
+          "id": "cafe_bystanders",
+          "label": "Incidental cafe patrons",
+          "primaryCategoryId": "background_individuals",
+          "categoryIds": [
+            "background_individuals",
+            "biometric_data",
+            "children_images"
+          ],
+          "subcategory": "bystanders",
+          "bbox": {
+            "x": 0.0,
+            "y": 0.04,
+            "width": 1.0,
+            "height": 0.43
+          },
+          "salience": "high",
+          "sceneLocation": "background across scene",
+          "vlmConfidence": null,
+          "researcherVerified": true,
+          "clickable": true,
+          "description": "Unrelated cafe patrons are incidentally captured in the user's field of view.",
+          "confidenceSource": "not_available_researcher_defined",
+          "detectionSource": "researcher_defined_for_synthetic_stimulus"
+        }
+      ]
+    },
+    {
+      "id": "scene_semipublic_hospital",
+      "fileName": "hospital_semipublic.png",
+      "sourceFileName": "医院候诊区的第一视角.png",
+      "assetPath": "/assets/images/hospital_semipublic.png",
+      "width": 1448,
+      "height": 1086,
+      "scenarioType": "semi-public",
+      "title": "Hospital waiting area",
+      "context": "A first-person view while holding medical documents in a hospital waiting area.",
+      "availableCategoryIds": [
+        "biometric_data",
+        "pii",
+        "background_individuals"
+      ],
+      "categoryEvidence": [
+        {
+          "categoryId": "biometric_data",
+          "detectionIds": [
+            "hospital_visible_faces"
+          ]
+        },
+        {
+          "categoryId": "pii",
+          "detectionIds": [
+            "hospital_intake_form",
+            "hospital_prescription_bottle",
+            "hospital_wristband"
+          ]
+        },
+        {
+          "categoryId": "background_individuals",
+          "detectionIds": [
+            "hospital_bystanders"
+          ]
+        }
+      ],
+      "detections": [
+        {
+          "id": "hospital_intake_form",
+          "label": "Patient intake form",
+          "primaryCategoryId": "pii",
+          "categoryIds": [
+            "pii"
+          ],
+          "subcategory": "legal identifiers / contact information / insurance / HIPAA data",
+          "bbox": {
+            "x": 0.278,
+            "y": 0.285,
+            "width": 0.405,
+            "height": 0.645
+          },
+          "salience": "high",
+          "sceneLocation": "foreground center",
+          "vlmConfidence": null,
+          "researcherVerified": true,
+          "clickable": true,
+          "containsSyntheticPII": true,
+          "description": "A fictional intake form includes name, date of birth, address, phone, email, insurance, symptoms, medical history, and signature.",
+          "confidenceSource": "not_available_researcher_defined",
+          "detectionSource": "researcher_defined_for_synthetic_stimulus"
+        },
+        {
+          "id": "hospital_prescription_bottle",
+          "label": "Prescription medication bottle",
+          "primaryCategoryId": "pii",
+          "categoryIds": [
+            "pii"
+          ],
+          "subcategory": "HIPAA data / prescription / legal identifier",
+          "bbox": {
+            "x": 0.665,
+            "y": 0.505,
+            "width": 0.155,
+            "height": 0.335
+          },
+          "salience": "high",
+          "sceneLocation": "foreground right",
+          "vlmConfidence": null,
+          "researcherVerified": true,
+          "clickable": true,
+          "containsSyntheticPII": true,
+          "description": "A fictional prescription label shows a patient's name, date of birth, medication, dosage, and prescriber.",
+          "confidenceSource": "not_available_researcher_defined",
+          "detectionSource": "researcher_defined_for_synthetic_stimulus"
+        },
+        {
+          "id": "hospital_wristband",
+          "label": "Patient identification wristband",
+          "primaryCategoryId": "pii",
+          "categoryIds": [
+            "pii"
+          ],
+          "subcategory": "medical identifier / date of birth",
+          "bbox": {
+            "x": 0.055,
+            "y": 0.81,
+            "width": 0.205,
+            "height": 0.18
+          },
+          "salience": "medium",
+          "sceneLocation": "foreground lower-left",
+          "vlmConfidence": null,
+          "researcherVerified": true,
+          "clickable": true,
+          "containsSyntheticPII": true,
+          "description": "A fictional hospital wristband shows the patient's name, date of birth, and medical record number.",
+          "confidenceSource": "not_available_researcher_defined",
+          "detectionSource": "researcher_defined_for_synthetic_stimulus"
+        },
+        {
+          "id": "hospital_visible_faces",
+          "label": "Visible patients and staff faces",
+          "primaryCategoryId": "biometric_data",
+          "categoryIds": [
+            "biometric_data",
+            "background_individuals"
+          ],
+          "subcategory": "faces",
+          "bbox": {
+            "x": 0.0,
+            "y": 0.1,
+            "width": 1.0,
+            "height": 0.5
+          },
+          "salience": "medium",
+          "sceneLocation": "background across scene",
+          "vlmConfidence": null,
+          "researcherVerified": true,
+          "clickable": true,
+          "description": "Several patients and healthcare staff have visible, potentially identifiable faces.",
+          "confidenceSource": "not_available_researcher_defined",
+          "detectionSource": "researcher_defined_for_synthetic_stimulus"
+        },
+        {
+          "id": "hospital_bystanders",
+          "label": "Patients and staff incidentally captured",
+          "primaryCategoryId": "background_individuals",
+          "categoryIds": [
+            "background_individuals",
+            "biometric_data"
+          ],
+          "subcategory": "bystanders",
+          "bbox": {
+            "x": 0.0,
+            "y": 0.08,
+            "width": 1.0,
+            "height": 0.54
+          },
+          "salience": "high",
+          "sceneLocation": "background across scene",
+          "vlmConfidence": null,
+          "researcherVerified": true,
+          "clickable": true,
+          "description": "Other patients and staff are incidentally captured in a semi-public medical setting.",
+          "confidenceSource": "not_available_researcher_defined",
+          "detectionSource": "researcher_defined_for_synthetic_stimulus"
+        }
+      ]
+    }
+  ]
+}

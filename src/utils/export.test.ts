@@ -80,5 +80,13 @@ describe('response export', () => {
     expect(validation.valid).toBe(false);
     expect(validation.errors.some((error) => error.includes('requires exactly one response'))).toBe(true);
   });
+
+  it('does not require a profile confirmation while the profile page is hidden', () => {
+    const session = completeSession();
+    session.profileConfirmation = null;
+    const response = buildResponseExport(session, dataset);
+
+    expect(validateResponseExport(response, dataset)).toEqual({ valid: true, errors: [] });
+  });
 });
 

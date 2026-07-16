@@ -1,3 +1,4 @@
+import { studyConfig } from '../config';
 import { q10Questions } from '../questions';
 import type {
   CategoryResponse,
@@ -133,7 +134,9 @@ export function validateResponseExport(
     }
   }
 
-  if (!response.profileConfirmation) errors.push('Missing profile confirmation.');
+  if (studyConfig.showProfilePage && !response.profileConfirmation) {
+    errors.push('Missing profile confirmation.');
+  }
   return { valid: errors.length === 0, errors };
 }
 

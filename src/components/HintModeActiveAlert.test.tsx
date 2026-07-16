@@ -9,12 +9,14 @@ describe('HintModeActiveAlert', () => {
     const onContinue = vi.fn();
     render(<HintModeActiveAlert onContinue={onContinue} />);
 
-    expect(screen.getByRole('alertdialog')).toHaveAccessibleName('You are in Hint mode');
-    expect(screen.getByText(/starting Stage 2: Probe/)).toBeVisible();
-    expect(screen.getByText(/complete a short interaction test/)).toBeVisible();
+    expect(screen.getByRole('alertdialog')).toHaveAccessibleName(
+      'You are in Hint mode of Stage 2',
+    );
+    expect(screen.getByText(/starting Stage 2: VPrivCal-Probe/)).toBeVisible();
+    expect(screen.getByText(/complete a short interaction hint/)).toBeVisible();
     expect(screen.getByText(/continue with the Probe questions/)).toBeVisible();
     expect(screen.queryByText('Practice only')).not.toBeInTheDocument();
-    await user.click(screen.getByRole('button', { name: 'Start interaction test' }));
+    await user.click(screen.getByRole('button', { name: 'Start Hint Mode' }));
     expect(onContinue).toHaveBeenCalledOnce();
   });
 });

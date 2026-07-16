@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { makeCategoryResponse, makeDetection } from '../test/fixtures';
 import {
   createPointSelection,
+  defaultAwarenessStatusForCategory,
   isCategoryIndexUnlocked,
   isSceneReviewComplete,
 } from './probe';
@@ -26,6 +27,27 @@ describe('point selections', () => {
     expect(selection.autoCategoryId).toBe('pii');
     expect(selection.finalCategoryId).toBe('pii');
     expect(selection.categoryCorrected).toBe(false);
+  });
+
+  it('defaults awareness to the first option only for a category the participant pointed to', () => {
+    const detection = makeDetection('report-card', 'pii', {
+      x: 0.2,
+      y: 0.3,
+      width: 0.2,
+      height: 0.2,
+    });
+    const selection = createPointSelection({
+      sceneId: 'scene-1',
+      clickNumber: 1,
+      normalizedPoint: { x: 0.3, y: 0.4 },
+      displayedPoint: { x: 300, y: 300 },
+      matchedDetections: [detection],
+      at: '2026-07-15T00:00:00.000Z',
+    });
+
+    expect(defaultAwarenessStatusForCategory([selection], 'pii', 1)).toBe(1);
+    expect(defaultAwarenessStatusForCategory([selection], 'children_images', 1)).toBeNull();
+    expect(defaultAwarenessStatusForCategory([selection], 'pii', undefined)).toBeNull();
   });
 
   it('stores an unmatched point immediately without requiring a predefined region', () => {

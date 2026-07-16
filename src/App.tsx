@@ -1,6 +1,7 @@
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 import type { ReactNode } from 'react';
 import { AppLayout } from './components/AppLayout';
+import { studyConfig } from './config';
 import { useDataset } from './context/DataContext';
 import { CompletePage } from './pages/CompletePage';
 import { NotFoundPage } from './pages/NotFoundPage';
@@ -70,7 +71,14 @@ export function App() {
             path="/probe/:sceneId"
             element={<ConsentRequired><ProbeScenePage /></ConsentRequired>}
           />
-          <Route path="/profile" element={<ConsentRequired><ProfilePage /></ConsentRequired>} />
+          <Route
+            path="/profile"
+            element={
+              <ConsentRequired>
+                {studyConfig.showProfilePage ? <ProfilePage /> : <Navigate to="/complete" replace />}
+              </ConsentRequired>
+            }
+          />
           <Route path="/complete" element={<ConsentRequired><CompletePage /></ConsentRequired>} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>

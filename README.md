@@ -9,6 +9,10 @@ Question wording and policy semantics are based on `source materials/VPrivCal_Fu
 
 The repository includes an optional Lambda/DynamoDB participant-persistence placeholder modeled on the continuous-VLM study. Expert review is always memory-only. No analytics or trackers are included.
 
+## Participant-answer policy filter
+
+The deterministic design for validating participant answers, combining Q10 priors with contextual Probe corrections, and filtering future visual cues is documented in [`docs/policy-filter/README.md`](docs/policy-filter/README.md). It includes the rule hierarchy, action-scale mappings, safety-floor behavior, pseudocode, examples, and implementation test requirements. This is a reference design; the current profile screen remains a simpler summary implementation.
+
 ## Participant and expert-review interfaces
 
 The same static build provides two deliberately different entry experiences:

@@ -28,19 +28,18 @@ describe('point selections', () => {
     expect(selection.categoryCorrected).toBe(false);
   });
 
-  it('stores an unmatched point as a participant-created manual region', () => {
+  it('stores an unmatched point immediately without requiring a predefined region', () => {
     const selection = createPointSelection({
       sceneId: 'scene-1',
       clickNumber: 2,
       normalizedPoint: { x: 0.9, y: 0.9 },
       displayedPoint: { x: 900, y: 675 },
       matchedDetections: [],
-      manualBox: { x: 0.85, y: 0.85, width: 0.1, height: 0.1 },
       at: '2026-07-15T00:00:00.000Z',
     });
     expect(selection.manualUnmatched).toBe(true);
     expect(selection.matchedDetectionIds).toEqual([]);
-    expect(selection.manualBox).toEqual({ x: 0.85, y: 0.85, width: 0.1, height: 0.1 });
+    expect(selection.manualBox).toBeUndefined();
     expect(selection.autoCategoryId).toBeNull();
     expect(selection.finalCategoryId).toBe('other_not_sure');
     expect(selection.categoryCorrected).toBe(false);

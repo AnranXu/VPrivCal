@@ -45,10 +45,16 @@ export function buildResponseExport(
     };
   });
 
-  const probeDurationMs = session.randomizedSceneOrder.reduce((sum, sceneId) => {
+  const summedSceneDurationMs = session.randomizedSceneOrder.reduce((sum, sceneId) => {
     const sceneState = session.probeScenes[sceneId];
     return sum + durationBetween(sceneState?.startedAt ?? null, sceneState?.completedAt ?? null);
   }, 0);
+  const probeStartedAt = session.probeStartedAt ?? null;
+  const probeCompletedAt = session.probeCompletedAt ?? null;
+  const probeDurationMs =
+    probeStartedAt && probeCompletedAt
+      ? durationBetween(probeStartedAt, probeCompletedAt)
+      : summedSceneDurationMs;
   const end = session.completedAt ?? new Date().toISOString();
 
   return {
@@ -68,6 +74,8 @@ export function buildResponseExport(
     profileConfirmation: session.profileConfirmation,
     timing: {
       q10DurationMs: durationBetween(session.q10StartedAt, session.q10CompletedAt),
+      probeStartedAt,
+      probeCompletedAt,
       probeDurationMs,
       totalDurationMs: durationBetween(session.startedAt, end),
     },

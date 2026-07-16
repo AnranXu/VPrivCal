@@ -9,19 +9,26 @@ export function ParticipantTimer() {
   const pageOpenedAt = useRef(new Date().toISOString());
   const [now, setNow] = useState(() => Date.now());
   const isWelcomePage = location.pathname === '/' || location.pathname === '/participant';
+  const isProbeRoute = location.pathname.startsWith('/probe');
   const consentedAt = !isWelcomePage && session.consent?.agreed ? session.consent.answeredAt : null;
   const studyStarted = consentedAt !== null;
-  const startedAt = consentedAt ?? pageOpenedAt.current;
-  const endedAt = studyStarted ? session.completedAt : null;
+  const probeStartedAt = session.probeStartedAt ?? null;
+  const startedAt = isProbeRoute ? (probeStartedAt ?? pageOpenedAt.current) : (consentedAt ?? pageOpenedAt.current);
+  const endedAt = isProbeRoute
+    ? (session.probeCompletedAt ?? null)
+    : (studyStarted ? session.completedAt : null);
+  const timerRunning = isProbeRoute ? probeStartedAt !== null && endedAt === null : endedAt === null;
 
   useEffect(() => {
-    if (endedAt) return undefined;
+    if (!timerRunning) return undefined;
     const interval = window.setInterval(() => setNow(Date.now()), 1000);
     return () => window.clearInterval(interval);
-  }, [endedAt]);
+  }, [timerRunning]);
 
-  const elapsed = formatElapsedTime(elapsedTimeBetween(startedAt, endedAt, now));
-  const label = studyStarted ? 'Study time' : 'Time on page';
+  const elapsed = formatElapsedTime(
+    isProbeRoute && !probeStartedAt ? 0 : elapsedTimeBetween(startedAt, endedAt, now),
+  );
+  const label = isProbeRoute ? 'Probe time' : (studyStarted ? 'Study time' : 'Time on page');
 
   return (
     <div className="participant-timer" role="timer" aria-label={`${label}: ${elapsed}`}>

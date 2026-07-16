@@ -10,6 +10,9 @@ interface CategoryReviewCardProps {
   awarenessQuestion: ProbeQuestionDefinition;
   actionQuestion: ProbeQuestionDefinition;
   evidenceVisible: boolean;
+  disabled?: boolean;
+  reviewTitle?: string;
+  showCategoryIdentity?: boolean;
   onToggleEvidence: () => void;
   onAnswer: (field: 'awarenessStatus' | 'preferredAction', value: number) => void;
 }
@@ -20,24 +23,30 @@ export function CategoryReviewCard({
   awarenessQuestion,
   actionQuestion,
   evidenceVisible,
+  disabled = false,
+  reviewTitle = 'Highlighted visual content',
+  showCategoryIdentity = false,
   onToggleEvidence,
   onAnswer,
 }: CategoryReviewCardProps) {
   return (
-    <article className="category-review-card" aria-labelledby={`category-${category.id}`}>
+    <article className="category-review-card" aria-labelledby={`review-${category.id}`}>
       <div className="category-heading-row">
         <div>
-          <p className="eyebrow">Category review</p>
-          <h2 id={`category-${category.id}`}>{category.label}</h2>
-          <p>{category.description}</p>
+          <p className="eyebrow">Visual content review</p>
+          <h2 id={`review-${category.id}`}>
+            {showCategoryIdentity ? category.label : reviewTitle}
+          </h2>
+          {showCategoryIdentity ? <p>{category.description}</p> : null}
         </div>
         <button
           className={`button button-secondary ${evidenceVisible ? 'is-active' : ''}`}
           type="button"
+          disabled={disabled}
           aria-pressed={evidenceVisible}
           onClick={onToggleEvidence}
         >
-          {evidenceVisible ? 'Hide evidence' : 'Show evidence'}
+          {evidenceVisible ? 'Hide highlight' : 'Show highlight'}
         </button>
       </div>
 
@@ -50,6 +59,7 @@ export function CategoryReviewCard({
                 type="radio"
                 name={`${category.id}-awareness`}
                 value={option.value}
+                disabled={disabled}
                 checked={response.awarenessStatus === option.value}
                 onChange={() => onAnswer('awarenessStatus', option.value)}
               />
@@ -68,6 +78,7 @@ export function CategoryReviewCard({
                 type="radio"
                 name={`${category.id}-action`}
                 value={option.value}
+                disabled={disabled}
                 checked={response.preferredAction === option.value}
                 onChange={() => onAnswer('preferredAction', option.value)}
               />

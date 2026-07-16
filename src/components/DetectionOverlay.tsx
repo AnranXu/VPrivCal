@@ -3,23 +3,17 @@ import type { Detection } from '../types';
 interface DetectionOverlayProps {
   detections: readonly Detection[];
   visibleIds: readonly string[];
-  transientIds?: readonly string[];
 }
 
-export function DetectionOverlay({
-  detections,
-  visibleIds,
-  transientIds = [],
-}: DetectionOverlayProps) {
+export function DetectionOverlay({ detections, visibleIds }: DetectionOverlayProps) {
   const visible = new Set(visibleIds);
-  const transient = new Set(transientIds);
   return (
     <div className="overlay-layer" aria-hidden="true">
       {detections
-        .filter((detection) => visible.has(detection.id) || transient.has(detection.id))
+        .filter((detection) => visible.has(detection.id))
         .map((detection) => (
           <div
-            className={`detection-box ${transient.has(detection.id) ? 'is-transient' : ''}`}
+            className="detection-box"
             key={detection.id}
             style={{
               left: `${detection.bbox.x * 100}%`,

@@ -2,13 +2,11 @@ import type { NormalizedBox, PointSelection } from '../types';
 
 interface PointSelectionLayerProps {
   selections: readonly PointSelection[];
-  pendingManualBox?: NormalizedBox;
   keyboardPoint?: { x: number; y: number };
 }
 
 export function PointSelectionLayer({
   selections,
-  pendingManualBox,
   keyboardPoint,
 }: PointSelectionLayerProps) {
   return (
@@ -42,17 +40,6 @@ export function PointSelectionLayer({
             />
           );
         })}
-      {pendingManualBox ? (
-        <div
-          className="manual-box is-pending"
-          style={{
-            left: `${pendingManualBox.x * 100}%`,
-            top: `${pendingManualBox.y * 100}%`,
-            width: `${pendingManualBox.width * 100}%`,
-            height: `${pendingManualBox.height * 100}%`,
-          }}
-        />
-      ) : null}
       {keyboardPoint ? (
         <div
           className="keyboard-cursor"

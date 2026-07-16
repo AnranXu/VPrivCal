@@ -21,5 +21,10 @@ describe('deterministic randomization', () => {
     const second = initializeParticipantSession(createEmptySession(), 'participant-42', scenes);
     expect(first.originalSceneOrder).toEqual(['one', 'two', 'three']);
     expect(first.randomizedSceneOrder).toEqual(second.randomizedSceneOrder);
+    expect(first).toMatchObject({
+      probeHintCompletedAt: null,
+      probeStartedAt: null,
+      probeCompletedAt: null,
+    });
   });
 });

@@ -3,7 +3,7 @@ export interface StudyConfig {
   participantIdRequired: boolean;
   randomizeSceneOrder: boolean;
   randomizeCategoryOrder: boolean;
-  allowUnmatchedManualRegions: boolean;
+  showProbeCategoryIdentities: boolean;
   profileCommentsEnabled: boolean;
   jsonExportEnabled: boolean;
   csvExportEnabled: boolean;
@@ -16,7 +16,7 @@ export const studyConfig: Readonly<StudyConfig> = {
   participantIdRequired: true,
   randomizeSceneOrder: true,
   randomizeCategoryOrder: true,
-  allowUnmatchedManualRegions: true,
+  showProbeCategoryIdentities: false,
   profileCommentsEnabled: true,
   jsonExportEnabled: true,
   csvExportEnabled: true,

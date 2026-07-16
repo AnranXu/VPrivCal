@@ -33,13 +33,20 @@ export function CompletePage() {
     [dataset, response],
   );
 
-  if (!dataset || !response || !session.profileConfirmation) {
+  if (!dataset || !response || (studyConfig.showProfilePage && !session.profileConfirmation)) {
+    const returnRoute = studyConfig.showProfilePage
+      ? '/profile'
+      : `/probe/${session.randomizedSceneOrder.at(-1) ?? ''}`;
     return (
       <section className="content-card narrow-card">
         <h1>Completion step unavailable</h1>
-        <p>Confirm the privacy reminder profile before exporting responses.</p>
-        <button className="button button-primary" type="button" onClick={() => navigate('/profile')}>
-          Return to profile
+        <p>
+          {studyConfig.showProfilePage
+            ? 'Confirm the privacy reminder profile before exporting responses.'
+            : 'Complete every Probe scene before exporting responses.'}
+        </p>
+        <button className="button button-primary" type="button" onClick={() => navigate(returnRoute)}>
+          {studyConfig.showProfilePage ? 'Return to profile' : 'Return to Probe'}
         </button>
       </section>
     );
@@ -102,7 +109,17 @@ export function CompletePage() {
         <section className="error-card" role="alert">
           <h2>Export validation found incomplete data</h2>
           <ul>{validation?.errors.map((error) => <li key={error}>{error}</li>)}</ul>
-          <button className="button button-secondary" type="button" onClick={() => navigate('/profile')}>Review study</button>
+          <button
+            className="button button-secondary"
+            type="button"
+            onClick={() => navigate(
+              studyConfig.showProfilePage
+                ? '/profile'
+                : `/probe/${session.randomizedSceneOrder.at(-1) ?? ''}`,
+            )}
+          >
+            Review study
+          </button>
         </section>
       )}
     </div>

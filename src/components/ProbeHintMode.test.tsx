@@ -51,9 +51,11 @@ describe('ProbeHintMode', () => {
       <ProbeHintMode dataset={dataset} onExit={onExit} required />,
     );
 
-    expect(screen.getByRole('alertdialog')).toHaveAccessibleName('You are in Hint mode');
+    expect(screen.getByRole('alertdialog')).toHaveAccessibleName(
+      'You are in Hint mode of Stage 2',
+    );
     expect(container.querySelector('.probe-workspace')).toHaveAttribute('inert');
-    await user.click(screen.getByRole('button', { name: 'Start interaction test' }));
+    await user.click(screen.getByRole('button', { name: 'Start Hint Mode' }));
     expect(container.querySelector('.probe-workspace')).not.toHaveAttribute('inert');
     expect(screen.getByText('You are in Hint mode')).toBeVisible();
     const pointHeading = screen.getByRole('heading', { name: 'Place a practice point' });

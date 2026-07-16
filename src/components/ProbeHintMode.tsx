@@ -202,6 +202,14 @@ export function ProbeHintMode({ dataset, onExit, required = false }: ProbeHintMo
     return response?.awarenessStatus != null && response.preferredAction != null;
   }).length;
   const evidenceIds = evidenceVisible && activeResponse ? activeResponse.linkedDetectionIds : [];
+  const activeContentLabels = activeResponse
+    ? activeResponse.linkedDetectionIds
+        .map(
+          (detectionId) =>
+            practiceScene.detections.find((detection) => detection.id === detectionId)?.label,
+        )
+        .filter((label): label is string => Boolean(label))
+    : [];
   const imageInertAttributes: Record<string, string> = imageFocused ? {} : { inert: '' };
   const sidebarInertAttributes: Record<string, string> = sidebarFocused ? {} : { inert: '' };
   const alertInertAttributes: Record<string, string> = entryAlertOpen ? { inert: '' } : {};
@@ -465,6 +473,7 @@ export function ProbeHintMode({ dataset, onExit, required = false }: ProbeHintMo
                 <CategoryReviewCard
                   category={activeCategory}
                   response={activeResponse}
+                  contentLabels={activeContentLabels}
                   reviewTitle="Highlighted practice content"
                   showCategoryIdentity={studyConfig.showProbeCategoryIdentities}
                   awarenessQuestion={{

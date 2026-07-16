@@ -124,15 +124,13 @@
           "categoryId": "biometric_data",
           "detectionIds": [
             "home_adult_faces",
-            "home_child_face",
-            "home_family_photos"
+            "home_child_face"
           ]
         },
         {
           "categoryId": "children_images",
           "detectionIds": [
-            "home_child_person",
-            "home_report_card_child_photo"
+            "home_child_person"
           ]
         },
         {
@@ -163,8 +161,7 @@
           "label": "Visible adult family-member faces",
           "primaryCategoryId": "biometric_data",
           "categoryIds": [
-            "biometric_data",
-            "personal_life"
+            "biometric_data"
           ],
           "subcategory": "faces",
           "bbox": {
@@ -187,9 +184,7 @@
           "label": "Child at the party",
           "primaryCategoryId": "children_images",
           "categoryIds": [
-            "children_images",
-            "biometric_data",
-            "personal_life"
+            "children_images"
           ],
           "subcategory": "child",
           "bbox": {
@@ -212,8 +207,7 @@
           "label": "Child's visible face",
           "primaryCategoryId": "biometric_data",
           "categoryIds": [
-            "biometric_data",
-            "children_images"
+            "biometric_data"
           ],
           "subcategory": "face",
           "bbox": {
@@ -236,9 +230,7 @@
           "label": "School report card with student details",
           "primaryCategoryId": "pii",
           "categoryIds": [
-            "pii",
-            "children_images",
-            "personal_life"
+            "pii"
           ],
           "subcategory": "education record / legal identifier",
           "bbox": {
@@ -254,30 +246,6 @@
           "clickable": true,
           "containsSyntheticPII": true,
           "description": "A school report card shows a fictional student's name, school, grade, teacher, and performance.",
-          "confidenceSource": "not_available_researcher_defined",
-          "detectionSource": "researcher_defined_for_synthetic_stimulus"
-        },
-        {
-          "id": "home_report_card_child_photo",
-          "label": "Child-related school record",
-          "primaryCategoryId": "children_images",
-          "categoryIds": [
-            "children_images",
-            "pii"
-          ],
-          "subcategory": "child education record",
-          "bbox": {
-            "x": 0.283,
-            "y": 0.575,
-            "width": 0.245,
-            "height": 0.282
-          },
-          "salience": "high",
-          "sceneLocation": "foreground center",
-          "vlmConfidence": null,
-          "researcherVerified": true,
-          "clickable": false,
-          "description": "The report card is explicitly associated with a child.",
           "confidenceSource": "not_available_researcher_defined",
           "detectionSource": "researcher_defined_for_synthetic_stimulus"
         },
@@ -309,8 +277,7 @@
           "label": "Family photographs",
           "primaryCategoryId": "personal_life",
           "categoryIds": [
-            "personal_life",
-            "biometric_data"
+            "personal_life"
           ],
           "subcategory": "personal context / faces",
           "bbox": {
@@ -356,8 +323,7 @@
           "label": "Child's toys and play area",
           "primaryCategoryId": "personal_life",
           "categoryIds": [
-            "personal_life",
-            "children_images"
+            "personal_life"
           ],
           "subcategory": "personal items",
           "bbox": {
@@ -450,9 +416,7 @@
           "label": "Visible patron faces",
           "primaryCategoryId": "biometric_data",
           "categoryIds": [
-            "biometric_data",
-            "background_individuals",
-            "children_images"
+            "biometric_data"
           ],
           "subcategory": "faces",
           "bbox": {
@@ -475,9 +439,7 @@
           "label": "Child seated in the cafe",
           "primaryCategoryId": "children_images",
           "categoryIds": [
-            "children_images",
-            "biometric_data",
-            "background_individuals"
+            "children_images"
           ],
           "subcategory": "child",
           "bbox": {
@@ -572,9 +534,7 @@
           "label": "Incidental cafe patrons",
           "primaryCategoryId": "background_individuals",
           "categoryIds": [
-            "background_individuals",
-            "biometric_data",
-            "children_images"
+            "background_individuals"
           ],
           "subcategory": "bystanders",
           "bbox": {
@@ -606,8 +566,7 @@
       "context": "A first-person view while holding medical documents in a hospital waiting area.",
       "availableCategoryIds": [
         "biometric_data",
-        "pii",
-        "background_individuals"
+        "pii"
       ],
       "categoryEvidence": [
         {
@@ -622,12 +581,6 @@
             "hospital_intake_form",
             "hospital_prescription_bottle",
             "hospital_wristband"
-          ]
-        },
-        {
-          "categoryId": "background_individuals",
-          "detectionIds": [
-            "hospital_bystanders"
           ]
         }
       ],
@@ -709,8 +662,7 @@
           "label": "Visible patients and staff faces",
           "primaryCategoryId": "biometric_data",
           "categoryIds": [
-            "biometric_data",
-            "background_individuals"
+            "biometric_data"
           ],
           "subcategory": "faces",
           "bbox": {
@@ -725,30 +677,6 @@
           "researcherVerified": true,
           "clickable": true,
           "description": "Several patients and healthcare staff have visible, potentially identifiable faces.",
-          "confidenceSource": "not_available_researcher_defined",
-          "detectionSource": "researcher_defined_for_synthetic_stimulus"
-        },
-        {
-          "id": "hospital_bystanders",
-          "label": "Patients and staff incidentally captured",
-          "primaryCategoryId": "background_individuals",
-          "categoryIds": [
-            "background_individuals",
-            "biometric_data"
-          ],
-          "subcategory": "bystanders",
-          "bbox": {
-            "x": 0.0,
-            "y": 0.08,
-            "width": 1.0,
-            "height": 0.54
-          },
-          "salience": "high",
-          "sceneLocation": "background across scene",
-          "vlmConfidence": null,
-          "researcherVerified": true,
-          "clickable": true,
-          "description": "Other patients and staff are incidentally captured in a semi-public medical setting.",
           "confidenceSource": "not_available_researcher_defined",
           "detectionSource": "researcher_defined_for_synthetic_stimulus"
         }

@@ -21,6 +21,7 @@ import {
 } from '../utils/coordinates';
 import {
   createPointSelection,
+  defaultAwarenessStatusForCategory,
   isCategoryIndexUnlocked,
   isSceneReviewComplete,
 } from '../utils/probe';
@@ -190,29 +191,6 @@ export function ProbeScenePage() {
     });
   };
 
-  const openListMode = () => {
-    updateSession((current) => ({
-      ...current,
-      probeScenes: {
-        ...current.probeScenes,
-        [scene.id]: { ...current.probeScenes[scene.id], listModeOpened: true },
-      },
-    }));
-  };
-
-  const addFromList = (detection: Detection) => {
-    const normalizedPoint = {
-      x: detection.bbox.x + detection.bbox.width / 2,
-      y: detection.bbox.y + detection.bbox.height / 2,
-    };
-    addSelection(
-      normalizedPoint,
-      { x: normalizedPoint.x * scene.width, y: normalizedPoint.y * scene.height },
-      [detection],
-      detection,
-    );
-  };
-
   const beginReview = () => {
     if (sceneState.pointSelections.length === 0 && !sceneState.noAdditionalSelected) {
       setPointingError('Select content or confirm that you did not identify any additional content.');
@@ -224,6 +202,9 @@ export function ProbeScenePage() {
         const linkedDetectionIds =
           scene.categoryEvidence.find((evidence) => evidence.categoryId === categoryId)
             ?.detectionIds ?? [];
+        const spontaneouslySelected = sceneState.pointSelections.some(
+          (selection) => selection.finalCategoryId === categoryId,
+        );
         return [
           categoryId,
           {
@@ -231,10 +212,12 @@ export function ProbeScenePage() {
             categoryId,
             presentationOrder: index,
             linkedDetectionIds,
-            spontaneouslySelected: sceneState.pointSelections.some(
-              (selection) => selection.finalCategoryId === categoryId,
+            spontaneouslySelected,
+            awarenessStatus: defaultAwarenessStatusForCategory(
+              sceneState.pointSelections,
+              categoryId,
+              dataset.probeQuestions.awarenessStatus.options[0]?.value,
             ),
-            awarenessStatus: null,
             preferredAction: null,
             evidenceOpened: index === 0,
             evidenceToggleCount: 0,
@@ -274,9 +257,6 @@ export function ProbeScenePage() {
   };
 
   if (sceneState.phase === 'pointing') {
-    const alreadyListed = new Set(
-      sceneState.pointSelections.flatMap((selection) => selection.matchedDetectionIds),
-    );
     return (
       <div className="page-stack probe-page">
         <header className="scene-header">
@@ -349,11 +329,6 @@ export function ProbeScenePage() {
               <p className="eyebrow">Your first-look selections</p>
               <h2>{sceneState.pointSelections.length} selected</h2>
             </div>
-            {!sceneState.listModeOpened ? (
-              <button className="button button-quiet" type="button" onClick={openListMode}>
-                Use a list instead of pointing
-              </button>
-            ) : null}
           </div>
           {sceneState.pointSelections.length === 0 ? (
             <p className="empty-state">No areas selected yet.</p>
@@ -377,28 +352,6 @@ export function ProbeScenePage() {
               ))}
             </ol>
           )}
-
-          {sceneState.listModeOpened ? (
-            <div className="list-fallback">
-              <h3>Neutral content list</h3>
-              <p>This list is shown only because you opened the accessibility alternative.</p>
-              <ul>
-                {scene.detections.filter((detection) => detection.clickable).map((detection) => (
-                  <li key={detection.id}>
-                    <span>{detection.label}</span>
-                    <button
-                      className="button button-quiet"
-                      type="button"
-                      disabled={alreadyListed.has(detection.id)}
-                      onClick={() => addFromList(detection)}
-                    >
-                      {alreadyListed.has(detection.id) ? 'Selected' : 'Select'}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : null}
 
           <label className="confirmation-check">
             <input
@@ -438,6 +391,14 @@ export function ProbeScenePage() {
   const activeCategory = categoriesById.get(activeCategoryId);
   const activeResponse = sceneState.categoryResponses[activeCategoryId];
   const evidenceIds = activeResponse?.linkedDetectionIds ?? [];
+  const activeContentLabels = activeResponse
+    ? activeResponse.linkedDetectionIds
+        .map(
+          (detectionId) =>
+            scene.detections.find((detection) => detection.id === detectionId)?.label,
+        )
+        .filter((label): label is string => Boolean(label))
+    : [];
 
   const ensureViewedAndNavigate = (nextIndex: number) => {
     const categoryId = sceneState.categoryOrder[nextIndex];
@@ -530,7 +491,12 @@ export function ProbeScenePage() {
     const sceneIndex = session.randomizedSceneOrder.indexOf(scene.id);
     const nextScene = session.randomizedSceneOrder[sceneIndex + 1];
     updateSession((current) => {
-      const completedSession = nextScene ? current : recordProbeCompletion(current, now);
+      const completedSession = nextScene
+        ? current
+        : {
+            ...recordProbeCompletion(current, now),
+            completedAt: current.completedAt ?? now,
+          };
       return {
         ...completedSession,
         probeScenes: {
@@ -543,7 +509,7 @@ export function ProbeScenePage() {
         },
       };
     });
-    navigate(nextScene ? `/probe/${nextScene}` : '/profile');
+    navigate(nextScene ? `/probe/${nextScene}` : studyConfig.showProfilePage ? '/profile' : '/complete');
   };
 
   if (!activeCategory || !activeResponse) {
@@ -631,6 +597,7 @@ export function ProbeScenePage() {
       <CategoryReviewCard
         category={activeCategory}
         response={activeResponse}
+        contentLabels={activeContentLabels}
         reviewTitle={`Highlighted visual content ${activeIndex + 1}`}
         showCategoryIdentity={studyConfig.showProbeCategoryIdentities}
         awarenessQuestion={{

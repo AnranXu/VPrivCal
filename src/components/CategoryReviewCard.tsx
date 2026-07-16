@@ -11,6 +11,7 @@ interface CategoryReviewCardProps {
   actionQuestion: ProbeQuestionDefinition;
   evidenceVisible: boolean;
   disabled?: boolean;
+  contentLabels?: readonly string[];
   reviewTitle?: string;
   showCategoryIdentity?: boolean;
   onToggleEvidence: () => void;
@@ -24,18 +25,26 @@ export function CategoryReviewCard({
   actionQuestion,
   evidenceVisible,
   disabled = false,
+  contentLabels = [],
   reviewTitle = 'Highlighted visual content',
   showCategoryIdentity = false,
   onToggleEvidence,
   onAnswer,
 }: CategoryReviewCardProps) {
+  const specificContentLabel = [...new Set(contentLabels)].join(', ');
+
   return (
     <article className="category-review-card" aria-labelledby={`review-${category.id}`}>
       <div className="category-heading-row">
         <div>
-          <p className="eyebrow">Visual content review</p>
-          <h2 id={`review-${category.id}`}>
-            {showCategoryIdentity ? category.label : reviewTitle}
+          <p className={showCategoryIdentity ? 'eyebrow' : 'content-identity-label'}>
+            {showCategoryIdentity ? 'Visual content review' : 'Specific highlighted content'}
+          </p>
+          <h2
+            className={showCategoryIdentity ? undefined : 'content-identity-name'}
+            id={`review-${category.id}`}
+          >
+            {showCategoryIdentity ? category.label : (specificContentLabel || reviewTitle)}
           </h2>
           {showCategoryIdentity ? <p>{category.description}</p> : null}
         </div>

@@ -4,6 +4,7 @@ export interface StudyConfig {
   randomizeSceneOrder: boolean;
   randomizeCategoryOrder: boolean;
   showProbeCategoryIdentities: boolean;
+  showProfilePage: boolean;
   profileCommentsEnabled: boolean;
   jsonExportEnabled: boolean;
   csvExportEnabled: boolean;
@@ -17,6 +18,7 @@ export const studyConfig: Readonly<StudyConfig> = {
   randomizeSceneOrder: true,
   randomizeCategoryOrder: true,
   showProbeCategoryIdentities: false,
+  showProfilePage: false,
   profileCommentsEnabled: true,
   jsonExportEnabled: true,
   csvExportEnabled: true,

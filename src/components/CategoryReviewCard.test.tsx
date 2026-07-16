@@ -34,12 +34,14 @@ describe('CategoryReviewCard', () => {
             { value: 4, label: 'Avoid using it unless I explicitly request it' },
           ],
         }}
+        contentLabels={['Student report card']}
         evidenceVisible={false}
         onToggleEvidence={onToggle}
         onAnswer={onAnswer}
       />,
     );
-    expect(screen.getByRole('heading', { name: 'Highlighted visual content' })).toBeVisible();
+    expect(screen.getByText('Specific highlighted content')).toBeVisible();
+    expect(screen.getByRole('heading', { name: 'Student report card' })).toBeVisible();
     expect(screen.queryByText('PII')).not.toBeInTheDocument();
     expect(screen.queryByText('Personal records.')).not.toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'Show highlight' }));

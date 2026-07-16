@@ -41,6 +41,17 @@ export function createPointSelection(input: CreateSelectionInput): PointSelectio
   };
 }
 
+export function defaultAwarenessStatusForCategory(
+  selections: readonly PointSelection[],
+  categoryId: string,
+  firstOptionValue: number | undefined,
+): number | null {
+  if (firstOptionValue === undefined) return null;
+  return selections.some((selection) => selection.finalCategoryId === categoryId)
+    ? firstOptionValue
+    : null;
+}
+
 export function isCategoryResponseComplete(response: CategoryResponse | undefined): boolean {
   return response?.awarenessStatus != null && response.preferredAction != null;
 }

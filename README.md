@@ -11,7 +11,7 @@ The repository includes an optional Lambda/DynamoDB participant-persistence plac
 
 ## Participant-answer policy filter
 
-The deterministic design for validating participant answers, combining Q10 priors with contextual Probe corrections, and filtering future visual cues is documented in [`docs/policy-filter/README.md`](docs/policy-filter/README.md). It includes the rule hierarchy, action-scale mappings, safety-floor behavior, pseudocode, examples, and implementation test requirements. This is a reference design; the current profile screen remains a simpler summary implementation.
+The executable policy engine is implemented in [`src/utils/policyFilter.ts`](src/utils/policyFilter.ts), with focused tests in [`src/utils/policyFilter.test.ts`](src/utils/policyFilter.test.ts). Its full design is documented in [`docs/policy-filter/README.md`](docs/policy-filter/README.md), including validation, rule hierarchy, action-scale mappings, safety floors, pseudocode, and examples. The current profile screen remains a simpler summary, and live cue filtering is not wired into the static study UI because it has no calibrated runtime cue feed.
 
 ## Participant and expert-review interfaces
 

@@ -4,7 +4,7 @@ This document specifies a deterministic, rule-based algorithm that turns a compl
 
 The algorithm is deliberately transparent. It does not train or fine-tune the VLM, infer protected traits, diagnose the participant, or assign a hidden "quality score" to the participant. Every output action can be traced to a particular Q10 answer, Probe answer, runtime condition, or configured safety rule.
 
-> **Implementation status:** this is the reference design, not a description of a complete runtime implementation. The current `ProfilePage` calculates a simple median of Probe actions, and `showProfilePage` is currently disabled in `src/config.ts`. Implementations should version this specification before using it to make live decisions.
+> **Implementation status:** the executable core is implemented in [`src/utils/policyFilter.ts`](../../src/utils/policyFilter.ts), with unit coverage in [`src/utils/policyFilter.test.ts`](../../src/utils/policyFilter.test.ts). The current study UI does not invoke it: `ProfilePage` still calculates its simpler summary, `showProfilePage` is disabled, and the static site has no calibrated live candidate-cue feed.
 
 ## What the filter does
 
@@ -26,6 +26,39 @@ participant export
     -> apply a visible, configurable safety floor
     -> return an action plus an explanation
 ```
+
+## Implementation API
+
+The TypeScript module exports:
+
+- `validatePolicyResponse(response, dataset)` for strict answer and dataset-scale validation;
+- `upperWeightedMedian(items)` for deterministic aggregation;
+- `buildParticipantPolicy(response, dataset, config?)` for policy compilation;
+- `filterCandidateCue(candidate, policy, guardrails?)` for one candidate;
+- `filterCandidateBatch(candidates, policy, guardrails?, visibleLimit?)` for deduplication and stable visible-action ranking;
+- `DISABLED_SAFETY_FLOORS` and opt-in `PROOF_OF_CONCEPT_SAFETY_FLOORS` configurations.
+
+Minimal usage:
+
+```ts
+import {
+  PROOF_OF_CONCEPT_SAFETY_FLOORS,
+  buildParticipantPolicy,
+  filterCandidateCue,
+} from './utils/policyFilter';
+
+const compiled = buildParticipantPolicy(responseExport, dataset);
+
+if (compiled.status === 'READY') {
+  const decision = filterCandidateCue(
+    candidateCue,
+    compiled.policy,
+    PROOF_OF_CONCEPT_SAFETY_FLOORS,
+  );
+}
+```
+
+Guardrails are disabled when the third argument is omitted. Every safety-floor configuration has an immutable, versioned `configId`, which is copied into each decision for audit. Invalid ranks, tiers, IDs, or waiver keys return `INVALID_CONFIGURATION`. The proof-of-concept floors are deliberately opt-in because they require expert and ethics approval for a real deployment.
 
 ## Design principles
 
@@ -106,12 +139,13 @@ A response is eligible only when all of these conditions hold:
 
 1. `schemaVersion`, `studyVersion`, `sessionId`, and `startedAt` are present.
 2. Participant consent exists and `consent.agreed == true`.
-3. Every Q10 question occurs exactly once and its value is one of that question's declared options.
+3. Every Q10 question occurs exactly once, its value is one of that question's declared options, and `finalResponse` matches `value`.
 4. Every dataset scene occurs exactly once in the export.
 5. Every ID in a scene's `availableCategoryIds` has exactly one category response.
 6. No exported scene contains an unexpected category response.
 7. Every required Probe response has an allowed awareness value and preferred-action value.
 8. IDs used for policy compilation exist in the loaded dataset.
+9. The dataset's declared awareness and preferred-action options remain on the supported 1-4 and 0-4 scales.
 
 Do not use "last answer wins" for duplicates and do not replace missing values with a neutral midpoint. Return all validation errors and compile no final policy.
 
@@ -427,7 +461,7 @@ Safety floors are deployment rules, not inferred participant preferences. The fo
 
 Define "high-confidence severe" in configuration, for example `likelihoodTier >= 4 AND severityTier >= 4`. Do not bury this threshold in UI code.
 
-If a floor raises the participant-selected action, return both `preferenceAction` and `effectiveAction`, plus `floorApplied` and the floor reason. An optional waiver must be a separate, explicit, study-approved value. Awareness status 4 alone is not a waiver, because awareness and desired action are separate questions.
+If a floor raises the participant-selected action, return both `preferenceAction` and `effectiveAction`, plus `floorApplied` and the floor reason. An optional waiver must be a separate, explicit, study-approved value in `approvedWaiverKeys`. Keys are namespaced as `region:<id>` or `candidate:<id>` so equal text cannot waive the wrong identity type. Awareness status 4 alone is not a waiver, because awareness and desired action are separate questions.
 
 For preference-only research analysis, guardrails may be disabled; the reported participant policy must never be overwritten in stored data.
 
@@ -566,11 +600,13 @@ A live frame may produce several overlapping detections for the same cue. Before
    - awareness-gap flag as a final ranking tie-break only, descending;
    - stable candidate ID, ascending.
 
+Candidates with the same identity but conflicting `scenarioType` metadata are not merged. Each context is evaluated independently so a strict context action cannot be replaced by a lower general fallback. All ID ordering uses locale-independent code-unit comparison.
+
 The awareness flag may reorder otherwise equal visible items, but it must not raise an action or make an item eligible for display. If a UI imposes a maximum visible-item count, that quota and its tie behavior are algorithm configuration and must be versioned. Q8 itself is a threshold, not an undocumented quota.
 
 ```text
 FUNCTION FILTER_BATCH(candidates, policy, guardrails, visibleLimit):
-    merged = DEDUPLICATE_BY_STABLE_REGION_ID(candidates)
+    merged = DEDUPLICATE_BY_STABLE_REGION_ID_AND_SCENARIO(candidates)
     FOR cue IN merged:
         cue.categoryIds = UNIQUE_SORTED(UNION_OF_DUPLICATE_CATEGORY_IDS(cue))
         cue.reasonCodes = UNIQUE_SORTED(UNION_OF_DUPLICATE_REASON_CODES(cue))
@@ -643,9 +679,11 @@ Each runtime decision should include at least:
     effectiveAction: { rank, label, presentation, source },
     reminderThreshold,
     floorApplied,
+    safetyWaiverApplied,
     reasons[],
     policyVersion,
-    studyVersion
+    studyVersion,
+    guardrailConfigId
 }
 ```
 

@@ -136,8 +136,6 @@ export const profileConfirmationOptions = [
 ];
 
 export const probeQuestionPrompts = {
-  awareness:
-    'Before the content supporting this category was highlighted, which best describes your experience?',
-  action:
-    'When similar content in this category appears in the future, what should the assistant do?',
+  awareness: 'Before the highlight, how had you noticed this visual content?',
+  action: 'What should the assistant do with similar visual content?',
 } as const;

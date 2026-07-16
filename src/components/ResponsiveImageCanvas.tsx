@@ -7,7 +7,6 @@ import {
   type PointerEvent,
 } from 'react';
 import type {
-  NormalizedBox,
   NormalizedPoint,
   PixelPoint,
   PointSelection,
@@ -18,22 +17,36 @@ import { withBasePath } from '../utils/assets';
 import { DetectionOverlay } from './DetectionOverlay';
 import { PointSelectionLayer } from './PointSelectionLayer';
 
+type InteractionMode = 'none' | 'point' | 'move';
+
 interface ResponsiveImageCanvasProps {
   scene: ProbeScene;
   selections: readonly PointSelection[];
   activeDetectionIds?: readonly string[];
-  transientDetectionIds?: readonly string[];
-  pendingManualBox?: NormalizedBox;
   interactive?: boolean;
   onPoint?: (normalized: NormalizedPoint, displayed: PixelPoint) => void;
+}
+
+function PointModeIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M5 3.5 18.5 13l-6.1 1.15 3.45 5.55-2.75 1.7-3.4-5.55L5 20V3.5Z" />
+    </svg>
+  );
+}
+
+function MoveModeIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="m12 2.5-3 3h2v5.5H5.5V9l-3 3 3 3v-2H11v5.5H9l3 3 3-3h-2V13h5.5v2l3-3-3-3v2H13V5.5h2l-3-3Z" />
+    </svg>
+  );
 }
 
 export function ResponsiveImageCanvas({
   scene,
   selections,
   activeDetectionIds = [],
-  transientDetectionIds = [],
-  pendingManualBox,
   interactive = false,
   onPoint,
 }: ResponsiveImageCanvasProps) {
@@ -47,10 +60,14 @@ export function ResponsiveImageCanvas({
     scrollTop: number;
   } | null>(null);
   const [zoom, setZoom] = useState(1);
-  const [panMode, setPanMode] = useState(false);
+  const [interactionMode, setInteractionMode] = useState<InteractionMode>(
+    interactive ? 'point' : 'none',
+  );
   const [isPanning, setIsPanning] = useState(false);
   const [renderedSize, setRenderedSize] = useState({ width: 0, height: 0 });
   const [keyboardPoint, setKeyboardPoint] = useState<NormalizedPoint>({ x: 0.5, y: 0.5 });
+  const pointMode = interactive && interactionMode === 'point';
+  const panMode = interactionMode === 'move';
 
   const measure = useCallback(() => {
     const rect = imageFrameRef.current?.getBoundingClientRect();
@@ -67,12 +84,12 @@ export function ResponsiveImageCanvas({
   }, [measure, zoom]);
 
   const invokePoint = (normalized: NormalizedPoint) => {
-    if (!interactive || !onPoint) return;
+    if (!pointMode || !onPoint) return;
     onPoint(normalized, normalizedPointToPixels(normalized, renderedSize));
   };
 
   const handlePointer = (event: PointerEvent<HTMLDivElement>) => {
-    if (!interactive || panMode) return;
+    if (!pointMode) return;
     const rect = imageFrameRef.current?.getBoundingClientRect();
     if (!rect) return;
     const normalized = clientPointToNormalized(
@@ -98,7 +115,7 @@ export function ResponsiveImageCanvas({
       event.preventDefault();
       return;
     }
-    if (!interactive) return;
+    if (!pointMode) return;
     const step = event.shiftKey ? 0.005 : 0.02;
     let next = keyboardPoint;
     if (event.key === 'ArrowLeft') next = { ...next, x: Math.max(0, next.x - step) };
@@ -124,7 +141,9 @@ export function ResponsiveImageCanvas({
         }
       : { x: 0.5, y: 0.5 };
     setZoom(nextZoom);
-    if (nextZoom <= 1) setPanMode(false);
+    if (nextZoom <= 1) {
+      setInteractionMode((current) => (current === 'move' ? 'none' : current));
+    }
     window.requestAnimationFrame(() => {
       const updated = scrollRegionRef.current;
       if (!updated) return;
@@ -135,7 +154,7 @@ export function ResponsiveImageCanvas({
 
   const resetView = () => {
     setZoom(1);
-    setPanMode(false);
+    setInteractionMode((current) => (current === 'move' ? 'none' : current));
     scrollRegionRef.current?.scrollTo({ left: 0, top: 0 });
   };
 
@@ -189,18 +208,36 @@ export function ResponsiveImageCanvas({
           <output>{Math.round(zoom * 100)}%</output>
         </div>
         <div className="image-view-actions">
-          <button
-            className={`image-tool-button ${panMode ? 'is-active' : ''}`}
-            type="button"
-            disabled={zoom <= 1}
-            aria-pressed={panMode}
-            onClick={() => {
-              setPanMode((current) => !current);
-              window.requestAnimationFrame(() => imageFrameRef.current?.focus());
-            }}
-          >
-            {panMode ? 'Finish moving' : 'Move image'}
-          </button>
+          <div className="image-mode-controls" role="group" aria-label="Image interaction mode">
+            <button
+              className={`image-tool-button image-mode-button ${pointMode ? 'is-active' : ''}`}
+              type="button"
+              disabled={!interactive}
+              aria-label="Point on image"
+              title={pointMode ? 'Turn pointing off' : 'Enable pointing'}
+              aria-pressed={pointMode}
+              onClick={() => {
+                setInteractionMode((current) => (current === 'point' ? 'none' : 'point'));
+                window.requestAnimationFrame(() => imageFrameRef.current?.focus());
+              }}
+            >
+              <PointModeIcon />
+            </button>
+            <button
+              className={`image-tool-button image-mode-button ${panMode ? 'is-active' : ''}`}
+              type="button"
+              disabled={zoom <= 1}
+              aria-label="Move image"
+              title={zoom <= 1 ? 'Zoom in to move the image' : 'Move image'}
+              aria-pressed={panMode}
+              onClick={() => {
+                setInteractionMode((current) => (current === 'move' ? 'none' : 'move'));
+                window.requestAnimationFrame(() => imageFrameRef.current?.focus());
+              }}
+            >
+              <MoveModeIcon />
+            </button>
+          </div>
           <button
             className="image-tool-button"
             type="button"
@@ -222,17 +259,17 @@ export function ResponsiveImageCanvas({
       >
         <div
           ref={imageFrameRef}
-          className={`image-frame ${interactive ? 'is-interactive' : ''}`}
+          className={`image-frame ${pointMode ? 'is-interactive' : ''}`}
           style={{ width: `${zoom * 100}%`, aspectRatio: `${scene.width} / ${scene.height}` }}
-          role={interactive || panMode ? 'application' : undefined}
+          role={pointMode || panMode ? 'application' : undefined}
           aria-label={
             panMode
               ? 'Image move mode. Drag the zoomed image, or use arrow keys, to change the focused area.'
-              : interactive
+              : pointMode
                 ? 'Interactive scene. Use a pointer, or move the keyboard cursor with arrow keys and press Enter to select.'
                 : undefined
           }
-          tabIndex={interactive || panMode ? 0 : -1}
+          tabIndex={pointMode || panMode ? 0 : -1}
           onPointerDown={handlePointer}
           onKeyDown={handleKeyboard}
         >
@@ -245,20 +282,20 @@ export function ResponsiveImageCanvas({
           <DetectionOverlay
             detections={scene.detections}
             visibleIds={activeDetectionIds}
-            transientIds={transientDetectionIds}
           />
           <PointSelectionLayer
             selections={selections}
-            pendingManualBox={pendingManualBox}
-            keyboardPoint={interactive ? keyboardPoint : undefined}
+            keyboardPoint={pointMode ? keyboardPoint : undefined}
           />
         </div>
       </div>
       {interactive || panMode ? (
         <p className="keyboard-help">
           {panMode
-            ? 'Move mode: drag the image or use arrow keys. Select “Finish moving” to annotate again.'
-            : 'Keyboard: arrow keys move the crosshair; Shift + arrow moves more precisely; Enter selects.'}
+            ? 'Move mode: drag the image or use arrow keys. Select the pointer icon to mark areas again.'
+            : pointMode
+              ? 'Point mode: click or tap anywhere to mark it. Select the pointer icon again to turn pointing off.'
+              : 'Pointing is off. Select the pointer icon when you want to mark the image.'}
         </p>
       ) : null}
     </section>

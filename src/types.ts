@@ -181,6 +181,9 @@ export interface StudySession {
   q10ActiveIndex: number;
   q10StartedAt: string | null;
   q10CompletedAt: string | null;
+  probeHintCompletedAt: string | null;
+  probeStartedAt: string | null;
+  probeCompletedAt: string | null;
   probeScenes: Record<string, ProbeSceneState>;
   consent: StudyConsent | null;
   profileConfirmation: ProfileConfirmation | null;
@@ -221,6 +224,8 @@ export interface VPrivCalResponseExport {
   profileConfirmation: ProfileConfirmation | null;
   timing: {
     q10DurationMs: number;
+    probeStartedAt: string | null;
+    probeCompletedAt: string | null;
     probeDurationMs: number;
     totalDurationMs: number;
   };

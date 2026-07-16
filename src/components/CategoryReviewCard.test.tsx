@@ -39,11 +39,32 @@ describe('CategoryReviewCard', () => {
         onAnswer={onAnswer}
       />,
     );
-    await user.click(screen.getByRole('button', { name: 'Show evidence' }));
+    expect(screen.getByRole('heading', { name: 'Highlighted visual content' })).toBeVisible();
+    expect(screen.queryByText('PII')).not.toBeInTheDocument();
+    expect(screen.queryByText('Personal records.')).not.toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'Show highlight' }));
     await user.click(screen.getByRole('radio', { name: 'Ask before using it' }));
     expect(onToggle).toHaveBeenCalledOnce();
     expect(onAnswer).toHaveBeenCalledWith('preferredAction', 3);
     expect(screen.getAllByRole('radio')).toHaveLength(9);
+  });
+
+  it('can restore category identity presentation when the configuration is enabled', () => {
+    render(
+      <CategoryReviewCard
+        category={{ id: 'pii', label: 'PII', description: 'Personal records.' }}
+        response={makeCategoryResponse('scene', 'pii', 0, false)}
+        awarenessQuestion={{ id: 'awareness', prompt: 'Awareness?', options: [] }}
+        actionQuestion={{ id: 'action', prompt: 'Action?', options: [] }}
+        evidenceVisible
+        showCategoryIdentity
+        onToggleEvidence={vi.fn()}
+        onAnswer={vi.fn()}
+      />,
+    );
+
+    expect(screen.getByRole('heading', { name: 'PII' })).toBeVisible();
+    expect(screen.getByText('Personal records.')).toBeVisible();
   });
 });
 

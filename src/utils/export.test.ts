@@ -18,6 +18,9 @@ function completeSession() {
   );
   initialized.q10StartedAt = '2026-07-15T00:00:00.000Z';
   initialized.q10CompletedAt = '2026-07-15T00:01:00.000Z';
+  initialized.probeHintCompletedAt = '2026-07-15T00:01:30.000Z';
+  initialized.probeStartedAt = '2026-07-15T00:01:30.000Z';
+  initialized.probeCompletedAt = '2026-07-15T00:05:30.000Z';
   for (const question of q10Questions) {
     initialized.q10Responses[question.id] = {
       questionId: question.id,
@@ -63,6 +66,11 @@ describe('response export', () => {
     );
     expect(response.probe.flatMap((scene) => scene.categoryResponses)).toHaveLength(expectedPairs);
     expect(buildCategoryCsv(response, dataset).trim().split(/\r?\n/)).toHaveLength(expectedPairs + 1);
+    expect(response.timing).toMatchObject({
+      probeStartedAt: '2026-07-15T00:01:30.000Z',
+      probeCompletedAt: '2026-07-15T00:05:30.000Z',
+      probeDurationMs: 240_000,
+    });
   });
 
   it('rejects an export that omits an available category', () => {

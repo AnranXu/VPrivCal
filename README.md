@@ -69,7 +69,7 @@ interface StudyConfig {
   participantIdRequired: boolean;
   randomizeSceneOrder: boolean;
   randomizeCategoryOrder: boolean;
-  allowUnmatchedManualRegions: boolean;
+  showProbeCategoryIdentities: boolean;
   profileCommentsEnabled: boolean;
   jsonExportEnabled: boolean;
   csvExportEnabled: boolean;
@@ -94,13 +94,13 @@ Detection boxes are never hardcoded in components. The application loads the loc
 
 `ResponsiveImageCanvas` keeps the image and overlays in a shared aspect-ratio frame. Pointer coordinates are calculated from the actual rendered image rectangle and normalized before hit testing. Out-of-image points are ignored. Matching detections are sorted by normalized area so the most specific region wins. Equally specific matches with different primary categories open a compact chooser while retaining the original point.
 
-Probe scenes use a 7:5 image-and-annotation workspace modeled on the reference VLM annotation interface. Pointing selections and category questions remain in a right sidebar constrained to the rendered image panel height; the sidebar scrolls independently instead of forcing repeated page scrolling. A four-step **View interface hint** walkthrough explains pointing, deleting or adjusting areas, starting review, and completing the sequential category cards. It opens automatically before the participant's first Probe and when an expert opens a fresh Probe demo, and it can be reopened from either Phase A or Phase B.
+Probe scenes use a 7:5 image-and-annotation workspace modeled on the reference VLM annotation interface. Pointing selections and review questions remain in a right sidebar constrained to the rendered image panel height; the sidebar scrolls independently instead of forcing repeated page scrolling. Before the first Probe, a blocking prompt asks the participant to view Hint mode. Entering Hint mode then opens a centered **You are in Hint mode** alert explaining that the participant is starting Stage 2 (Probe), that its opening activity is a short image-control interaction test, and that the Probe questions follow it. After acknowledgement, a white callout with a clear red boundary appears directly beside the current control and provides a direct **Next hint** button at every step. Each newly active callout is smoothly centered and focused whether progression came from a real practice control or the direct button. The question choices are disabled during Hint mode and sample answers are simulated only to demonstrate the next-item state. Hint state never enters the study response. After the required first walkthrough, Hint mode can be restarted from either Phase A or Phase B.
 
-Phase A never displays precomputed detection boxes or the full category set. Participants only mark areas; they do not name them or select privacy categories. A matched detection's primary category is retained internally so the export can indicate whether that category was selected spontaneously, but the mapping is not exposed or editable during the first look. Selecting **Review all privacy threats** begins Phase B. The right sidebar then shows a persistent completion bar, unlocks categories in sequence, and requires both responses before the next category becomes available. Evidence regions from `categoryEvidence` are displayed automatically for the active category; participants may still hide and reopen them with the evidence button.
+Phase A never displays precomputed detection boxes or the full category set, including when a participant's point overlaps a VLM-detected privacy area; only the numbered participant point is shown. Participants only mark areas; they do not name them or select privacy categories. A matched detection's primary category is retained internally so the export can indicate whether that category was selected spontaneously, but the mapping is not exposed or editable during the first look. Selecting **Review all privacy threats** begins Phase B. The right sidebar presents each valid review item sequentially but, with `showProbeCategoryIdentities: false`, hides the category stepper, category name, and description. Participants see only the highlighted visual content, two compact questions, and generic item progress. Evidence regions from `categoryEvidence` remain available through the shorter highlight toggle.
 
-Zooming preserves the current visual center. At zoom levels above 100%, select **Move image** and drag the scene, or focus it and use the arrow keys, to reposition the visible area. Select **Finish moving** to resume pointing. **Reset view** returns to 100% and the original position. Panning changes only the viewport; normalized selection and overlay coordinates remain anchored to the source image.
+Zooming preserves the current visual center. The image toolbar has separate pointer and move icon buttons. The pointer is a toggle, so participants can turn pointing off without enabling movement and select it again when they want to resume marking. At zoom levels above 100%, select the move icon and drag the scene, or focus it and use the arrow keys, to reposition the visible area. **Reset view** returns to 100% and the original position. Panning changes only the viewport; normalized selection and overlay coordinates remain anchored to the source image.
 
-An unmatched point opens a participant-created rectangle confirmation. Its size can be adjusted and confirmed without choosing a category. It is stored with the internal `other_not_sure` value for schema compatibility. These regions exist only in the response record and never modify the source detection JSON.
+Every point inside the image is accepted immediately, whether or not it overlaps a predefined privacy detection. An unmatched point is stored with the internal `other_not_sure` value for schema compatibility. These points exist only in the response record and never modify the source detection JSON.
 
 Keyboard users can focus the image, move a crosshair with arrow keys, and press Enter or Space to select. Shift + arrow makes a finer movement. The voluntarily opened list fallback reveals neutral source labels only after the participant chooses that alternative.
 
@@ -188,6 +188,8 @@ interface VPrivCalResponseExport {
   } | null;
   timing: {
     q10DurationMs: number;
+    probeStartedAt: string | null;
+    probeCompletedAt: string | null;
     probeDurationMs: number;
     totalDurationMs: number;
   };
@@ -195,6 +197,8 @@ interface VPrivCalResponseExport {
 ```
 
 `autoCategoryId`, `finalCategoryId`, and `categoryCorrected` remain in the export for schema and analysis compatibility. The Phase A interface does not ask participants to classify or correct their own markings, so matched points retain the internal model mapping, unmatched regions use `other_not_sure`, and `categoryCorrected` remains `false`.
+
+Probe timing starts only when the participant completes the required first Hint walkthrough and stops when the final Probe scene is completed. The visible Probe timer remains at `00:00` during the introductory prompt and Hint walkthrough. The two persisted timing boundaries and their elapsed duration are included in the JSON export.
 
 Probe awareness uses the source JSON values `1–4`. Probe preferred action uses `0–4`, from no intervention through avoid unless explicitly requested. Q10 uses the research plan's `1–5` item coding.
 
@@ -208,7 +212,7 @@ The Vitest/React Testing Library suite covers:
 - out-of-image rejection;
 - overlapping detection hit testing and smallest-area priority;
 - equal-specificity resolution candidates;
-- participant-created unmatched regions;
+- immediately accepted unmatched points;
 - internal category mapping for matched points without participant-facing classification;
 - participant `/status` restoration and `/stage` request payloads;
 - zero persistence requests when the placeholder endpoint is unconfigured;

@@ -6,14 +6,20 @@ export function ProbeInstructionsPage() {
   const navigate = useNavigate();
   const { session } = useStudy();
   const firstScene = session.randomizedSceneOrder[0];
+  const startInteractiveHint = () => {
+    if (firstScene) navigate(`/probe/${firstScene}`, { state: { startProbeHint: true } });
+  };
+  const beginFirstScene = () => {
+    if (firstScene) navigate(`/probe/${firstScene}`);
+  };
 
   return (
     <section className="content-card instructions-card">
       <p className="eyebrow">VPrivCal-Probe</p>
       <h1>Point first, review second</h1>
       <div className="instruction-hint-row">
-        <p>View the short guided hint before starting the first scene.</p>
-        <ProbeInterfaceHint defaultOpen />
+        <p>Practice directly in the image interface before starting the first scene.</p>
+        <ProbeInterfaceHint disabled={!firstScene} onStart={startInteractiveHint} />
       </div>
       <div className="instruction-steps">
         <article>
@@ -51,7 +57,7 @@ export function ProbeInstructionsPage() {
           className="button button-primary"
           type="button"
           disabled={!firstScene}
-          onClick={() => firstScene && navigate(`/probe/${firstScene}`)}
+          onClick={beginFirstScene}
         >
           Begin first scene
         </button>

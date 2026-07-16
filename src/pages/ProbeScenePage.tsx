@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { CategoryReviewCard } from '../components/CategoryReviewCard';
+import { InitialProbeHintPrompt } from '../components/InitialProbeHintPrompt';
+import { ProbeHintMode } from '../components/ProbeHintMode';
 import { ProbeInterfaceHint } from '../components/ProbeInterfaceHint';
 import { ResponsiveImageCanvas } from '../components/ResponsiveImageCanvas';
 import { studyConfig } from '../config';
@@ -10,12 +12,10 @@ import { probeQuestionPrompts } from '../questions';
 import type {
   CategoryResponse,
   Detection,
-  NormalizedBox,
   NormalizedPoint,
   PixelPoint,
 } from '../types';
 import {
-  createManualBox,
   hitTestDetections,
   smallestDetectionCandidates,
 } from '../utils/coordinates';
@@ -24,6 +24,7 @@ import {
   isCategoryIndexUnlocked,
   isSceneReviewComplete,
 } from '../utils/probe';
+import { recordInitialHintCompletion, recordProbeCompletion } from '../utils/probeTiming';
 
 interface PendingMatch {
   normalizedPoint: NormalizedPoint;
@@ -32,27 +33,29 @@ interface PendingMatch {
   candidates: Detection[];
 }
 
-interface PendingManual {
-  normalizedPoint: NormalizedPoint;
-  displayedPoint: PixelPoint;
-  box: NormalizedBox;
-}
-
 export function ProbeScenePage() {
   const { sceneId = '' } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const { dataset } = useDataset();
   const { session, updateSession, expertReview } = useStudy();
   const scene = dataset?.images.find((item) => item.id === sceneId);
   const sceneState = session.probeScenes[sceneId];
   const [pendingMatch, setPendingMatch] = useState<PendingMatch | null>(null);
-  const [pendingManual, setPendingManual] = useState<PendingManual | null>(null);
-  const [transientDetectionIds, setTransientDetectionIds] = useState<string[]>([]);
   const [evidenceVisible, setEvidenceVisible] = useState(false);
   const [pointingError, setPointingError] = useState('');
+  const [hintMode, setHintMode] = useState(
+    () =>
+      expertReview ||
+      Boolean((location.state as { startProbeHint?: boolean } | null)?.startProbeHint),
+  );
   const imageColumnRef = useRef<HTMLDivElement>(null);
   const reviewSidebarScrollRef = useRef<HTMLDivElement>(null);
   const [imageColumnHeight, setImageColumnHeight] = useState<number | null>(null);
+  const initialHintRequired =
+    !expertReview &&
+    sceneId === session.randomizedSceneOrder[0] &&
+    !session.probeHintCompletedAt;
 
   const categoriesById = useMemo(
     () => new Map(dataset?.categories.map((category) => [category.id, category]) ?? []),
@@ -60,7 +63,7 @@ export function ProbeScenePage() {
   );
 
   useEffect(() => {
-    if (!sceneState || sceneState.startedAt) return;
+    if (hintMode || initialHintRequired || !sceneState || sceneState.startedAt) return;
     updateSession((current) => ({
       ...current,
       probeScenes: {
@@ -68,13 +71,7 @@ export function ProbeScenePage() {
         [sceneId]: { ...current.probeScenes[sceneId], startedAt: new Date().toISOString() },
       },
     }));
-  }, [sceneId, sceneState, updateSession]);
-
-  useEffect(() => {
-    if (transientDetectionIds.length === 0) return;
-    const timeout = window.setTimeout(() => setTransientDetectionIds([]), 1000);
-    return () => window.clearTimeout(timeout);
-  }, [transientDetectionIds]);
+  }, [hintMode, initialHintRequired, sceneId, sceneState, updateSession]);
 
   useEffect(() => {
     setEvidenceVisible(sceneState?.phase === 'review');
@@ -105,12 +102,31 @@ export function ProbeScenePage() {
     );
   }
 
+  if (hintMode) {
+    return (
+      <ProbeHintMode
+        dataset={dataset}
+        required={initialHintRequired}
+        onExit={(completed) => {
+          if (completed && !expertReview) {
+            const now = new Date().toISOString();
+            updateSession((current) => recordInitialHintCompletion(current, now));
+          }
+          setHintMode(false);
+        }}
+      />
+    );
+  }
+
+  if (initialHintRequired) {
+    return <InitialProbeHintPrompt onStart={() => setHintMode(true)} />;
+  }
+
   const addSelection = (
     normalizedPoint: NormalizedPoint,
     displayedPoint: PixelPoint,
     matches: Detection[],
     selectedDetection?: Detection,
-    manualBox?: NormalizedBox,
   ) => {
     updateSession((current) => {
       const currentScene = current.probeScenes[scene.id];
@@ -121,7 +137,6 @@ export function ProbeScenePage() {
         displayedPoint,
         matchedDetections: matches,
         selectedDetection,
-        manualBox,
       });
       return {
         ...current,
@@ -135,9 +150,7 @@ export function ProbeScenePage() {
         },
       };
     });
-    if (selectedDetection) setTransientDetectionIds([selectedDetection.id]);
     setPendingMatch(null);
-    setPendingManual(null);
     setPointingError('');
   };
 
@@ -148,17 +161,7 @@ export function ProbeScenePage() {
       dataset.coordinateSystem.hitPadding,
     );
     if (matches.length === 0) {
-      if (!studyConfig.allowUnmatchedManualRegions) {
-        setPointingError('That point did not match a predefined region. Please try another area.');
-        return;
-      }
-      setPendingManual({
-        normalizedPoint,
-        displayedPoint,
-        box: createManualBox(normalizedPoint),
-      });
-      setPendingMatch(null);
-      setPointingError('');
+      addSelection(normalizedPoint, displayedPoint, []);
       return;
     }
 
@@ -166,7 +169,6 @@ export function ProbeScenePage() {
     const primaryCategories = new Set(candidates.map((candidate) => candidate.primaryCategoryId));
     if (candidates.length > 1 && primaryCategories.size > 1) {
       setPendingMatch({ normalizedPoint, displayedPoint, matches, candidates });
-      setPendingManual(null);
       return;
     }
     addSelection(normalizedPoint, displayedPoint, matches, candidates[0]);
@@ -284,7 +286,7 @@ export function ProbeScenePage() {
             <p>{scene.context}</p>
           </div>
           <div className="scene-header-actions">
-            <ProbeInterfaceHint defaultOpen={expertReview} />
+            <ProbeInterfaceHint onStart={() => setHintMode(true)} />
             {expertReview ? (
               <button className="button button-quiet" type="button" onClick={() => navigate('/')}>
                 Choose another scene
@@ -304,8 +306,6 @@ export function ProbeScenePage() {
             <ResponsiveImageCanvas
               scene={scene}
               selections={sceneState.pointSelections}
-              transientDetectionIds={transientDetectionIds}
-              pendingManualBox={pendingManual?.box}
               interactive
               onPoint={handlePoint}
             />
@@ -339,73 +339,6 @@ export function ProbeScenePage() {
                   {candidate.label}
                 </button>
               ))}
-            </div>
-          </section>
-        ) : null}
-
-        {pendingManual ? (
-          <section className="resolution-card" role="dialog" aria-labelledby="manual-heading">
-            <h2 id="manual-heading">Confirm a participant-created region</h2>
-            <p>No predefined detection matched. Adjust the small rectangle around the content you meant.</p>
-            <div className="manual-size-controls">
-              <label>
-                Width
-                <input
-                  type="range"
-                  min="0.04"
-                  max="0.3"
-                  step="0.01"
-                  value={pendingManual.box.width}
-                  onChange={(event) =>
-                    setPendingManual({
-                      ...pendingManual,
-                      box: createManualBox(
-                        pendingManual.normalizedPoint,
-                        Number(event.target.value),
-                        pendingManual.box.height,
-                      ),
-                    })
-                  }
-                />
-              </label>
-              <label>
-                Height
-                <input
-                  type="range"
-                  min="0.04"
-                  max="0.3"
-                  step="0.01"
-                  value={pendingManual.box.height}
-                  onChange={(event) =>
-                    setPendingManual({
-                      ...pendingManual,
-                      box: createManualBox(
-                        pendingManual.normalizedPoint,
-                        pendingManual.box.width,
-                        Number(event.target.value),
-                      ),
-                    })
-                  }
-                />
-              </label>
-            </div>
-            <div className="button-row">
-              <button className="button button-secondary" type="button" onClick={() => setPendingManual(null)}>Cancel</button>
-              <button
-                className="button button-primary"
-                type="button"
-                onClick={() =>
-                  addSelection(
-                    pendingManual.normalizedPoint,
-                    pendingManual.displayedPoint,
-                    [],
-                    undefined,
-                    pendingManual.box,
-                  )
-                }
-              >
-                Confirm region
-              </button>
             </div>
           </section>
         ) : null}
@@ -594,19 +527,22 @@ export function ProbeScenePage() {
   const finishScene = () => {
     if (!isSceneReviewComplete(sceneState, scene.availableCategoryIds)) return;
     const now = new Date().toISOString();
-    updateSession((current) => ({
-      ...current,
-      probeScenes: {
-        ...current.probeScenes,
-        [scene.id]: {
-          ...current.probeScenes[scene.id],
-          phase: 'complete',
-          completedAt: now,
-        },
-      },
-    }));
     const sceneIndex = session.randomizedSceneOrder.indexOf(scene.id);
     const nextScene = session.randomizedSceneOrder[sceneIndex + 1];
+    updateSession((current) => {
+      const completedSession = nextScene ? current : recordProbeCompletion(current, now);
+      return {
+        ...completedSession,
+        probeScenes: {
+          ...completedSession.probeScenes,
+          [scene.id]: {
+            ...completedSession.probeScenes[scene.id],
+            phase: 'complete',
+            completedAt: now,
+          },
+        },
+      };
+    });
     navigate(nextScene ? `/probe/${nextScene}` : '/profile');
   };
 
@@ -626,16 +562,16 @@ export function ProbeScenePage() {
         <div>
           <p className="eyebrow">{scene.scenarioType} scene · Phase B</p>
           <h1>{scene.title}</h1>
-          <p>{completedCount} of {scene.availableCategoryIds.length} categories complete</p>
+          <p>{completedCount} of {scene.availableCategoryIds.length} review items complete</p>
         </div>
         <div className="scene-header-actions">
-          <ProbeInterfaceHint />
+          <ProbeInterfaceHint onStart={() => setHintMode(true)} />
           {expertReview ? (
             <button className="button button-quiet" type="button" onClick={() => navigate('/')}>
               Choose another scene
             </button>
           ) : null}
-          <span className="phase-badge review-badge">Category review</span>
+          <span className="phase-badge review-badge">Visual review</span>
         </div>
       </header>
       <div className="probe-workspace">
@@ -648,7 +584,7 @@ export function ProbeScenePage() {
         </div>
         <aside
           className="probe-sidebar probe-review-sidebar"
-          aria-label="Category review annotations"
+          aria-label="Visual content review"
           style={imageColumnHeight ? { height: `${imageColumnHeight}px` } : undefined}
         >
           <div className="probe-sidebar-scroll" ref={reviewSidebarScrollRef}>
@@ -663,40 +599,40 @@ export function ProbeScenePage() {
         <progress
           max={scene.availableCategoryIds.length}
           value={completedCount}
-          aria-label={`${completedCount} of ${scene.availableCategoryIds.length} privacy categories complete`}
+          aria-label={`${completedCount} of ${scene.availableCategoryIds.length} review items complete`}
         />
         <p id="category-progress-help">
-          Answer both questions for this category to unlock the next one.
+          Answer both questions for this highlighted content to unlock the next item.
         </p>
-        <div className="automatic-evidence-note">
-          <span aria-hidden="true" />
-          Precomputed VLM evidence is highlighted automatically for the current category.
-        </div>
       </section>
-      <nav className="category-stepper sidebar-stepper" aria-label="Category review navigation">
-        {sceneState.categoryOrder.map((categoryId, index) => {
-          const response = sceneState.categoryResponses[categoryId];
-          const complete = response?.awarenessStatus != null && response.preferredAction != null;
-          const unlocked = isCategoryIndexUnlocked(sceneState, index);
-          return (
-            <button
-              className={`${index === activeIndex ? 'is-current' : ''} ${complete ? 'is-complete' : ''}`}
-              type="button"
-              key={categoryId}
-              aria-current={index === activeIndex ? 'step' : undefined}
-              aria-describedby="category-progress-help"
-              disabled={!unlocked}
-              onClick={() => ensureViewedAndNavigate(index)}
-            >
-              <span>{index + 1}</span>
-              {categoriesById.get(categoryId)?.label}
-            </button>
-          );
-        })}
-      </nav>
+      {studyConfig.showProbeCategoryIdentities ? (
+        <nav className="category-stepper sidebar-stepper" aria-label="Category review navigation">
+          {sceneState.categoryOrder.map((categoryId, index) => {
+            const response = sceneState.categoryResponses[categoryId];
+            const complete = response?.awarenessStatus != null && response.preferredAction != null;
+            const unlocked = isCategoryIndexUnlocked(sceneState, index);
+            return (
+              <button
+                className={`${index === activeIndex ? 'is-current' : ''} ${complete ? 'is-complete' : ''}`}
+                type="button"
+                key={categoryId}
+                aria-current={index === activeIndex ? 'step' : undefined}
+                aria-describedby="category-progress-help"
+                disabled={!unlocked}
+                onClick={() => ensureViewedAndNavigate(index)}
+              >
+                <span>{index + 1}</span>
+                {categoriesById.get(categoryId)?.label}
+              </button>
+            );
+          })}
+        </nav>
+      ) : null}
       <CategoryReviewCard
         category={activeCategory}
         response={activeResponse}
+        reviewTitle={`Highlighted visual content ${activeIndex + 1}`}
+        showCategoryIdentity={studyConfig.showProbeCategoryIdentities}
         awarenessQuestion={{
           ...dataset.probeQuestions.awarenessStatus,
           prompt: probeQuestionPrompts.awareness,
@@ -716,7 +652,7 @@ export function ProbeScenePage() {
           disabled={activeIndex === 0}
           onClick={() => ensureViewedAndNavigate(activeIndex - 1)}
         >
-          Previous category
+          Previous item
         </button>
         {activeIndex < sceneState.categoryOrder.length - 1 ? (
           <button
@@ -725,7 +661,7 @@ export function ProbeScenePage() {
             disabled={activeResponse.awarenessStatus == null || activeResponse.preferredAction == null}
             onClick={() => ensureViewedAndNavigate(activeIndex + 1)}
           >
-            Next category
+            Next item
           </button>
         ) : (
           <button className="button button-primary" type="button" disabled={!allComplete} onClick={finishScene}>
@@ -734,7 +670,7 @@ export function ProbeScenePage() {
         )}
       </div>
       {!allComplete && activeIndex === sceneState.categoryOrder.length - 1 ? (
-        <p className="field-help centered-help">Review and answer every category before completing this scene.</p>
+        <p className="field-help centered-help">Review and answer every item before completing this scene.</p>
       ) : null}
           </div>
         </aside>

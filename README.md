@@ -3,15 +3,43 @@
 A deployable React research frontend for the VPrivCal method. The site combines:
 
 - **VPrivCal-Q10**: ten policy questions that initialize reminder preferences.
-- **VPrivCal-Probe**: three synthetic egocentric scenes using a point-first, reveal-second interaction and category-complete review.
+- **VPrivCal-Probe**: three synthetic egocentric scenes using point-first marking followed by a neutral, category-hidden, category-complete review.
 
-Question wording and policy semantics are based on `source materials/VPrivCal_Full_Research_Plan_Updated_v6.docx`. Expert-review constraints come from `source materials/VPrivCal_Expert_Workshop_Updated_v6.docx`. Scene coverage, detections, coordinates, evidence mappings, and Probe response coding come from `public/data/vprivcal_detections.json`.
+Question wording and policy semantics are based on `source materials/VPrivCal_Full_Research_Plan_Updated_v6.docx`. The current expert-review procedure is `source materials/VPrivCal_Expert_Workshop_Interface_Aligned_v6_1.docx`; the earlier `VPrivCal_Expert_Workshop_Updated_v6.docx` is retained as the unmodified source version. Scene coverage, detections, coordinates, evidence mappings, and Probe response coding come from `public/data/vprivcal_detections.json`.
 
 The repository includes an optional Lambda/DynamoDB participant-persistence placeholder modeled on the continuous-VLM study. Expert review is always memory-only. No analytics or trackers are included.
 
 ## Participant-answer policy filter
 
-The executable policy engine is implemented in [`src/utils/policyFilter.ts`](src/utils/policyFilter.ts), with focused tests in [`src/utils/policyFilter.test.ts`](src/utils/policyFilter.test.ts). Its full design is documented in [`docs/policy-filter/README.md`](docs/policy-filter/README.md), including validation, rule hierarchy, action-scale mappings, safety floors, pseudocode, and examples. The current profile screen remains a simpler summary, and live cue filtering is not wired into the static study UI because it has no calibrated runtime cue feed.
+The executable policy engine is implemented in [`src/utils/policyFilter.ts`](src/utils/policyFilter.ts), with focused tests in [`src/utils/policyFilter.test.ts`](src/utils/policyFilter.test.ts). Its full design is documented in [`docs/policy-filter/README.md`](docs/policy-filter/README.md), including validation, rule hierarchy, action-scale mappings, safety floors, pseudocode, and examples. The study UI does not currently invoke this engine. `showProfilePage` is disabled, the legacy profile component produces only a simpler summary, and the static site has no calibrated runtime cue feed.
+
+## Pre-expert simulated policy pre-verification
+
+Before the expert workshop or participant cognitive interviews, run a small offline pre-verification using **simulated response profiles** and manually checked video cues. This step is intended to expose broken mappings, implausible policy decisions, missing categories, unsafe fallbacks, and unclear explanations before expert time is spent. It is not user profiling, an effectiveness result, or evidence that the method works.
+
+Use the following sequence:
+
+1. Create a small set of deliberately contrasting simulated response exports, such as low-intervention, high-protection, context-dependent, uncertainty-sensitive, and reminder-averse profiles. Do not describe these as participants or infer demographic identities for them.
+2. Validate each export and compile it with the versioned policy engine in `src/utils/policyFilter.ts`.
+3. Apply generic, Q10-only, and full compiled-policy conditions to the same manually verified cue set. Keep the original answers, compiled policy, candidate metadata, decision reasons, thresholds, safety-floor result, and software versions together.
+4. Manually inspect deterministic repeatability, strictness ordering, unknown-category fallback, Q7/Q9/Q10 interactions, Q8 reminder filtering, and the difference between preference and safety-floor-adjusted actions.
+5. Record defects and revise the implementation or expert-workshop prompts. Treat all resulting tables, profiles, and decisions as **simulated non-empirical outputs**.
+
+For minimum sufficient coverage, start with the seven previously selected 12-second continuous-VLM windows. They cover biometric data, background individuals, PII, personal life, legal/cultural sensitivity, a child-related negative/inference control, and a negative privacy control. The Ego4D `Household management - caring for kids` matches are uncertain candidates: collect all of them and manually verify actual child visibility before selecting the shortest usable excerpts. Do not assume that the scenario label proves that a child appears.
+
+[`scripts/filter_candidate_videos.py`](scripts/filter_candidate_videos.py) prepares those source videos. It is dry-run-only unless `--execute` is supplied, never modifies source files, and leaves the real external-drive paths to the researcher:
+
+```powershell
+py scripts/filter_candidate_videos.py `
+  --ego4d-root "<EGO4D_FULL_VIDEO_ROOT>" `
+  --continuous-vlm-root "<CONTINUOUS_VLM_VIDEO_ROOT>" `
+  --output-root "<PRE_EXPERT_CANDIDATE_OUTPUT_ROOT>" `
+  --execute
+```
+
+FFmpeg is required to extract the short continuous-VLM windows. If it is unavailable, add `--previous-mode copy-full` and trim the copied sources later. Use `--skip-ego4d` or `--skip-previous` when only one source collection is mounted.
+
+The pre-expert gate is complete only when candidate visibility has been manually checked, every simulated decision is reproducible and auditable, and unresolved failures are documented for expert review. The participant-facing profile remains disabled throughout this step. The interface-aligned review form is [`source materials/VPrivCal_Expert_Workshop_Interface_Aligned_v6_1.docx`](source%20materials/VPrivCal_Expert_Workshop_Interface_Aligned_v6_1.docx).
 
 ## Participant and expert-review interfaces
 
@@ -56,9 +84,9 @@ npm run check
 | Direct expert Probe review | `?expert_review=probe` | Opens the three-scene chooser with a fresh in-memory demo |
 | Consent alias | `#/participant` | Returns to the same participant consent page |
 | Q10 | `#/q10` | One required policy question at a time, with Back navigation |
-| Probe instructions | `#/probe/instructions` | Explains point-first, reveal-second interaction |
-| Probe scene | `#/probe/:sceneId` | Phase A pointing followed by all available category reviews |
-| Profile | `#/profile` | Q10 defaults, Probe corrections, awareness gaps, and confirmation |
+| Probe instructions | `#/probe/instructions` | Explains point-first marking and neutral linked-content review |
+| Probe scene | `#/probe/:sceneId` | Phase A pointing followed by sequential, category-hidden review items |
+| Profile (disabled by default) | `#/profile` | Redirects to Complete while `showProfilePage` is `false`; the legacy simpler summary appears only if enabled |
 | Complete | `#/complete` | Validated JSON and category-pair CSV downloads |
 
 The original scene order and deterministically shuffled display order are stored. The Prolific ID seeds shuffling. Category cards are deterministically shuffled per scene. Response options are never shuffled. The global top bar is intentionally omitted; Q10 and Probe screens show progress in their own question and scene controls.
@@ -74,6 +102,7 @@ interface StudyConfig {
   randomizeSceneOrder: boolean;
   randomizeCategoryOrder: boolean;
   showProbeCategoryIdentities: boolean;
+  showProfilePage: boolean;
   profileCommentsEnabled: boolean;
   jsonExportEnabled: boolean;
   csvExportEnabled: boolean;
@@ -263,7 +292,7 @@ Run `npm run build`, then copy every file in `dist/` to the desired directory on
 - Ask only for the participant's Prolific ID; do not ask for a real name or email address.
 - The interface does not infer protected traits from faces or people.
 - No analytics, trackers, or remote fonts are included. Participant session requests are sent only to the researcher-configured API Gateway endpoint.
-- The generated profile is a preference summary, not a diagnosis or guaranteed privacy control.
+- Simulated or legacy generated profiles are preference summaries, not diagnoses, real-user findings, or guaranteed privacy controls.
 - Store exported files only in the study's approved secure location.
 
 ## Repository structure
@@ -275,6 +304,7 @@ Run `npm run build`, then copy every file in `dist/` to the desired directory on
 │   ├── assets/images/                  # Three synthetic scene images
 │   └── data/vprivcal_detections.json   # Detection and Probe source of truth
 ├── source materials/                   # Research plans and original supplied assets
+├── scripts/                            # Candidate-video collection and excerpt utility
 ├── infrastructure/                    # Lambda/DynamoDB persistence placeholder
 ├── src/
 │   ├── components/                     # Image, overlay, review, progress, layout controls

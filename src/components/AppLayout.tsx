@@ -1,7 +1,6 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { ResearcherControls } from './ResearcherControls';
-import { ParticipantTimer } from './ParticipantTimer';
 import { useStudy } from '../context/StudyContext';
 import { showsResearcherControls } from '../utils/mode';
 
@@ -25,7 +24,6 @@ export function AppLayout() {
   return (
     <div className={`app-shell ${expertReview ? 'expert-mode' : 'participant-mode'}`}>
       <main id="main-content" className="main-content">
-        {!expertReview ? <ParticipantTimer /> : null}
         <Outlet />
       </main>
       <footer className="site-footer">

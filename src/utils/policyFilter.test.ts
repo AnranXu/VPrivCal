@@ -36,7 +36,7 @@ function makeCompleteResponse(): VPrivCalResponseExport {
     randomizedSceneOrder: dataset.images.map(({ id }) => id),
     consent: { agreed: true, prolificId: 'test-participant', answeredAt: at },
     q10: q10Questions.map((question) => {
-      const option = question.options[2];
+      const option = question.options.at(-1)!;
       return {
         questionId: question.id,
         value: option.value,
@@ -117,6 +117,7 @@ function candidate(overrides: Partial<CandidateCue> = {}): CandidateCue {
     isUncertain: false,
     taskRelevant: true,
     explicitlyRequested: false,
+    exposureLevel: 'SENSITIVE_DETAIL_EXPOSED',
     likelihoodTier: 3,
     severityTier: 2,
     ...overrides,
@@ -135,33 +136,33 @@ function decided(
 
 describe('participant policy compilation', () => {
   it('uses an upper weighted median with deterministic exact-half behavior', () => {
-    expect(upperWeightedMedian([{ action: 0, weight: 1 }, { action: 4, weight: 1 }])).toBe(4);
-    expect(upperWeightedMedian([{ action: 4, weight: 1 }, { action: 0, weight: 2 }])).toBe(0);
+    expect(upperWeightedMedian([{ action: 0, weight: 1 }, { action: 2, weight: 1 }])).toBe(2);
+    expect(upperWeightedMedian([{ action: 2, weight: 1 }, { action: 0, weight: 2 }])).toBe(0);
     expect(() => upperWeightedMedian([{ action: 2, weight: 0 }])).toThrow(/positive/);
   });
 
   it('normalizes Q1-Q6 and lets a Probe context correct its prior', () => {
     const response = makeCompleteResponse();
-    setQ10(response, 'Q4', 5);
+    setQ10(response, 'Q4', 3);
     setProbe(response, 'scene_private_family_party', 'legal_sensitivity_information', 0);
 
     const policy = readyPolicy(response);
     expect(policy.categories.legal_sensitivity_information).toMatchObject({
-      q10Prior: 4,
-      q10PriorLabel: 'Do not use it unless explicitly requested',
+      q10Prior: 2,
+      q10PriorLabel: 'Show reminders whenever this verified category is present',
       generalAction: 0,
-      generalActionLabel: 'No intervention',
+      generalActionLabel: 'Do not show reminders for this category',
       contextActions: { private: 0 },
     });
     expect(policy.categories.legal_sensitivity_information.observations[0].actionLabel).toBe(
-      'No intervention',
+      'Do not show reminders for this category',
     );
   });
 
   it('rejects malformed answers, duplicate scenes, and missing consent without imputation', () => {
     const response = makeCompleteResponse();
     response.consent = null;
-    response.q10[0].finalResponse = 5;
+    response.q10[0].finalResponse = 99;
     response.q10.push({ ...response.q10[0] });
     response.probe.push({ ...response.probe[0] });
     response.probe[1].categoryResponses[0].preferredAction = 99;
@@ -186,7 +187,7 @@ describe('participant policy compilation', () => {
     expect(result.status).toBe('INVALID_RESPONSE');
     if (result.status === 'INVALID_RESPONSE') {
       expect(result.errors).toContain(
-        'Dataset preferred-action option 9 is outside the supported 0-4 scale.',
+        'Dataset preferred-action option 9 is outside the supported 0/1/2 trigger scale.',
       );
     }
   });
@@ -210,7 +211,7 @@ describe('participant policy compilation', () => {
 
   it('records awareness gaps and rejection conflicts without changing the selected action', () => {
     const response = makeCompleteResponse();
-    setQ10(response, 'Q4', 5);
+    setQ10(response, 'Q4', 3);
     setProbe(response, 'scene_private_family_party', 'legal_sensitivity_information', 0, 3);
     let policy = readyPolicy(response);
     expect(policy.categories.legal_sensitivity_information.generalAction).toBe(0);
@@ -244,7 +245,7 @@ describe('participant policy compilation', () => {
 describe('runtime cue filtering', () => {
   it('takes the strictest matched category and is independent of category order', () => {
     const response = makeCompleteResponse();
-    setProbe(response, 'scene_private_family_party', 'pii', 3);
+    setProbe(response, 'scene_private_family_party', 'pii', 2);
     setProbe(response, 'scene_private_family_party', 'legal_sensitivity_information', 0);
     const policy = readyPolicy(response);
 
@@ -256,31 +257,31 @@ describe('runtime cue filtering', () => {
       categoryIds: ['pii', 'legal_sensitivity_information'],
       scenarioType: 'private',
     }), policy));
-    expect(first.preferenceAction.rank).toBe(3);
+    expect(first.preferenceAction.rank).toBe(2);
     expect(second.preferenceAction).toEqual(first.preferenceAction);
     expect(second.categoryIds).toEqual(['legal_sensitivity_information', 'pii']);
   });
 
-  it('uses an ask-first fallback for unknown categories', () => {
+  it('uses a reminder fallback for unknown categories', () => {
     const result = decided(filterCandidateCue(candidate({ categoryIds: ['unknown-sensitive'] }), readyPolicy()));
     expect(result.status).toBe('DECIDED_WITH_FALLBACK');
     expect(result.unresolvedCategoryIds).toEqual(['unknown-sensitive']);
-    expect(result.effectiveAction.rank).toBe(3);
+    expect(result.effectiveAction.rank).toBe(2);
   });
 
   it('does not mistake inherited object property names for known categories', () => {
     const result = decided(filterCandidateCue(candidate({ categoryIds: ['toString'] }), readyPolicy()));
     expect(result.status).toBe('DECIDED_WITH_FALLBACK');
     expect(result.unresolvedCategoryIds).toEqual(['toString']);
-    expect(result.effectiveAction.rank).toBe(3);
+    expect(result.effectiveAction.rank).toBe(2);
   });
 
-  it('applies Q7 and Q10 conditional option 2 only at risk tier 4 or above', () => {
+  it('applies binary Q7 and Q10 reminder preferences whenever their conditions hold', () => {
     const response = makeCompleteResponse();
     setProbe(response, 'scene_private_family_party', 'legal_sensitivity_information', 0);
-    setQ10(response, 'Q7', 2);
-    setQ10(response, 'Q8', 5);
-    setQ10(response, 'Q10', 2);
+    setQ10(response, 'Q7', 3);
+    setQ10(response, 'Q8', 3);
+    setQ10(response, 'Q10', 3);
     const policy = readyPolicy(response);
     const base = {
       categoryIds: ['legal_sensitivity_information'],
@@ -288,23 +289,23 @@ describe('runtime cue filtering', () => {
       isInference: true,
       taskRelevant: false,
     };
-    expect(decided(filterCandidateCue(candidate({ ...base, likelihoodTier: 3 }), policy)).effectiveAction.rank).toBe(0);
-    expect(decided(filterCandidateCue(candidate({ ...base, likelihoodTier: 4 }), policy)).effectiveAction.rank).toBe(2);
+    expect(decided(filterCandidateCue(candidate({ ...base, likelihoodTier: 1 }), policy)).effectiveAction.rank).toBe(2);
+    expect(decided(filterCandidateCue(candidate({ ...base, likelihoodTier: 5 }), policy)).effectiveAction.rank).toBe(2);
   });
 
   it('uses cross-cutting answers as minimums and preserves Q9 presentation hints', () => {
     const response = makeCompleteResponse();
-    setProbe(response, 'scene_private_family_party', 'legal_sensitivity_information', 3);
+    setProbe(response, 'scene_private_family_party', 'legal_sensitivity_information', 2);
     setQ10(response, 'Q7', 1);
-    setQ10(response, 'Q8', 5);
-    setQ10(response, 'Q9', 2);
+    setQ10(response, 'Q8', 3);
+    setQ10(response, 'Q9', 3);
     const policy = readyPolicy(response);
     const minimum = decided(filterCandidateCue(candidate({
       categoryIds: ['legal_sensitivity_information'],
       scenarioType: 'private',
       isInference: true,
     }), policy));
-    expect(minimum.effectiveAction.rank).toBe(3);
+    expect(minimum.effectiveAction.rank).toBe(2);
 
     setProbe(response, 'scene_private_family_party', 'legal_sensitivity_information', 0);
     const quiet = decided(filterCandidateCue(candidate({
@@ -312,42 +313,42 @@ describe('runtime cue filtering', () => {
       scenarioType: 'private',
       isUncertain: true,
     }), readyPolicy(response)));
-    expect(quiet.effectiveAction).toMatchObject({ rank: 2, presentation: 'quiet_indicator' });
+    expect(quiet.effectiveAction).toMatchObject({ rank: 2, presentation: 'brief_uncertain_reminder' });
   });
 
-  it('lets Q8 filter notifications but never ask actions', () => {
+  it('uses the middle trigger only when sensitive details are exposed', () => {
     const response = makeCompleteResponse();
-    setQ10(response, 'Q8', 2);
-    setProbe(response, 'scene_public_cafe', 'pii', 2);
-    let result = decided(filterCandidateCue(candidate({ likelihoodTier: 3 }), readyPolicy(response)));
-    expect(result.preferenceAction.rank).toBe(1);
+    setProbe(response, 'scene_public_cafe', 'pii', 1);
+    let result = decided(filterCandidateCue(candidate({ exposureLevel: 'PRESENCE_ONLY' }), readyPolicy(response)));
+    expect(result.preferenceTriggerLevel).toBe(1);
+    expect(result.preferenceAction.rank).toBe(0);
     expect(result.reasons).toEqual(
-      expect.arrayContaining(['context_category_action', 'notification_filtered_by_Q8']),
+      expect.arrayContaining(['context_category_action', 'presence_only_below_selected_threshold']),
     );
 
-    setProbe(response, 'scene_public_cafe', 'pii', 3);
-    result = decided(filterCandidateCue(candidate({ likelihoodTier: 1, severityTier: 1 }), readyPolicy(response)));
-    expect(result.preferenceAction.rank).toBe(3);
+    result = decided(filterCandidateCue(candidate({ exposureLevel: 'SENSITIVE_DETAIL_EXPOSED' }), readyPolicy(response)));
+    expect(result.preferenceAction.rank).toBe(2);
+    expect(result.reasons).toContain('sensitive_detail_threshold_met');
   });
 
-  it('relaxes rank 4 only for the explicitly requested task while retaining other rules', () => {
+  it('emits binary reminder decisions while retaining the selected three-level trigger', () => {
     const response = makeCompleteResponse();
-    setProbe(response, 'scene_public_cafe', 'pii', 4);
-    setQ10(response, 'Q9', 4);
+    setProbe(response, 'scene_public_cafe', 'pii', 1);
+    setQ10(response, 'Q9', 1);
     const policy = readyPolicy(response);
-    const allowed = decided(filterCandidateCue(candidate({ explicitlyRequested: true }), policy));
-    expect(allowed.preferenceAction.rank).toBe(1);
-    const stillAsk = decided(filterCandidateCue(candidate({
-      explicitlyRequested: true,
-      isUncertain: true,
-    }), policy));
-    expect(stillAsk.preferenceAction.rank).toBe(3);
+    const decisions = [
+      decided(filterCandidateCue(candidate({ exposureLevel: 'PRESENCE_ONLY' }), policy)),
+      decided(filterCandidateCue(candidate({ exposureLevel: 'SENSITIVE_DETAIL_EXPOSED' }), policy)),
+    ];
+    expect(decisions.map(({ preferenceAction }) => preferenceAction.rank)).toEqual([0, 2]);
+    expect(decisions.map(({ preferenceTriggerLevel }) => preferenceTriggerLevel)).toEqual([1, 1]);
+    expect(decisions.every(({ preferenceAction }) => [0, 2].includes(preferenceAction.rank))).toBe(true);
   });
 
-  it('reports proof-of-concept safety floors separately and applies them after Q8', () => {
+  it('reports proof-of-concept safety floors separately and applies them after trigger resolution', () => {
     const response = makeCompleteResponse();
     setQ10(response, 'Q8', 1);
-    setQ10(response, 'Q9', 2);
+    setQ10(response, 'Q9', 1);
     setProbe(response, 'scene_public_cafe', 'children_images', 0);
     setProbe(response, 'scene_private_family_party', 'legal_sensitivity_information', 0);
     const policy = readyPolicy(response);
@@ -357,7 +358,7 @@ describe('runtime cue filtering', () => {
       severityTier: 1,
     }), policy, PROOF_OF_CONCEPT_SAFETY_FLOORS));
     expect(child.preferenceAction.rank).toBe(0);
-    expect(child.effectiveAction.rank).toBe(1);
+    expect(child.effectiveAction.rank).toBe(2);
     expect(child.floorApplied).toBe(true);
 
     const severe = decided(filterCandidateCue(candidate({
@@ -370,16 +371,6 @@ describe('runtime cue filtering', () => {
     expect(severe.effectiveAction.rank).toBe(2);
     expect(severe.guardrailConfigId).toBe('vprivcal-proof-of-concept-v1');
 
-    const presentationFloor = decided(filterCandidateCue(candidate({
-      categoryIds: ['legal_sensitivity_information'],
-      scenarioType: 'private',
-      isUncertain: true,
-      likelihoodTier: 5,
-      severityTier: 4,
-    }), policy, PROOF_OF_CONCEPT_SAFETY_FLOORS));
-    expect(presentationFloor.preferenceAction.presentation).toBe('quiet_indicator');
-    expect(presentationFloor.effectiveAction.presentation).toBe('brief_reminder');
-    expect(presentationFloor.floorApplied).toBe(true);
   });
 
   it('returns explicit errors for invalid candidate metadata', () => {
@@ -413,7 +404,7 @@ describe('runtime cue filtering', () => {
       candidateId: 'shared',
       categoryIds: ['children_images'],
     }), readyPolicy(response), waiverConfig));
-    expect(sameTextDifferentNamespace.effectiveAction.rank).toBe(1);
+    expect(sameTextDifferentNamespace.effectiveAction.rank).toBe(2);
     expect(sameTextDifferentNamespace.safetyWaiverApplied).toBe(false);
 
     const waivedRegion = decided(filterCandidateCue(candidate({
@@ -448,7 +439,7 @@ describe('runtime cue filtering', () => {
 describe('candidate batch filtering', () => {
   it('deduplicates regions, merges categories, and orders visible actions deterministically', () => {
     const response = makeCompleteResponse();
-    setProbe(response, 'scene_public_cafe', 'pii', 3);
+    setProbe(response, 'scene_public_cafe', 'pii', 2);
     setProbe(response, 'scene_public_cafe', 'children_images', 2);
     const policy = readyPolicy(response);
     const cues: CandidateCue[] = [
@@ -474,8 +465,8 @@ describe('candidate batch filtering', () => {
     const second = filterCandidateBatch([...cues].reverse(), policy);
 
     expect(first.allDecisions).toHaveLength(2);
-    expect(first.visibleDecisions.map(({ candidateId }) => candidateId)).toEqual(['a', 'c']);
-    expect(first.visibleDecisions[0].categoryIds).toEqual(['children_images', 'pii']);
+    expect(first.visibleDecisions.map(({ candidateId }) => candidateId)).toEqual(['c', 'a']);
+    expect(first.visibleDecisions[1].categoryIds).toEqual(['children_images', 'pii']);
     expect(second).toEqual(first);
     expect(filterCandidateBatch(cues, policy, undefined, 1).visibleDecisions).toHaveLength(1);
   });
@@ -512,7 +503,7 @@ describe('candidate batch filtering', () => {
 
   it('does not merge conflicting scenario metadata into a lower general action', () => {
     const response = makeCompleteResponse();
-    setProbe(response, 'scene_public_cafe', 'pii', 4);
+    setProbe(response, 'scene_public_cafe', 'pii', 2);
     setProbe(response, 'scene_private_family_party', 'pii', 0);
     const policy = readyPolicy(response);
     const result = filterCandidateBatch([
@@ -521,6 +512,6 @@ describe('candidate batch filtering', () => {
     ], policy);
 
     expect(result.allDecisions).toHaveLength(2);
-    expect(result.visibleDecisions.some(({ effectiveAction }) => effectiveAction.rank === 4)).toBe(true);
+    expect(result.visibleDecisions.some(({ effectiveAction }) => effectiveAction.rank === 2)).toBe(true);
   });
 });

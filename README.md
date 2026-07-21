@@ -73,9 +73,9 @@ Run the deterministic simulated-profile comparison against that JSON with:
 npm run preexpert:simulate
 ```
 
-This writes `E:\VPrivCal_pre_expert\simulated_policy_comparison.json`. The report retains the five simulated response exports, compiled policies, candidate metadata, decision reasons, reminder thresholds, safety-floor results, and software versions. It compares the personalized preference action and proof-of-concept guardrailed action with a declared no-filter baseline of rank 0. Exact action agreement is only an implementation-oriented preference-alignment proxy; it is not a measurement of participant satisfaction, detector accuracy, or effectiveness. Tests for this workflow are in [`src/utils/preExpertSimulation.test.ts`](src/utils/preExpertSimulation.test.ts).
+This writes `source materials/pilot videos/simulated_policy_comparison.json`. The report retains five synthetic response exports, three-level trigger preferences, compiled binary reminder decisions, exposure-rule reasons, safety-floor results, and software versions. It compares personalized and guardrailed decisions with a declared no-reminder baseline. Exact agreement is only an implementation-oriented proxy; participant acceptance is measured separately on held-out cues and these simulations do not measure satisfaction, detector accuracy, long-term behavior, or effectiveness. Tests for this workflow are in [`src/utils/preExpertSimulation.test.ts`](src/utils/preExpertSimulation.test.ts).
 
-The pre-expert gate is complete only when candidate visibility has been manually checked, every simulated decision is reproducible and auditable, and unresolved failures are documented for expert review. The participant-facing profile remains disabled throughout this step. The interface-aligned review form is [`source materials/VPrivCal_Expert_Workshop_Interface_Aligned_v6_1.docx`](source%20materials/VPrivCal_Expert_Workshop_Interface_Aligned_v6_1.docx).
+The pre-expert gate is complete only when candidate visibility has been manually checked, every simulated decision is reproducible and auditable, and unresolved failures are documented for expert review. The participant-facing profile remains disabled throughout this step. The current review form is [`source materials/VPrivCal_Expert_Workshop_Interface_Aligned_v6_2.docx`](source%20materials/VPrivCal_Expert_Workshop_Interface_Aligned_v6_2.docx).
 
 ## Participant and expert-review interfaces
 
@@ -271,7 +271,7 @@ interface VPrivCalResponseExport {
 
 Probe timing starts only when the participant completes the required first Hint walkthrough and stops when the final Probe scene is completed. The visible Probe timer remains at `00:00` during the introductory prompt and Hint walkthrough. The two persisted timing boundaries and their elapsed duration are included in the JSON export.
 
-Probe awareness uses the source JSON values `1–4`. Probe preferred action uses `0–4`, from no intervention through avoid unless explicitly requested. Q10 uses the research plan's `1–5` item coding.
+Probe awareness uses source values `1–4`. Probe trigger preferences use `0` (never remind), `1` (remind only when identifying or sensitive details are exposed), and `2` (remind whenever the expert-verified category is present). Q1–Q6 and Q8 store the equivalent displayed values `1–3`; Q7, Q9, and Q10 retain binary values `1` and `3`. Runtime reminder output remains binary. Each controlled-study cue must be expert verified and labeled `PRESENCE_ONLY` or `SENSITIVE_DETAIL_EXPOSED` before the rule runs. Held-out evaluation uses a separate 1–5 immediate acceptance item plus a binary preferred reminder decision.
 
 The CSV contains one row per required category-image pair with IDs, response labels and values, evidence use, changes, and duration. It is intended for quick researcher inspection; JSON remains the complete record.
 

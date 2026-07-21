@@ -19,6 +19,7 @@ function cue(overrides: Partial<CandidateCue> & Pick<CandidateCue, 'candidateId'
     isUncertain: false,
     taskRelevant: true,
     explicitlyRequested: false,
+    exposureLevel: 'SENSITIVE_DETAIL_EXPOSED',
     likelihoodTier: 3,
     severityTier: 3,
     ...overrides,
@@ -103,9 +104,9 @@ describe('pre-expert simulated policy comparison', () => {
     expect(report.aggregateMetrics).toMatchObject({
       nonFilteredBaseline: {
         observations: 20,
-        exactAgreementCount: 4,
-        exactAgreementRate: 0.2,
-        meanAbsoluteRankError: 2.05,
+        exactAgreementCount: 11,
+        exactAgreementRate: 0.55,
+        meanAbsoluteRankError: 0.9,
       },
       personalizedPreference: {
         observations: 20,
@@ -115,20 +116,20 @@ describe('pre-expert simulated policy comparison', () => {
       },
       personalizedWithProofOfConceptFloors: {
         observations: 20,
-        exactAgreementCount: 17,
-        exactAgreementRate: 0.85,
-        meanAbsoluteRankError: 0.2,
+        exactAgreementCount: 14,
+        exactAgreementRate: 0.7,
+        meanAbsoluteRankError: 0.6,
       },
     });
     expect(report.ruleChecks).toMatchObject({
       strictnessOrderingHighProtectionAtLeastLowIntervention: true,
-      unknownCategoryFallbackRank: 3,
+      unknownCategoryFallbackRank: 2,
       unknownCategoryFallbackStatus: 'DECIDED_WITH_FALLBACK',
-      q8FilteredDecisionCount: 1,
+      exposureFilteredDecisionCount: 3,
       q7ReasonObserved: true,
       q9ReasonObserved: true,
       q10ReasonObserved: true,
-      safetyFloorAppliedDecisionCount: 3,
+      safetyFloorAppliedDecisionCount: 6,
       negativeControlExcludedFromPolicyCandidates: true,
     });
   });
@@ -153,8 +154,8 @@ describe('pre-expert simulated policy comparison', () => {
 
     expect(report.aggregateMetrics.nonFilteredBaseline).toMatchObject({
       observations: 30,
-      exactAgreementCount: 6,
-      exactAgreementRate: 0.2,
+      exactAgreementCount: 13,
+      exactAgreementRate: 0.43333333333333335,
     });
     expect(report.aggregateMetrics.personalizedPreference).toMatchObject({
       observations: 30,
@@ -164,8 +165,8 @@ describe('pre-expert simulated policy comparison', () => {
     });
     expect(report.aggregateMetrics.personalizedWithProofOfConceptFloors).toMatchObject({
       observations: 30,
-      exactAgreementCount: 18,
-      exactAgreementRate: 0.6,
+      exactAgreementCount: 17,
+      exactAgreementRate: 0.5666666666666667,
     });
   });
 
@@ -174,13 +175,13 @@ describe('pre-expert simulated policy comparison', () => {
 
     expect(ruleChecks).toMatchObject({
       strictnessOrderingHighProtectionAtLeastLowIntervention: true,
-      unknownCategoryFallbackRank: 3,
+      unknownCategoryFallbackRank: 2,
       unknownCategoryFallbackStatus: 'DECIDED_WITH_FALLBACK',
-      q8FilteredDecisionCount: 4,
+      exposureFilteredDecisionCount: 0,
       q7ReasonObserved: true,
       q9ReasonObserved: true,
       q10ReasonObserved: true,
-      safetyFloorAppliedDecisionCount: 12,
+      safetyFloorAppliedDecisionCount: 13,
       negativeControlExcludedFromPolicyCandidates: true,
     });
   });

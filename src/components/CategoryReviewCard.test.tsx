@@ -27,11 +27,12 @@ describe('CategoryReviewCard', () => {
           id: 'preferred_action',
           prompt: 'What should the assistant do?',
           options: [
-            { value: 0, label: 'No intervention' },
-            { value: 1, label: 'Handle it silently' },
-            { value: 2, label: 'Give a brief reminder' },
-            { value: 3, label: 'Ask before using it' },
-            { value: 4, label: 'Avoid using it unless I explicitly request it' },
+            { value: 0, label: 'Do not show reminders for this category' },
+            {
+              value: 1,
+              label: 'Show reminders only when identifying or sensitive details are exposed',
+            },
+            { value: 2, label: 'Show reminders whenever this verified category is present' },
           ],
         }}
         contentLabels={['Student report card']}
@@ -45,10 +46,14 @@ describe('CategoryReviewCard', () => {
     expect(screen.queryByText('PII')).not.toBeInTheDocument();
     expect(screen.queryByText('Personal records.')).not.toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'Show highlight' }));
-    await user.click(screen.getByRole('radio', { name: 'Ask before using it' }));
+    await user.click(
+      screen.getByRole('radio', {
+        name: 'Show reminders only when identifying or sensitive details are exposed',
+      }),
+    );
     expect(onToggle).toHaveBeenCalledOnce();
-    expect(onAnswer).toHaveBeenCalledWith('preferredAction', 3);
-    expect(screen.getAllByRole('radio')).toHaveLength(9);
+    expect(onAnswer).toHaveBeenCalledWith('preferredAction', 1);
+    expect(screen.getAllByRole('radio')).toHaveLength(7);
   });
 
   it('can restore category identity presentation when the configuration is enabled', () => {

@@ -6,8 +6,9 @@ import { fileURLToPath } from 'node:url';
 import { createServer } from 'vite';
 
 const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const defaultDetectionPath = String.raw`E:\VPrivCal_pre_expert\candidate_detections.json`;
-const defaultOutputPath = String.raw`E:\VPrivCal_pre_expert\simulated_policy_comparison.json`;
+const pilotRoot = path.join(repositoryRoot, 'source materials', 'pilot videos');
+const defaultDetectionPath = path.join(pilotRoot, 'vlm_detections.json');
+const defaultOutputPath = path.join(pilotRoot, 'simulated_policy_comparison.json');
 
 function usage() {
   return [

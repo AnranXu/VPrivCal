@@ -1,9 +1,12 @@
 import { profileConfirmationOptions, q10Questions } from '../questions';
 import type { ProbeScene, VPrivCalDataset, VPrivCalResponseExport } from '../types';
 
-export const POLICY_FILTER_ALGORITHM_VERSION = '1.0.0';
+export const POLICY_FILTER_ALGORITHM_VERSION = '3.0.0-three-option-trigger';
 
 export type CanonicalActionRank = 0 | 1 | 2 | 3 | 4;
+export type ReminderTriggerLevel = 0 | 1 | 2;
+export type ReminderDecision = 'NO_REMINDER' | 'SHOW_REMINDER';
+export type ExposureLevel = 'PRESENCE_ONLY' | 'SENSITIVE_DETAIL_EXPOSED';
 export type RiskTier = 1 | 2 | 3 | 4 | 5;
 export type CandidateScenarioType = ProbeScene['scenarioType'] | 'unknown';
 export type ActionPresentation =
@@ -80,7 +83,7 @@ export interface CompiledParticipantPolicy {
   categories: Record<string, CompiledCategoryPolicy>;
   crossCutting: {
     inferenceRule: number;
-    reminderSensitivity: number;
+    unlistedCategoryTrigger: ReminderTriggerLevel;
     uncertaintyRule: number;
     taskIrrelevantRule: number;
   };
@@ -112,6 +115,7 @@ export interface CandidateCue {
   isUncertain: boolean;
   taskRelevant: boolean;
   explicitlyRequested: boolean;
+  exposureLevel: ExposureLevel;
   likelihoodTier: RiskTier;
   severityTier: RiskTier;
   reasonCodes?: string[];
@@ -141,8 +145,8 @@ export const PROOF_OF_CONCEPT_SAFETY_FLOORS: Readonly<SafetyFloorConfig> = {
   configId: 'vprivcal-proof-of-concept-v1',
   enabled: true,
   categoryMinimums: {
-    children_images: 1,
-    background_individuals: 1,
+    children_images: 2,
+    background_individuals: 2,
   },
   highConfidenceSevere: {
     minimumLikelihood: 4,
@@ -160,10 +164,13 @@ export interface DecidedCue {
   scenarioType: CandidateScenarioType;
   likelihoodTier: RiskTier;
   severityTier: RiskTier;
+  exposureLevel: ExposureLevel;
+  preferenceTriggerLevel: ReminderTriggerLevel;
   awarenessGapTieBreak: boolean;
   preferenceAction: PolicyAction;
   effectiveAction: PolicyAction;
-  reminderThreshold: RiskTier;
+  preferenceReminderDecision: ReminderDecision;
+  effectiveReminderDecision: ReminderDecision;
   floorApplied: boolean;
   safetyWaiverApplied: boolean;
   reasons: string[];
@@ -196,16 +203,16 @@ export interface CandidateBatchResult {
 }
 
 const ACTION_LABELS: Record<CanonicalActionRank, string> = {
-  0: 'No intervention',
-  1: 'Handle silently',
-  2: 'Notify',
-  3: 'Ask before use',
-  4: 'Avoid unless explicitly requested',
+  0: 'Do not show reminders for this category',
+  1: 'Show reminders only when identifying or sensitive details are exposed',
+  2: 'Show reminders whenever this verified category is present',
+  3: 'Legacy ask-before-use action',
+  4: 'Legacy avoid-unless-requested action',
 };
 
 const DEFAULT_PRESENTATIONS: Record<CanonicalActionRank, ActionPresentation> = {
   0: 'none',
-  1: 'silent',
+  1: 'none',
   2: 'brief_reminder',
   3: 'ask',
   4: 'avoid',
@@ -242,6 +249,10 @@ function isScenarioType(value: unknown): value is CandidateScenarioType {
   return value === 'private' || value === 'public' || value === 'semi-public' || value === 'unknown';
 }
 
+function isExposureLevel(value: unknown): value is ExposureLevel {
+  return value === 'PRESENCE_ONLY' || value === 'SENSITIVE_DETAIL_EXPOSED';
+}
+
 function makeAction(
   rank: CanonicalActionRank,
   source: string,
@@ -257,6 +268,10 @@ function makeAction(
     reasons: [reason],
     ...(minimumRiskTier === undefined ? {} : { minimumRiskTier }),
   };
+}
+
+export function reminderDecisionForAction(action: Pick<PolicyAction, 'rank'>): ReminderDecision {
+  return action.rank >= 2 ? 'SHOW_REMINDER' : 'NO_REMINDER';
 }
 
 function mergeActionMetadata(action: PolicyAction, source: string, reason: string): PolicyAction {
@@ -421,8 +436,8 @@ export function validatePolicyResponse(
     }
   }
   for (const value of allowedActions) {
-    if (!isCanonicalActionRank(value)) {
-      errors.push(`Dataset preferred-action option ${value} is outside the supported 0-4 scale.`);
+    if (value !== 0 && value !== 1 && value !== 2) {
+      errors.push(`Dataset preferred-action option ${value} is outside the supported 0/1/2 trigger scale.`);
     }
   }
   if (
@@ -432,10 +447,10 @@ export function validatePolicyResponse(
     errors.push('Dataset must declare each awareness option from 1 to 4 exactly once.');
   }
   if (
-    dataset.probeQuestions.preferredAction.options.length !== 5 ||
-    ![0, 1, 2, 3, 4].every((value) => allowedActions.has(value))
+    dataset.probeQuestions.preferredAction.options.length !== 3 ||
+    ![0, 1, 2].every((value) => allowedActions.has(value))
   ) {
-    errors.push('Dataset must declare each preferred-action option from 0 to 4 exactly once.');
+    errors.push('Dataset must declare preferred trigger options 0, 1, and 2 exactly once.');
   }
   for (const scene of dataset.images) {
     const exportedScenes = probe.filter((item) => item.sceneId === scene.id);
@@ -595,7 +610,7 @@ export function buildParticipantPolicy(
       categories,
       crossCutting: {
         inferenceRule: numericQ10Value(response, 'Q7'),
-        reminderSensitivity: numericQ10Value(response, 'Q8'),
+        unlistedCategoryTrigger: (numericQ10Value(response, 'Q8') - 1) as ReminderTriggerLevel,
         uncertaintyRule: numericQ10Value(response, 'Q9'),
         taskIrrelevantRule: numericQ10Value(response, 'Q10'),
       },
@@ -605,57 +620,37 @@ export function buildParticipantPolicy(
 }
 
 export function mapInferenceRule(value: number, riskTier: RiskTier): PolicyAction {
+  void riskTier;
   switch (value) {
     case 1:
-      return makeAction(0, 'Q7', 'ignore_inference');
-    case 2:
-      return riskTier >= 4
-        ? makeAction(2, 'Q7', 'likely_or_serious_inference', 'brief_reminder', 4)
-        : makeAction(0, 'Q7', 'inference_below_likely_or_serious_threshold');
+      return makeAction(0, 'Q7', 'no_reminder_for_inference');
     case 3:
       return makeAction(2, 'Q7', 'remind_for_inference');
-    case 4:
-      return makeAction(3, 'Q7', 'ask_before_inference');
-    case 5:
-      return makeAction(4, 'Q7', 'avoid_inference_unless_requested');
     default:
-      throw new Error('Q7 must be an integer from 1 to 5.');
+      throw new Error('Q7 must use binary option value 1 or 3.');
   }
 }
 
 export function mapUncertaintyRule(value: number): PolicyAction {
   switch (value) {
     case 1:
-      return makeAction(0, 'Q9', 'do_nothing_when_uncertain');
-    case 2:
-      return makeAction(2, 'Q9', 'quiet_uncertainty_indicator', 'quiet_indicator');
+      return makeAction(0, 'Q9', 'no_reminder_when_uncertain');
     case 3:
       return makeAction(2, 'Q9', 'brief_uncertain_reminder', 'brief_uncertain_reminder');
-    case 4:
-      return makeAction(3, 'Q9', 'ask_when_uncertain');
-    case 5:
-      return makeAction(4, 'Q9', 'avoid_uncertain_use_until_approved');
     default:
-      throw new Error('Q9 must be an integer from 1 to 5.');
+      throw new Error('Q9 must use binary option value 1 or 3.');
   }
 }
 
 export function mapTaskIrrelevantRule(value: number, riskTier: RiskTier): PolicyAction {
+  void riskTier;
   switch (value) {
     case 1:
-      return makeAction(0, 'Q10', 'do_nothing_when_task_irrelevant');
-    case 2:
-      return riskTier >= 4
-        ? makeAction(2, 'Q10', 'serious_task_irrelevant_content', 'brief_reminder', 4)
-        : makeAction(0, 'Q10', 'task_irrelevant_content_below_serious_threshold');
+      return makeAction(0, 'Q10', 'no_reminder_when_task_irrelevant');
     case 3:
-      return makeAction(2, 'Q10', 'brief_task_irrelevant_indicator', 'brief_indicator');
-    case 4:
-      return makeAction(3, 'Q10', 'ask_before_task_irrelevant_use');
-    case 5:
-      return makeAction(4, 'Q10', 'avoid_task_irrelevant_use_unless_requested');
+      return makeAction(2, 'Q10', 'brief_task_irrelevant_reminder', 'brief_reminder');
     default:
-      throw new Error('Q10 must be an integer from 1 to 5.');
+      throw new Error('Q10 must use binary option value 1 or 3.');
   }
 }
 
@@ -687,6 +682,9 @@ function validateCandidate(candidate: CandidateCue): string[] {
     errors.push('Reason codes must be non-empty strings when supplied.');
   }
   if (!isScenarioType(candidate.scenarioType)) errors.push('Candidate scenario type is invalid.');
+  if (!isExposureLevel(candidate.exposureLevel)) {
+    errors.push('Exposure level must be PRESENCE_ONLY or SENSITIVE_DETAIL_EXPOSED.');
+  }
   if (!isRiskTier(candidate.likelihoodTier)) errors.push('Likelihood tier must be an integer from 1 to 5.');
   if (!isRiskTier(candidate.severityTier)) errors.push('Severity tier must be an integer from 1 to 5.');
   for (const field of ['isInference', 'isUncertain', 'taskRelevant', 'explicitlyRequested'] as const) {
@@ -752,29 +750,24 @@ export function validateSafetyFloorConfig(
   return { valid: errors.length === 0, errors };
 }
 
-function applyParticipantRuntimeRules(
-  action: PolicyAction,
-  candidate: CandidateCue,
-  reminderSensitivity: number,
-  riskTier: RiskTier,
+function resolveTriggerForExposure(
+  trigger: PolicyAction,
+  exposureLevel: ExposureLevel,
 ): PolicyAction {
-  let resolved = action;
-  if (resolved.rank === 4 && candidate.explicitlyRequested) {
-    resolved = transformAction(
-      resolved,
-      1,
-      'runtime',
-      'explicit_request_satisfied_for_this_task',
+  if (trigger.rank === 0) return trigger;
+  if (trigger.rank === 1) {
+    return exposureLevel === 'SENSITIVE_DETAIL_EXPOSED'
+      ? transformAction(trigger, 2, 'exposure_rule', 'sensitive_detail_threshold_met')
+      : transformAction(trigger, 0, 'exposure_rule', 'presence_only_below_selected_threshold');
+  }
+  if (trigger.rank === 2) {
+    return mergeActionMetadata(
+      trigger,
+      'exposure_rule',
+      'verified_category_presence_threshold_met',
     );
   }
-  if (resolved.rank === 2) {
-    const q8Threshold = (6 - reminderSensitivity) as RiskTier;
-    const requiredTier = Math.max(q8Threshold, resolved.minimumRiskTier ?? 1) as RiskTier;
-    if (riskTier < requiredTier) {
-      resolved = transformAction(resolved, 1, 'Q8', 'notification_filtered_by_Q8');
-    }
-  }
-  return resolved;
+  throw new Error('New participant trigger paths must use level 0, 1, or 2.');
 }
 
 function safetyFloorForCandidate(
@@ -844,7 +837,13 @@ export function filterCandidateCue(
     const categoryPolicy = hasCategoryPolicy ? policy.categories[categoryId] : undefined;
     if (!categoryPolicy) {
       unresolvedCategoryIds.push(categoryId);
-      applicable.push(makeAction(3, 'fallback', `unknown_category:${categoryId}`));
+      applicable.push(
+        makeAction(
+          policy.crossCutting.unlistedCategoryTrigger,
+          'Q8',
+          `unlisted_verified_category:${categoryId}`,
+        ),
+      );
       continue;
     }
     const contextAction =
@@ -869,15 +868,9 @@ export function filterCandidateCue(
   if (!candidate.taskRelevant) {
     applicable.push(mapTaskIrrelevantRule(policy.crossCutting.taskIrrelevantRule, riskTier));
   }
-  const resolved = applicable.map((action) =>
-    applyParticipantRuntimeRules(
-      action,
-      candidate,
-      policy.crossCutting.reminderSensitivity,
-      riskTier,
-    ),
-  );
-  const preferenceAction = strictestAction(resolved);
+  const triggerAction = strictestAction(applicable);
+  const preferenceTriggerLevel = triggerAction.rank as ReminderTriggerLevel;
+  const preferenceAction = resolveTriggerForExposure(triggerAction, candidate.exposureLevel);
   const safetyWaiverApplied = hasApprovedSafetyWaiver(candidate, guardrails);
   const floor = safetyFloorForCandidate(candidate, guardrails);
   const effectiveAction = floor ? strictestAction([preferenceAction, floor]) : preferenceAction;
@@ -903,14 +896,18 @@ export function filterCandidateCue(
     scenarioType: candidate.scenarioType,
     likelihoodTier: candidate.likelihoodTier,
     severityTier: candidate.severityTier,
+    exposureLevel: candidate.exposureLevel,
+    preferenceTriggerLevel,
     awarenessGapTieBreak,
     preferenceAction,
     effectiveAction,
-    reminderThreshold: (6 - policy.crossCutting.reminderSensitivity) as RiskTier,
+    preferenceReminderDecision: reminderDecisionForAction(preferenceAction),
+    effectiveReminderDecision: reminderDecisionForAction(effectiveAction),
     floorApplied,
     safetyWaiverApplied,
     reasons: uniqueSorted([
-      ...resolved.flatMap((action) => action.reasons),
+      ...triggerAction.reasons,
+      ...preferenceAction.reasons,
       ...(floor?.reasons ?? []),
     ]),
     reasonCodes: uniqueSorted(candidate.reasonCodes ?? []),
@@ -934,6 +931,11 @@ function mergeCandidateGroup(candidates: readonly CandidateCue[]): CandidateCue 
     isUncertain: ordered.some(({ isUncertain }) => isUncertain),
     taskRelevant: ordered.every(({ taskRelevant }) => taskRelevant),
     explicitlyRequested: ordered.every(({ explicitlyRequested }) => explicitlyRequested),
+    exposureLevel: ordered.some(
+      ({ exposureLevel }) => exposureLevel === 'SENSITIVE_DETAIL_EXPOSED',
+    )
+      ? 'SENSITIVE_DETAIL_EXPOSED'
+      : 'PRESENCE_ONLY',
     likelihoodTier: Math.max(...ordered.map(({ likelihoodTier }) => likelihoodTier)) as RiskTier,
     severityTier: Math.max(...ordered.map(({ severityTier }) => severityTier)) as RiskTier,
     reasonCodes: uniqueSorted(ordered.flatMap(({ reasonCodes }) => reasonCodes ?? [])),

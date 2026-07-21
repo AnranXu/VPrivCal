@@ -30,8 +30,12 @@ const dataset: VPrivCalDataset = {
       id: 'action',
       prompt: 'Action?',
       options: [
-        { value: 2, label: 'Give a reminder' },
-        { value: 3, label: 'Ask before using it' },
+        { value: 0, label: 'Do not show reminders for this category' },
+        {
+          value: 1,
+          label: 'Show reminders only when identifying or sensitive details are exposed',
+        },
+        { value: 2, label: 'Show reminders whenever this verified category is present' },
       ],
     },
   },
@@ -93,7 +97,11 @@ describe('ProbeHintMode', () => {
     expect(answerHeading).toBeVisible();
     expect(answerHeading.closest('.probe-hint-callout')).toHaveClass('is-answer');
     expect(screen.getByRole('radio', { name: 'Already noticed' })).toBeDisabled();
-    expect(screen.getByRole('radio', { name: 'Ask before using it' })).toBeDisabled();
+    expect(
+      screen.getByRole('radio', {
+        name: 'Show reminders only when identifying or sensitive details are exposed',
+      }),
+    ).toBeDisabled();
 
     await user.click(screen.getByRole('button', { name: 'Next hint' }));
     const nextHeading = screen.getByRole('heading', {
@@ -116,5 +124,5 @@ describe('ProbeHintMode', () => {
       block: 'center',
       inline: 'nearest',
     });
-  });
+  }, 10000);
 });

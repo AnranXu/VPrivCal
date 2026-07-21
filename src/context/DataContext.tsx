@@ -17,7 +17,7 @@ function isDataset(value: unknown): value is VPrivCalDataset {
     Array.isArray(candidate.images) &&
     candidate.images.length === 3 &&
     candidate.probeQuestions?.awarenessStatus?.options.length === 4 &&
-    candidate.probeQuestions?.preferredAction?.options.length === 5
+    candidate.probeQuestions?.preferredAction?.options.length === 3
   );
 }
 

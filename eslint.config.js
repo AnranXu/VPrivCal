@@ -8,7 +8,7 @@ export default tseslint.config(
   { ignores: ['dist', 'coverage', 'node_modules'] },
   js.configs.recommended,
   {
-    files: ['infrastructure/**/*.mjs'],
+    files: ['infrastructure/**/*.mjs', 'scripts/**/*.mjs'],
     languageOptions: { globals: globals.node },
   },
   ...tseslint.configs.recommended,

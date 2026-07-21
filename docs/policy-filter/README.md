@@ -1,6 +1,6 @@
-# VPrivCal three-option reminder-trigger policy
+# VPrivCal reminder-trigger policy
 
-Current algorithm: `3.0.0-three-option-trigger`.
+Current algorithm: `4.0.0-five-point-agreement`.
 
 VPrivCal now elicits **when** a participant wants a privacy reminder, not how the assistant should handle or present private information. The participant chooses one of three trigger thresholds, while the runtime output remains binary:
 
@@ -10,7 +10,17 @@ VPrivCal now elicits **when** a participant wants a privacy reminder, not how th
 | 1 | Show reminders only when identifying or sensitive details are exposed | `SHOW_REMINDER` only for `SENSITIVE_DETAIL_EXPOSED` |
 | 2 | Show reminders whenever this verified category is present | `SHOW_REMINDER` for either verified exposure level |
 
-All displayed reminders use the same wording, timing, and visual presentation. The controlled study therefore tests reminder triggering, immediate acceptance, and cue awareness without adding a reminder-style condition.
+Q7-Q10 add a shared five-point agreement scale. The rule converts each level into a distinct minimum combined-risk score, where `combinedRiskScore = likelihoodTier + severityTier` (range `2..10`):
+
+| Agreement level | Participant-facing label | Minimum combined-risk score | Runtime effect when the item applies |
+|---:|---|---:|---|
+| 1 | Strongly disagree | 11 | Never adds a reminder; 11 is intentionally unreachable |
+| 2 | Disagree | 9 | Adds a reminder only when score is at least 9 |
+| 3 | Neither agree nor disagree | 7 | Adds a reminder when score is at least 7 |
+| 4 | Agree | 5 | Adds a reminder when score is at least 5 |
+| 5 | Strongly agree | 2 | Adds a reminder for any verified cue |
+
+Because all five thresholds differ, levels 1 and 2 are not collapsed into the same policy rule. All displayed reminders use the same wording, timing, and visual presentation. The controlled study therefore tests reminder triggering, immediate acceptance, and cue awareness without adding a reminder-style condition.
 
 ## Scope and implementation status
 
@@ -23,10 +33,11 @@ This version replaces the former five-action design. Legacy actions such as sile
 ## Questionnaire values
 
 - Q1-Q6 use the shared three-option scale and store displayed values `1`, `2`, and `3`.
-- Q8 uses the same scale as a fallback for an expert-verified category not represented by Q1-Q6.
 - Probe uses the same labels and stores internal trigger values `0`, `1`, and `2`.
-- Q7, Q9, and Q10 remain binary cross-cutting reminder questions with stored values `1` and `3`.
-- The compiler normalizes Q1-Q6 and Q8 with `displayedValue - 1`.
+- Q7-Q10 use one five-point agreement scale and store values `1` through `5`.
+- Q8 is the general show/hide sensitivity score and applies to every verified privacy cue.
+- Q7, Q9, and Q10 apply additionally when a cue is inferred, uncertain, or task-irrelevant, respectively.
+- The compiler normalizes only Q1-Q6 with `displayedValue - 1`.
 
 Awareness responses are kept separate from reminder preferences. A participant can notice a cue but prefer no reminder, or miss a cue but still prefer no reminder after review.
 
@@ -75,9 +86,9 @@ The compiler first validates the response and dataset. Missing, duplicated, unkn
 
 Q1-Q6 initialize category trigger priors. Each Probe category-scene response is a contextual observation. The default aggregation is an upper weighted median:
 
-- Q10 prior weight: `1.0`;
-- Probe response weight: `1.0`;
-- optional profile-confirmation correction: `0.5`;
+- Q1-Q6 prior weight: `1.0`;
+- Probe response weight: `2.0`;
+- profile confirmation is retained as recalibration feedback and does not silently change a policy;
 - an awareness gap is retained as audit metadata and does not itself change the trigger preference.
 
 The compiled policy retains category, scene type, source answer, original label, normalized trigger, and any contextual correction.
@@ -104,6 +115,19 @@ For a verified cue:
 
 ```text
 trigger = strictest applicable participant trigger
+combinedRiskScore = likelihoodTier + severityTier
+
+evaluate Q8 for every cue
+evaluate Q7 when isInference is true
+evaluate Q9 when isUncertain is true
+evaluate Q10 when taskRelevant is false
+
+for each applicable agreement item:
+    minimum = {1: 11, 2: 9, 3: 7, 4: 5, 5: 2}[answer]
+    if combinedRiskScore >= minimum:
+        add SHOW_REMINDER trigger
+    else:
+        add NO_REMINDER trigger
 
 if trigger == 0:
     preference decision = NO_REMINDER
@@ -117,7 +141,7 @@ else:
 effective decision = apply any approved safety floor after the preference decision
 ```
 
-Q8 supplies the trigger for a verified category missing from Q1-Q6. Applicable Q7, Q9, or Q10 answers can raise the trigger for inferred, uncertain, or task-irrelevant cues. They cannot silently lower a stricter category or Probe trigger.
+Q8 supplies a general threshold for every verified privacy threat, including a verified category missing from Q1-Q6. Applicable Q7, Q9, or Q10 answers can raise the trigger for inferred, uncertain, or task-irrelevant cues. They cannot silently lower a stricter category or Probe trigger.
 
 When duplicate detections merge into one cue, the merged cue is labeled `SENSITIVE_DETAIL_EXPOSED` if any verified member has that label. Category IDs and reason codes are deduplicated, and the maximum likelihood and severity tiers are retained for safety-floor auditing.
 
@@ -141,6 +165,8 @@ Safety-floor outcomes must be reported separately because an aggressive floor ca
 
 - `preferenceTriggerLevel`;
 - `exposureLevel`;
+- `combinedRiskScore`;
+- `crossCuttingEvaluations`, with question ID, agreement level, minimum score, observed score, and trigger result;
 - `preferenceReminderDecision`;
 - `effectiveReminderDecision`;
 - `preferenceAction` and `effectiveAction` audit objects;
@@ -160,7 +186,7 @@ Held-out evaluation records, for every verified cue and condition:
 - pre-reminder cue awareness;
 - policy condition and exposure level.
 
-Primary summaries are immediate acceptance, binary agreement, false-reminder rate, missed-reminder rate, and awareness by condition. Reminder frequency is a burden measure. Outcomes should also be stratified by exposure level to test whether the middle option behaves differently from the always-remind option.
+Primary summaries are immediate acceptance, binary agreement, false-reminder rate, missed-reminder rate, and awareness by condition. Reminder frequency is a burden measure. Outcomes should also be stratified by exposure level to test whether the middle category trigger behaves differently from the always-remind option. The exported Q8 and Q10 values plus per-cue evaluations permit a prespecified analysis of whether general sensitivity and task relevance predict acceptance; a non-informative Q10 result can support removing that item in a later version, but does not change the current rule post hoc.
 
 Short clips support immediate cue-level claims only. They cannot establish long-term acceptance, memory, behavior change, or real-world effectiveness.
 

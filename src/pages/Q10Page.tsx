@@ -70,15 +70,22 @@ export function Q10Page() {
 
   return (
     <section className="question-card">
+      {index === 0 ? (
+        <div className="stage-marker" aria-label="Stage I: Questions">
+          <span>Stage I</span>
+          <strong>Questions</strong>
+        </div>
+      ) : null}
       <div className="question-count">Question {index + 1} of {q10Questions.length}</div>
       <p className="eyebrow">VPrivCal-Q10 · {question.id}</p>
       <h1>{question.title}</h1>
       {question.example ? <p className="example-text"><strong>Examples:</strong> {question.example}</p> : null}
       <fieldset className="option-fieldset q10-options">
         <legend>{question.prompt}</legend>
+        {question.statement ? <p className="agreement-statement">{question.statement}</p> : null}
         <div className="option-list">
           {question.options.map((option) => (
-            <label className="radio-card numbered-option" key={option.value}>
+            <label className="radio-card" key={option.value}>
               <input
                 type="radio"
                 name={question.id}
@@ -86,7 +93,6 @@ export function Q10Page() {
                 checked={response?.value === option.value}
                 onChange={() => answer(option.value, option.label)}
               />
-              <span className="option-number">{option.value}</span>
               <span>{option.label}</span>
             </label>
           ))}

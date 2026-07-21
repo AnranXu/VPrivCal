@@ -5,8 +5,10 @@ import { q10Questions } from '../questions';
 import { parseDataset } from '../test/fixtures';
 import type { VPrivCalResponseExport } from '../types';
 import {
+  AGREEMENT_MINIMUM_COMBINED_RISK_SCORE,
   PROOF_OF_CONCEPT_SAFETY_FLOORS,
   buildParticipantPolicy,
+  evaluateCrossCuttingAgreement,
   filterCandidateBatch,
   filterCandidateCue,
   upperWeightedMedian,
@@ -36,7 +38,9 @@ function makeCompleteResponse(): VPrivCalResponseExport {
     randomizedSceneOrder: dataset.images.map(({ id }) => id),
     consent: { agreed: true, prolificId: 'test-participant', answeredAt: at },
     q10: q10Questions.map((question) => {
-      const option = question.options.at(-1)!;
+      const option = question.categoryId
+        ? question.options.at(-1)!
+        : question.options.find(({ value }) => value === 3)!;
       return {
         questionId: question.id,
         value: option.value,
@@ -263,37 +267,76 @@ describe('runtime cue filtering', () => {
   });
 
   it('uses a reminder fallback for unknown categories', () => {
-    const result = decided(filterCandidateCue(candidate({ categoryIds: ['unknown-sensitive'] }), readyPolicy()));
+    const result = decided(filterCandidateCue(candidate({
+      categoryIds: ['unknown-sensitive'],
+      likelihoodTier: 4,
+      severityTier: 3,
+    }), readyPolicy()));
     expect(result.status).toBe('DECIDED_WITH_FALLBACK');
     expect(result.unresolvedCategoryIds).toEqual(['unknown-sensitive']);
     expect(result.effectiveAction.rank).toBe(2);
+    expect(result.crossCuttingEvaluations).toEqual([
+      expect.objectContaining({ questionId: 'Q8', minimumCombinedRiskScore: 7, triggeredReminder: true }),
+    ]);
   });
 
   it('does not mistake inherited object property names for known categories', () => {
-    const result = decided(filterCandidateCue(candidate({ categoryIds: ['toString'] }), readyPolicy()));
+    const result = decided(filterCandidateCue(candidate({
+      categoryIds: ['toString'],
+      likelihoodTier: 4,
+      severityTier: 3,
+    }), readyPolicy()));
     expect(result.status).toBe('DECIDED_WITH_FALLBACK');
     expect(result.unresolvedCategoryIds).toEqual(['toString']);
     expect(result.effectiveAction.rank).toBe(2);
   });
 
-  it('applies binary Q7 and Q10 reminder preferences whenever their conditions hold', () => {
+  it('gives every agreement level a distinct combined-risk threshold', () => {
+    expect(AGREEMENT_MINIMUM_COMBINED_RISK_SCORE).toEqual({ 1: 11, 2: 9, 3: 7, 4: 5, 5: 2 });
+    expect([1, 2, 3, 4, 5].map((agreementLevel) =>
+      evaluateCrossCuttingAgreement('Q7', agreementLevel as 1 | 2 | 3 | 4 | 5, 5, 5),
+    )).toEqual([
+      expect.objectContaining({ minimumCombinedRiskScore: 11, triggeredReminder: false }),
+      expect.objectContaining({ minimumCombinedRiskScore: 9, triggeredReminder: true }),
+      expect.objectContaining({ minimumCombinedRiskScore: 7, triggeredReminder: true }),
+      expect.objectContaining({ minimumCombinedRiskScore: 5, triggeredReminder: true }),
+      expect.objectContaining({ minimumCombinedRiskScore: 2, triggeredReminder: true }),
+    ]);
+  });
+
+  it('uses Q8 as the general show-or-hide threshold and keeps Q10 conditional on task relevance', () => {
     const response = makeCompleteResponse();
     setProbe(response, 'scene_private_family_party', 'legal_sensitivity_information', 0);
-    setQ10(response, 'Q7', 3);
+    setQ10(response, 'Q7', 1);
     setQ10(response, 'Q8', 3);
-    setQ10(response, 'Q10', 3);
-    const policy = readyPolicy(response);
+    setQ10(response, 'Q9', 1);
+    setQ10(response, 'Q10', 5);
     const base = {
       categoryIds: ['legal_sensitivity_information'],
       scenarioType: 'private' as const,
-      isInference: true,
-      taskRelevant: false,
+      likelihoodTier: 3 as const,
+      severityTier: 4 as const,
     };
-    expect(decided(filterCandidateCue(candidate({ ...base, likelihoodTier: 1 }), policy)).effectiveAction.rank).toBe(2);
-    expect(decided(filterCandidateCue(candidate({ ...base, likelihoodTier: 5 }), policy)).effectiveAction.rank).toBe(2);
+    const general = decided(filterCandidateCue(candidate({ ...base, taskRelevant: true }), readyPolicy(response)));
+    expect(general.preferenceAction.rank).toBe(2);
+    expect(general.crossCuttingEvaluations).toEqual([
+      expect.objectContaining({ questionId: 'Q8', agreementLevel: 3, triggeredReminder: true }),
+    ]);
+
+    setQ10(response, 'Q8', 1);
+    const taskIrrelevant = decided(filterCandidateCue(candidate({
+      ...base,
+      likelihoodTier: 1,
+      severityTier: 1,
+      taskRelevant: false,
+    }), readyPolicy(response)));
+    expect(taskIrrelevant.preferenceAction.rank).toBe(2);
+    expect(taskIrrelevant.crossCuttingEvaluations).toEqual(expect.arrayContaining([
+      expect.objectContaining({ questionId: 'Q10', agreementLevel: 5, triggeredReminder: true }),
+    ]));
   });
 
-  it('uses cross-cutting answers as minimums and preserves Q9 presentation hints', () => {
+  it('uses agreement rules as minimums while keeping one reminder presentation', () => {
     const response = makeCompleteResponse();
     setProbe(response, 'scene_private_family_party', 'legal_sensitivity_information', 2);
     setQ10(response, 'Q7', 1);
@@ -312,8 +355,14 @@ describe('runtime cue filtering', () => {
       categoryIds: ['legal_sensitivity_information'],
       scenarioType: 'private',
       isUncertain: true,
+      likelihoodTier: 3,
+      severityTier: 4,
     }), readyPolicy(response)));
-    expect(quiet.effectiveAction).toMatchObject({ rank: 2, presentation: 'brief_uncertain_reminder' });
+    expect(quiet.effectiveAction).toMatchObject({ rank: 2, presentation: 'brief_reminder' });
+    expect(quiet.combinedRiskScore).toBe(7);
+    expect(quiet.crossCuttingEvaluations).toEqual(expect.arrayContaining([
+      expect.objectContaining({ questionId: 'Q9', agreementLevel: 3, triggeredReminder: true }),
+    ]));
   });
 
   it('uses the middle trigger only when sensitive details are exposed', () => {

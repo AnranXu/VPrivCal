@@ -18,7 +18,7 @@ import {
 } from './policyFilter';
 import type { CandidateDetectionDocument } from './preExpertSimulation';
 
-export const RANDOMIZED_SIMULATION_VERSION = 'vprivcal-randomized-profile-simulation-2.0.0';
+export const RANDOMIZED_SIMULATION_VERSION = 'vprivcal-randomized-profile-simulation-3.0.0';
 const FIXED_TIME_MS = Date.UTC(2026, 0, 1);
 const REMINDER_RANKS = [0, 2] as const;
 
@@ -30,6 +30,8 @@ export interface RandomizedSimulationConfig {
 export interface CompactRandomizedDecision {
   candidateId: string;
   exposureLevel: DecidedCue['exposureLevel'];
+  combinedRiskScore: number;
+  crossCuttingEvaluations: DecidedCue['crossCuttingEvaluations'];
   preferenceTriggerLevel: DecidedCue['preferenceTriggerLevel'];
   preferenceRank: CanonicalActionRank;
   effectiveRank: CanonicalActionRank;
@@ -144,6 +146,14 @@ function triggerLevelForScore(score: number): ReminderTriggerLevel {
   return 2;
 }
 
+function agreementLevelForScore(score: number): 1 | 2 | 3 | 4 | 5 {
+  if (score < 0.2) return 1;
+  if (score < 0.4) return 2;
+  if (score < 0.6) return 3;
+  if (score < 0.8) return 4;
+  return 5;
+}
+
 function emptyActionCounts(): Record<string, number> {
   return Object.fromEntries(REMINDER_RANKS.map((actionRank) => [String(actionRank), 0]));
 }
@@ -206,15 +216,11 @@ function generateResponse(
       const categoryRank = triggerLevelForScore(categoryProbability);
       categoryRanks[question.categoryId] = categoryRank;
       q10Values[question.id] = categoryRank + 1;
-    } else if (question.id === 'Q8') {
-      q10Values[question.id] = triggerLevelForScore(
-        clampProbability(latentReminderProbability + (random.next() - 0.5) * 0.8),
-      ) + 1;
     } else {
       const ruleProbability = clampProbability(
         latentReminderProbability + (random.next() - 0.5) * 0.8,
       );
-      q10Values[question.id] = random.chance(ruleProbability) ? 3 : 1;
+      q10Values[question.id] = agreementLevelForScore(ruleProbability);
     }
   }
 
@@ -360,6 +366,8 @@ export function runRandomizedProfileSimulation(
       decisions.push({
         candidateId: candidate.candidateId,
         exposureLevel: preference.exposureLevel,
+        combinedRiskScore: preference.combinedRiskScore,
+        crossCuttingEvaluations: preference.crossCuttingEvaluations,
         preferenceTriggerLevel: preference.preferenceTriggerLevel,
         preferenceRank: preference.preferenceAction.rank,
         effectiveRank: guarded.effectiveAction.rank,
@@ -421,7 +429,7 @@ export function runRandomizedProfileSimulation(
       latentReminderPreference:
         'Each profile samples a continuous reminder probability from 0.10 to 0.90 that correlates, but does not determine, its answers.',
       categoryVariation:
-        'Each Q1-Q6 three-option trigger answer receives independent probability noise around the latent reminder preference.',
+        'Each Q1-Q6 three-option trigger answer and each Q7-Q10 five-point agreement answer receives independent probability noise around the latent reminder preference.',
       probeVariation:
         'Probe decisions combine the category prior, profile-specific context biases, and substantial scene-level noise before sampling reminder or no reminder.',
       awarenessVariation:

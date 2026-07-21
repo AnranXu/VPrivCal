@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import { useStudy } from '../context/StudyContext';
-import { ExpertSceneChooser } from '../components/ExpertSceneChooser';
 
 const workflow = [
   {
@@ -51,6 +50,13 @@ export function ExpertReviewWelcomePage() {
     navigate('/q10');
   };
 
+  const openProbe = async () => {
+    if (session.randomizedSceneOrder.length === 0) {
+      await configureParticipant('expert-review-demo');
+    }
+    navigate('/probe/instructions');
+  };
+
   return (
     <div className="expert-review-welcome">
       <header className="expert-review-intro">
@@ -90,47 +96,28 @@ export function ExpertReviewWelcomePage() {
         </ol>
       </section>
 
-      <div className="expert-review-grid">
-        <section className="expert-section">
-          <p className="study-kicker">Probe logic</p>
-          <h2>Point first, reveal second</h2>
-          <div className="phase-comparison">
-            <article>
-              <span>Phase A</span>
-              <h3>Unprompted first look</h3>
-              <p>The scene begins without boxes, category overlays, or detection labels.</p>
-            </article>
-            <article>
-              <span>Phase B</span>
-              <h3>Category-complete review</h3>
-              <p>Every category listed for the scene is reviewed, with evidence shown only on request.</p>
-            </article>
-          </div>
-        </section>
-
-        <section className="expert-section review-focus-card">
-          <p className="study-kicker">Suggested review focus</p>
-          <h2>What to examine</h2>
-          <ul className="review-checklist">
-            <li>Question clarity and response-scale semantics</li>
-            <li>Burden of reviewing every available category</li>
-            <li>Pointing, overlap resolution, and manual-region behavior</li>
-            <li>Separation of awareness status from preferred action</li>
-            <li>Clarity of the generated policy summary</li>
-          </ul>
-        </section>
-      </div>
-
       <section className="expert-launch-card">
         <div>
-          <h2>{hasProgress ? 'Continue the interface review' : 'Open the participant interface'}</h2>
-          <p>Your demo answers let you experience validation, Back navigation, and the full interaction sequence.</p>
+          <h2>Open the interface for review</h2>
+          <p>Start from VPrivCal-Q10 or go directly to the VPrivCal-Probe instructions.</p>
         </div>
-        <button className="button button-primary" type="button" onClick={openInterface}>
-          {hasProgress ? 'Resume interface review' : 'Start interface review'}
-        </button>
+        <div className="expert-launch-actions">
+          <button
+            className="button button-primary expert-primary-launch"
+            type="button"
+            onClick={openInterface}
+          >
+            {hasProgress ? 'Resume full review' : 'Start full review'}
+          </button>
+          <button
+            className="button button-secondary expert-probe-shortcut"
+            type="button"
+            onClick={openProbe}
+          >
+            Go directly to Probe
+          </button>
+        </div>
       </section>
-      <ExpertSceneChooser />
     </div>
   );
 }

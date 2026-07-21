@@ -56,7 +56,7 @@ describe('ProbeHintMode', () => {
     );
 
     expect(screen.getByRole('alertdialog')).toHaveAccessibleName(
-      'You are in Hint mode of Stage 2',
+      'You are in Hint mode of Stage II',
     );
     expect(container.querySelector('.probe-workspace')).toHaveAttribute('inert');
     await user.click(screen.getByRole('button', { name: 'Start Hint Mode' }));

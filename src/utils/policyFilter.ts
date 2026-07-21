@@ -1,13 +1,15 @@
 import { profileConfirmationOptions, q10Questions } from '../questions';
 import type { ProbeScene, VPrivCalDataset, VPrivCalResponseExport } from '../types';
 
-export const POLICY_FILTER_ALGORITHM_VERSION = '3.0.0-three-option-trigger';
+export const POLICY_FILTER_ALGORITHM_VERSION = '4.0.0-five-point-agreement';
 
 export type CanonicalActionRank = 0 | 1 | 2 | 3 | 4;
 export type ReminderTriggerLevel = 0 | 1 | 2;
 export type ReminderDecision = 'NO_REMINDER' | 'SHOW_REMINDER';
 export type ExposureLevel = 'PRESENCE_ONLY' | 'SENSITIVE_DETAIL_EXPOSED';
 export type RiskTier = 1 | 2 | 3 | 4 | 5;
+export type AgreementLevel = 1 | 2 | 3 | 4 | 5;
+export type AgreementQuestionId = 'Q7' | 'Q8' | 'Q9' | 'Q10';
 export type CandidateScenarioType = ProbeScene['scenarioType'] | 'unknown';
 export type ActionPresentation =
   | 'none'
@@ -31,6 +33,14 @@ export interface PolicyAction {
 export interface WeightedAction {
   action: CanonicalActionRank;
   weight: number;
+}
+
+export interface CrossCuttingAgreementEvaluation {
+  questionId: AgreementQuestionId;
+  agreementLevel: AgreementLevel;
+  minimumCombinedRiskScore: number;
+  observedCombinedRiskScore: number;
+  triggeredReminder: boolean;
 }
 
 export interface PolicyValidationResult {
@@ -82,10 +92,10 @@ export interface CompiledParticipantPolicy {
   };
   categories: Record<string, CompiledCategoryPolicy>;
   crossCutting: {
-    inferenceRule: number;
-    unlistedCategoryTrigger: ReminderTriggerLevel;
-    uncertaintyRule: number;
-    taskIrrelevantRule: number;
+    inferenceReminderAgreement: AgreementLevel;
+    generalReminderAgreement: AgreementLevel;
+    uncertainDetectionReminderAgreement: AgreementLevel;
+    taskIrrelevantReminderAgreement: AgreementLevel;
   };
   confirmation: ProfileConfirmationInterpretation;
 }
@@ -164,7 +174,9 @@ export interface DecidedCue {
   scenarioType: CandidateScenarioType;
   likelihoodTier: RiskTier;
   severityTier: RiskTier;
+  combinedRiskScore: number;
   exposureLevel: ExposureLevel;
+  crossCuttingEvaluations: CrossCuttingAgreementEvaluation[];
   preferenceTriggerLevel: ReminderTriggerLevel;
   awarenessGapTieBreak: boolean;
   preferenceAction: PolicyAction;
@@ -229,6 +241,19 @@ const PRESENTATION_PRIORITY: Record<ActionPresentation, number> = {
   avoid: 7,
 };
 
+/**
+ * The candidate score is likelihood (1-5) plus severity (1-5), so its range is 2-10.
+ * Level 1 deliberately uses the unreachable threshold 11: it never adds a reminder.
+ * Every subsequent agreement level has its own reachable threshold.
+ */
+export const AGREEMENT_MINIMUM_COMBINED_RISK_SCORE: Readonly<Record<AgreementLevel, number>> = {
+  1: 11,
+  2: 9,
+  3: 7,
+  4: 5,
+  5: 2,
+};
+
 function compareCodeUnits(first: string, second: string): number {
   return first < second ? -1 : first > second ? 1 : 0;
 }
@@ -242,6 +267,10 @@ function isCanonicalActionRank(value: unknown): value is CanonicalActionRank {
 }
 
 function isRiskTier(value: unknown): value is RiskTier {
+  return Number.isInteger(value) && typeof value === 'number' && value >= 1 && value <= 5;
+}
+
+function isAgreementLevel(value: unknown): value is AgreementLevel {
   return Number.isInteger(value) && typeof value === 'number' && value >= 1 && value <= 5;
 }
 
@@ -504,6 +533,17 @@ function numericQ10Value(response: VPrivCalResponseExport, questionId: string): 
   return response.q10.find((answer) => answer.questionId === questionId)!.value as number;
 }
 
+function agreementQ10Value(
+  response: VPrivCalResponseExport,
+  questionId: AgreementQuestionId,
+): AgreementLevel {
+  const value = numericQ10Value(response, questionId);
+  if (!isAgreementLevel(value)) {
+    throw new Error(`${questionId} must use an agreement value from 1 to 5.`);
+  }
+  return value;
+}
+
 function interpretConfirmation(
   response: VPrivCalResponseExport,
 ): ProfileConfirmationInterpretation {
@@ -609,49 +649,81 @@ export function buildParticipantPolicy(
       },
       categories,
       crossCutting: {
-        inferenceRule: numericQ10Value(response, 'Q7'),
-        unlistedCategoryTrigger: (numericQ10Value(response, 'Q8') - 1) as ReminderTriggerLevel,
-        uncertaintyRule: numericQ10Value(response, 'Q9'),
-        taskIrrelevantRule: numericQ10Value(response, 'Q10'),
+        inferenceReminderAgreement: agreementQ10Value(response, 'Q7'),
+        generalReminderAgreement: agreementQ10Value(response, 'Q8'),
+        uncertainDetectionReminderAgreement: agreementQ10Value(response, 'Q9'),
+        taskIrrelevantReminderAgreement: agreementQ10Value(response, 'Q10'),
       },
       confirmation: interpretConfirmation(response),
     },
   };
 }
 
-export function mapInferenceRule(value: number, riskTier: RiskTier): PolicyAction {
-  void riskTier;
-  switch (value) {
-    case 1:
-      return makeAction(0, 'Q7', 'no_reminder_for_inference');
-    case 3:
-      return makeAction(2, 'Q7', 'remind_for_inference');
-    default:
-      throw new Error('Q7 must use binary option value 1 or 3.');
-  }
+export function evaluateCrossCuttingAgreement(
+  questionId: AgreementQuestionId,
+  agreementLevel: AgreementLevel,
+  likelihoodTier: RiskTier,
+  severityTier: RiskTier,
+): CrossCuttingAgreementEvaluation {
+  const observedCombinedRiskScore = likelihoodTier + severityTier;
+  const minimumCombinedRiskScore = AGREEMENT_MINIMUM_COMBINED_RISK_SCORE[agreementLevel];
+  return {
+    questionId,
+    agreementLevel,
+    minimumCombinedRiskScore,
+    observedCombinedRiskScore,
+    triggeredReminder: observedCombinedRiskScore >= minimumCombinedRiskScore,
+  };
 }
 
-export function mapUncertaintyRule(value: number): PolicyAction {
-  switch (value) {
-    case 1:
-      return makeAction(0, 'Q9', 'no_reminder_when_uncertain');
-    case 3:
-      return makeAction(2, 'Q9', 'brief_uncertain_reminder', 'brief_uncertain_reminder');
-    default:
-      throw new Error('Q9 must use binary option value 1 or 3.');
-  }
+function actionForAgreementEvaluation(
+  evaluation: CrossCuttingAgreementEvaluation,
+  reasonPrefix: string,
+  triggeredPresentation: ActionPresentation = 'brief_reminder',
+): PolicyAction {
+  const result = evaluation.triggeredReminder ? 'threshold_met' : 'below_threshold';
+  return makeAction(
+    evaluation.triggeredReminder ? 2 : 0,
+    evaluation.questionId,
+    `${reasonPrefix}:${result}:agreement_${evaluation.agreementLevel}:minimum_${evaluation.minimumCombinedRiskScore}:observed_${evaluation.observedCombinedRiskScore}`,
+    evaluation.triggeredReminder ? triggeredPresentation : 'none',
+  );
 }
 
-export function mapTaskIrrelevantRule(value: number, riskTier: RiskTier): PolicyAction {
-  void riskTier;
-  switch (value) {
-    case 1:
-      return makeAction(0, 'Q10', 'no_reminder_when_task_irrelevant');
-    case 3:
-      return makeAction(2, 'Q10', 'brief_task_irrelevant_reminder', 'brief_reminder');
-    default:
-      throw new Error('Q10 must use binary option value 1 or 3.');
-  }
+export function mapInferenceRule(
+  value: number,
+  likelihoodTier: RiskTier,
+  severityTier: RiskTier = likelihoodTier,
+): PolicyAction {
+  if (!isAgreementLevel(value)) throw new Error('Q7 must use an agreement value from 1 to 5.');
+  return actionForAgreementEvaluation(
+    evaluateCrossCuttingAgreement('Q7', value, likelihoodTier, severityTier),
+    'inference_reminder',
+  );
+}
+
+export function mapUncertaintyRule(
+  value: number,
+  likelihoodTier: RiskTier = 3,
+  severityTier: RiskTier = likelihoodTier,
+): PolicyAction {
+  if (!isAgreementLevel(value)) throw new Error('Q9 must use an agreement value from 1 to 5.');
+  return actionForAgreementEvaluation(
+    evaluateCrossCuttingAgreement('Q9', value, likelihoodTier, severityTier),
+    'uncertain_detection_reminder',
+  );
+}
+
+export function mapTaskIrrelevantRule(
+  value: number,
+  likelihoodTier: RiskTier,
+  severityTier: RiskTier = likelihoodTier,
+): PolicyAction {
+  if (!isAgreementLevel(value)) throw new Error('Q10 must use an agreement value from 1 to 5.');
+  return actionForAgreementEvaluation(
+    evaluateCrossCuttingAgreement('Q10', value, likelihoodTier, severityTier),
+    'task_irrelevant_reminder',
+  );
 }
 
 function validateCandidate(candidate: CandidateCue): string[] {
@@ -837,13 +909,6 @@ export function filterCandidateCue(
     const categoryPolicy = hasCategoryPolicy ? policy.categories[categoryId] : undefined;
     if (!categoryPolicy) {
       unresolvedCategoryIds.push(categoryId);
-      applicable.push(
-        makeAction(
-          policy.crossCutting.unlistedCategoryTrigger,
-          'Q8',
-          `unlisted_verified_category:${categoryId}`,
-        ),
-      );
       continue;
     }
     const contextAction =
@@ -858,15 +923,50 @@ export function filterCandidateCue(
       ),
     );
   }
-  const riskTier = Math.max(candidate.likelihoodTier, candidate.severityTier) as RiskTier;
+  const combinedRiskScore = candidate.likelihoodTier + candidate.severityTier;
+  const crossCuttingEvaluations: CrossCuttingAgreementEvaluation[] = [];
+  const evaluateAndApplyAgreement = (
+    questionId: AgreementQuestionId,
+    agreementLevel: AgreementLevel,
+    reasonPrefix: string,
+    presentation: ActionPresentation = 'brief_reminder',
+  ) => {
+    const evaluation = evaluateCrossCuttingAgreement(
+      questionId,
+      agreementLevel,
+      candidate.likelihoodTier,
+      candidate.severityTier,
+    );
+    crossCuttingEvaluations.push(evaluation);
+    applicable.push(actionForAgreementEvaluation(evaluation, reasonPrefix, presentation));
+  };
+  evaluateAndApplyAgreement(
+    'Q8',
+    policy.crossCutting.generalReminderAgreement,
+    unresolvedCategoryIds.length > 0
+      ? `general_reminder_sensitivity:unlisted_verified_category:${unresolvedCategoryIds.join(',')}`
+      : 'general_reminder_sensitivity',
+  );
   if (candidate.isInference) {
-    applicable.push(mapInferenceRule(policy.crossCutting.inferenceRule, riskTier));
+    evaluateAndApplyAgreement(
+      'Q7',
+      policy.crossCutting.inferenceReminderAgreement,
+      'inference_reminder',
+    );
   }
   if (candidate.isUncertain) {
-    applicable.push(mapUncertaintyRule(policy.crossCutting.uncertaintyRule));
+    evaluateAndApplyAgreement(
+      'Q9',
+      policy.crossCutting.uncertainDetectionReminderAgreement,
+      'uncertain_detection_reminder',
+    );
   }
   if (!candidate.taskRelevant) {
-    applicable.push(mapTaskIrrelevantRule(policy.crossCutting.taskIrrelevantRule, riskTier));
+    evaluateAndApplyAgreement(
+      'Q10',
+      policy.crossCutting.taskIrrelevantReminderAgreement,
+      'task_irrelevant_reminder',
+    );
   }
   const triggerAction = strictestAction(applicable);
   const preferenceTriggerLevel = triggerAction.rank as ReminderTriggerLevel;
@@ -896,7 +996,9 @@ export function filterCandidateCue(
     scenarioType: candidate.scenarioType,
     likelihoodTier: candidate.likelihoodTier,
     severityTier: candidate.severityTier,
+    combinedRiskScore,
     exposureLevel: candidate.exposureLevel,
+    crossCuttingEvaluations,
     preferenceTriggerLevel,
     awarenessGapTieBreak,
     preferenceAction,

@@ -15,6 +15,10 @@ export function ProbeInstructionsPage() {
 
   return (
     <section className="content-card instructions-card">
+      <div className="stage-marker" aria-label="Stage II: Probe">
+        <span>Stage II</span>
+        <strong>Probe</strong>
+      </div>
       <p className="eyebrow">VPrivCal-Probe</p>
       <h1>Point first, review second</h1>
       <div className="instruction-hint-row">

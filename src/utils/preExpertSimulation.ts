@@ -12,7 +12,7 @@ import {
   type DecidedCue,
 } from './policyFilter';
 
-const SIMULATION_VERSION = 'vprivcal-pre-expert-simulation-1.0.0';
+const SIMULATION_VERSION = 'vprivcal-pre-expert-simulation-2.0.0';
 const FIXED_TIME = '2026-01-01T00:00:00.000Z';
 
 type Q10Id = 'Q1' | 'Q2' | 'Q3' | 'Q4' | 'Q5' | 'Q6' | 'Q7' | 'Q8' | 'Q9' | 'Q10';
@@ -169,7 +169,7 @@ const profiles: readonly SimulatedProfileDefinition[] = [
     profileId: 'sim_high_protection',
     label: 'Reminder for every cue',
     rationale: 'Requests a visible reminder for every category and cross-cutting condition.',
-    q10Values: q10Values(3, 3, 3, 3, 3),
+    q10Values: q10Values(3, 5, 5, 5, 5),
     defaultProbeAction: 2,
     awarenessStatus: 3,
     expectedPreferenceRanks: {
@@ -189,7 +189,7 @@ const profiles: readonly SimulatedProfileDefinition[] = [
     profileId: 'sim_context_dependent',
     label: 'Context dependent',
     rationale: 'Requests reminders only for selected category-by-context combinations.',
-    q10Values: q10Values(1, 1, 3, 1, 1),
+    q10Values: q10Values(1, 1, 1, 1, 1),
     defaultProbeAction: 0,
     probeActionOverrides: {
       'scene_private_family_party|biometric_data': 0,
@@ -222,7 +222,7 @@ const profiles: readonly SimulatedProfileDefinition[] = [
     profileId: 'sim_uncertainty_sensitive',
     label: 'Uncertainty sensitive',
     rationale: 'Requests a reminder only when the VLM cue is uncertain.',
-    q10Values: q10Values(1, 1, 3, 3, 1),
+    q10Values: q10Values(1, 1, 1, 5, 1),
     defaultProbeAction: 0,
     awarenessStatus: 3,
     expectedPreferenceRanks: {
@@ -242,7 +242,7 @@ const profiles: readonly SimulatedProfileDefinition[] = [
     profileId: 'sim_sensitive_detail_only',
     label: 'Sensitive-detail only',
     rationale: 'Requests reminders only when identifying or sensitive details are exposed.',
-    q10Values: q10Values(2, 1, 2, 1, 1),
+    q10Values: q10Values(2, 1, 1, 1, 1),
     defaultProbeAction: 1,
     awarenessStatus: 1,
     expectedPreferenceRanks: {
@@ -472,9 +472,7 @@ export function runPreExpertSimulation(
     );
   });
 
-  const contextPolicy = profileResults.find(
-    ({ profileId }) => profileId === 'sim_context_dependent',
-  )!.compiledPolicy;
+  const fallbackPolicy = high.compiledPolicy;
   const unknownDecision = requireDecision(filterCandidateCue({
     candidateId: 'audit_unknown_category',
     categoryIds: ['unknown_sensitive_category'],
@@ -486,7 +484,7 @@ export function runPreExpertSimulation(
     exposureLevel: 'PRESENCE_ONLY',
     likelihoodTier: 3,
     severityTier: 3,
-  }, contextPolicy));
+  }, fallbackPolicy));
   const everyDecision = profileResults.flatMap(({ candidateResults }) =>
     candidateResults.map(({ personalizedDecision }) => personalizedDecision),
   );

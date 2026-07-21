@@ -9,6 +9,14 @@ export const sharedActionScale: Q10Option[] = [
   { value: 3, label: 'Show reminders whenever this verified category is present' },
 ];
 
+export const sharedAgreementScale: Q10Option[] = [
+  { value: 1, label: 'Strongly disagree' },
+  { value: 2, label: 'Disagree' },
+  { value: 3, label: 'Neither agree nor disagree' },
+  { value: 4, label: 'Agree' },
+  { value: 5, label: 'Strongly agree' },
+];
+
 const sharedPrompt =
   'When this type of information appears in an egocentric image or video, when should the assistant show a privacy reminder?';
 
@@ -74,43 +82,38 @@ export const q10Questions: Q10Question[] = [
   {
     id: 'Q7',
     title: 'Inferred risks',
-    prompt:
-      'When a visual cue supports a sensitive inference, should the assistant show a brief privacy reminder?',
-    policyParameter: 'inference_reminder_level',
-    options: [
-      { value: 1, label: 'Do not show a privacy reminder' },
-      { value: 3, label: 'Show a brief privacy reminder' },
-    ],
+    prompt: 'How much do you agree with the following statement?',
+    statement:
+      'The assistant should show a privacy reminder when a visual cue supports a sensitive inference.',
+    policyParameter: 'inference_reminder_agreement',
+    options: sharedAgreementScale,
   },
   {
     id: 'Q8',
-    title: 'Other verified privacy categories',
-    prompt:
-      'If experts verify a privacy category that was not covered above, when should the assistant show a reminder?',
-    policyParameter: 'unlisted_category_trigger',
-    options: sharedActionScale,
+    title: 'General reminder sensitivity',
+    prompt: 'How much do you agree with the following statement?',
+    statement:
+      'In general, the assistant should show detected privacy threats to the user.',
+    policyParameter: 'general_reminder_agreement',
+    options: sharedAgreementScale,
   },
   {
     id: 'Q9',
-    title: 'Uncertainty',
-    prompt:
-      'When the assistant is unsure whether a cue is privacy-sensitive, should it show a brief privacy reminder?',
-    policyParameter: 'uncertain_risk_action',
-    options: [
-      { value: 1, label: 'Do not show a privacy reminder' },
-      { value: 3, label: 'Show a brief privacy reminder' },
-    ],
+    title: 'Uncertain detections',
+    prompt: 'How much do you agree with the following statement?',
+    statement:
+      'The assistant should show a privacy reminder when it is uncertain whether a detected visual cue is privacy-sensitive.',
+    policyParameter: 'uncertain_detection_reminder_agreement',
+    options: sharedAgreementScale,
   },
   {
     id: 'Q10',
-    title: 'Task relevance',
-    prompt:
-      'When privacy-sensitive content is visible but not needed for the current task, should the assistant show a brief privacy reminder?',
-    policyParameter: 'task_irrelevant_action',
-    options: [
-      { value: 1, label: 'Do not show a privacy reminder' },
-      { value: 3, label: 'Show a brief privacy reminder' },
-    ],
+    title: 'Task-irrelevant sensitive content',
+    prompt: 'How much do you agree with the following statement?',
+    statement:
+      'The assistant should show a privacy reminder when privacy-sensitive content is visible but not needed for the current task.',
+    policyParameter: 'task_irrelevant_reminder_agreement',
+    options: sharedAgreementScale,
   },
 ];
 

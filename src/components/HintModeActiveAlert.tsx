@@ -13,9 +13,9 @@ export function HintModeActiveAlert({ onContinue }: HintModeActiveAlertProps) {
         aria-describedby="hint-mode-alert-description"
       >
         <div className="hint-mode-alert-icon" aria-hidden="true">i</div>
-        <h2 id="hint-mode-alert-heading">You are in Hint mode of Stage 2</h2>
+        <h2 id="hint-mode-alert-heading">You are in Hint mode of Stage II</h2>
         <p id="hint-mode-alert-description">
-          You are now starting Stage 2: VPrivCal-Probe. First, complete a short interaction hint with the
+          You are now starting Stage II: VPrivCal-Probe. First, complete a short interaction hint with the
           image controls. Follow the on-screen hints through each step; then you will continue
           with the Probe questions.
         </p>

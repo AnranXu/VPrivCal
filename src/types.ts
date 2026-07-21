@@ -86,6 +86,7 @@ export interface Q10Question {
   id: string;
   title: string;
   prompt: string;
+  statement?: string;
   example?: string;
   policyParameter: string;
   categoryId?: string;

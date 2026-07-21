@@ -27,17 +27,53 @@ Use the following sequence:
 
 For minimum sufficient coverage, start with the seven previously selected 12-second continuous-VLM windows. They cover biometric data, background individuals, PII, personal life, legal/cultural sensitivity, a child-related negative/inference control, and a negative privacy control. The Ego4D `Household management - caring for kids` matches are uncertain candidates: collect all of them and manually verify actual child visibility before selecting the shortest usable excerpts. Do not assume that the scenario label proves that a child appears.
 
-[`scripts/filter_candidate_videos.py`](scripts/filter_candidate_videos.py) prepares those source videos. It is dry-run-only unless `--execute` is supplied, never modifies source files, and leaves the real external-drive paths to the researcher:
+[`scripts/filter_candidate_videos.py`](scripts/filter_candidate_videos.py) prepares those source videos. It is dry-run-only unless `--execute` is supplied and never modifies source files. The currently mounted research collection is configured as overridable defaults:
+
+- Ego4D: `E:\ego4d_data\v2\full_scale`
+- FHO annotations: `E:\ego4d_data\v2\annotations\fho_main.json`
+- continuous-VLM stories: `E:\ego4d_data\documents\12 stories final`
+- output: `E:\VPrivCal_pre_expert`
 
 ```powershell
-py scripts/filter_candidate_videos.py `
-  --ego4d-root "<EGO4D_FULL_VIDEO_ROOT>" `
-  --continuous-vlm-root "<CONTINUOUS_VLM_VIDEO_ROOT>" `
-  --output-root "<PRE_EXPERT_CANDIDATE_OUTPUT_ROOT>" `
+python scripts/filter_candidate_videos.py `
+  --previous-mode copy-full `
+  --materialize-fho-first-round `
   --execute
 ```
 
-FFmpeg is required to extract the short continuous-VLM windows. If it is unavailable, add `--previous-mode copy-full` and trim the copied sources later. Use `--skip-ego4d` or `--skip-previous` when only one source collection is mounted.
+Pass explicit root arguments to override those locations. FFmpeg is required to extract the short continuous-VLM windows. The example uses `--previous-mode copy-full` because FFmpeg is not installed on the current workstation; the manifest retains each 12-second start/end pair for later trimming. The missing `story_02/clip_05.mp4` alias is resolved against its audited source under `documents/story_clips_old/story_02_pid_104`. Use `--skip-ego4d` or `--skip-previous` when only one collection is mounted.
+
+An executed collection writes `candidate_video_manifest.csv`, `candidate_video_manifest.json`, and `candidate_detections.json`. It scans `fho_main.json` without loading the 2 GB file into memory and assigns videos with an FHO annotation to review round 1. The current intersection contains 62 videos. `fho_annotated_first_round_manifest.csv`, `fho_annotated_first_round_manifest.json`, and `fho_annotated_first_round.m3u8` provide the filtered queue and playlist. With `--materialize-fho-first-round`, the 62 real video files are also copied into `fho_annotated_first_round_videos`; existing files are safely skipped on reruns. Presence in FHO means only that structured hand-object annotations exist; it does not confirm a child or even another person is visible.
+
+The detection JSON contains six configured policy cues, one negative control, and a separate list of all Ego4D candidates. Ego4D entries deliberately have `childVisible: null` and `policyCandidate: null` until manual review establishes child visibility and calibrated likelihood/severity tiers. Pass `--skip-fho-screen` only when the annotation file is unavailable; those candidates will remain unsplit by review round.
+
+To extract any explicit child-related timestamp language from the complete timestamped Ego4D narrations, run:
+
+```powershell
+python scripts/generate_child_timestamp_review.py
+```
+
+This writes `child_appearance_timestamp_review.csv` and `.json` beside the candidate manifests. Only explicit terms such as *child*, *kid*, *baby*, *boy*, or *girl* produce a timestamp candidate and a `-3/+5` second review window. Generic other-person narration is retained separately and never labeled as a child. An empty child timestamp means only that the annotations did not identify one; visual review remains required.
+
+Manually confirmed results can be upserted without editing generated files directly:
+
+```powershell
+python scripts/record_manual_child_review.py `
+  --video-uid "<VIDEO_UID>" `
+  --child-visible yes `
+  --appearance-start-sec 120 `
+  --appearance-end-sec 145
+```
+
+This maintains `manual_child_visibility_reviews.csv` and `.json`. Omit the timestamp arguments when visibility is confirmed but the exact interval is still pending.
+
+Run the deterministic simulated-profile comparison against that JSON with:
+
+```powershell
+npm run preexpert:simulate
+```
+
+This writes `E:\VPrivCal_pre_expert\simulated_policy_comparison.json`. The report retains the five simulated response exports, compiled policies, candidate metadata, decision reasons, reminder thresholds, safety-floor results, and software versions. It compares the personalized preference action and proof-of-concept guardrailed action with a declared no-filter baseline of rank 0. Exact action agreement is only an implementation-oriented preference-alignment proxy; it is not a measurement of participant satisfaction, detector accuracy, or effectiveness. Tests for this workflow are in [`src/utils/preExpertSimulation.test.ts`](src/utils/preExpertSimulation.test.ts).
 
 The pre-expert gate is complete only when candidate visibility has been manually checked, every simulated decision is reproducible and auditable, and unresolved failures are documented for expert review. The participant-facing profile remains disabled throughout this step. The interface-aligned review form is [`source materials/VPrivCal_Expert_Workshop_Interface_Aligned_v6_1.docx`](source%20materials/VPrivCal_Expert_Workshop_Interface_Aligned_v6_1.docx).
 

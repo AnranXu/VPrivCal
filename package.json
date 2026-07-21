@@ -10,6 +10,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
+    "preexpert:simulate": "node scripts/generate_pre_expert_report.mjs",
     "lint": "eslint . --max-warnings=0",
     "check": "npm run lint && npm run test && npm run build"
   },

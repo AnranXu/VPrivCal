@@ -1,0 +1,1598 @@
+{
+  "schemaVersion": "vprivcal-pre-expert-simulation-1.0.0",
+  "nonEmpirical": true,
+  "interpretation": "This is a deterministic implementation check using deliberately constructed response profiles. It is not evidence about real participant satisfaction or VLM accuracy.",
+  "sourceDetectionJson": "D:\\VPrivCal\\source materials\\pilot videos\\vlm_detections.json",
+  "profiles": [
+    {
+      "profileId": "sim_low_intervention",
+      "label": "Low intervention",
+      "rationale": "Requests normal use and no cross-cutting reminders.",
+      "response": {
+        "schemaVersion": "1.0.0",
+        "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
+        "participantId": "simulated-profile:sim_low_intervention",
+        "sessionId": "session:sim_low_intervention",
+        "startedAt": "2026-01-01T00:00:00.000Z",
+        "completedAt": "2026-01-01T00:00:00.000Z",
+        "userAgent": "deterministic-pre-expert-simulation",
+        "viewportHistory": [],
+        "originalSceneOrder": [
+          "scene_private_family_party",
+          "scene_public_cafe",
+          "scene_semipublic_hospital"
+        ],
+        "randomizedSceneOrder": [
+          "scene_private_family_party",
+          "scene_public_cafe",
+          "scene_semipublic_hospital"
+        ],
+        "consent": {
+          "agreed": true,
+          "prolificId": "simulated-profile:sim_low_intervention",
+          "answeredAt": "2026-01-01T00:00:00.000Z"
+        },
+        "q10": [
+          {
+            "questionId": "Q1",
+            "value": 1,
+            "label": "Use for the current task without interruption",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 1
+          },
+          {
+            "questionId": "Q2",
+            "value": 1,
+            "label": "Use for the current task without interruption",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 1
+          },
+          {
+            "questionId": "Q3",
+            "value": 1,
+            "label": "Use for the current task without interruption",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 1
+          },
+          {
+            "questionId": "Q4",
+            "value": 1,
+            "label": "Use for the current task without interruption",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 1
+          },
+          {
+            "questionId": "Q5",
+            "value": 1,
+            "label": "Use for the current task without interruption",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 1
+          },
+          {
+            "questionId": "Q6",
+            "value": 1,
+            "label": "Use for the current task without interruption",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 1
+          },
+          {
+            "questionId": "Q7",
+            "value": 1,
+            "label": "Ignore it",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 1
+          },
+          {
+            "questionId": "Q8",
+            "value": 1,
+            "label": "Show very few reminders",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 1
+          },
+          {
+            "questionId": "Q9",
+            "value": 1,
+            "label": "Do nothing",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 1
+          },
+          {
+            "questionId": "Q10",
+            "value": 1,
+            "label": "Do nothing",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 1
+          }
+        ],
+        "probe": [
+          {
+            "sceneId": "scene_private_family_party",
+            "startedAt": "2026-01-01T00:00:00.000Z",
+            "completedAt": "2026-01-01T00:00:00.000Z",
+            "pointSelections": [],
+            "categoryResponses": [
+              {
+                "categoryId": "biometric_data",
+                "presentationOrder": 0,
+                "linkedDetectionIds": [
+                  "home_adult_faces",
+                  "home_child_face"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 1,
+                "preferredAction": 0,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "children_images",
+                "presentationOrder": 1,
+                "linkedDetectionIds": [
+                  "home_child_person"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 1,
+                "preferredAction": 0,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "pii",
+                "presentationOrder": 2,
+                "linkedDetectionIds": [
+                  "home_report_card"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 1,
+                "preferredAction": 0,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "legal_sensitivity_information",
+                "presentationOrder": 3,
+                "linkedDetectionIds": [
+                  "home_wall_rifle"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 1,
+                "preferredAction": 0,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "personal_life",
+                "presentationOrder": 4,
+                "linkedDetectionIds": [
+                  "home_family_gathering",
+                  "home_family_photos",
+                  "home_birthday_sign",
+                  "home_child_toys"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 1,
+                "preferredAction": 0,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              }
+            ]
+          },
+          {
+            "sceneId": "scene_public_cafe",
+            "startedAt": "2026-01-01T00:00:00.000Z",
+            "completedAt": "2026-01-01T00:00:00.000Z",
+            "pointSelections": [],
+            "categoryResponses": [
+              {
+                "categoryId": "biometric_data",
+                "presentationOrder": 0,
+                "linkedDetectionIds": [
+                  "cafe_visible_faces"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 1,
+                "preferredAction": 0,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "children_images",
+                "presentationOrder": 1,
+                "linkedDetectionIds": [
+                  "cafe_child"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 1,
+                "preferredAction": 0,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "pii",
+                "presentationOrder": 2,
+                "linkedDetectionIds": [
+                  "cafe_laptop_email",
+                  "cafe_phone_contact",
+                  "cafe_receipt"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 1,
+                "preferredAction": 0,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "background_individuals",
+                "presentationOrder": 3,
+                "linkedDetectionIds": [
+                  "cafe_bystanders"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 1,
+                "preferredAction": 0,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              }
+            ]
+          },
+          {
+            "sceneId": "scene_semipublic_hospital",
+            "startedAt": "2026-01-01T00:00:00.000Z",
+            "completedAt": "2026-01-01T00:00:00.000Z",
+            "pointSelections": [],
+            "categoryResponses": [
+              {
+                "categoryId": "biometric_data",
+                "presentationOrder": 0,
+                "linkedDetectionIds": [
+                  "hospital_visible_faces"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 1,
+                "preferredAction": 0,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "pii",
+                "presentationOrder": 1,
+                "linkedDetectionIds": [
+                  "hospital_intake_form",
+                  "hospital_prescription_bottle",
+                  "hospital_wristband"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 1,
+                "preferredAction": 0,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              }
+            ]
+          }
+        ],
+        "profileConfirmation": null,
+        "timing": {
+          "q10DurationMs": 1000,
+          "probeStartedAt": "2026-01-01T00:00:00.000Z",
+          "probeCompletedAt": "2026-01-01T00:00:00.000Z",
+          "probeDurationMs": 1000,
+          "totalDurationMs": 2000
+        }
+      }
+    },
+    {
+      "profileId": "sim_high_protection",
+      "label": "High protection",
+      "rationale": "Requests avoidance for every category and cross-cutting condition.",
+      "response": {
+        "schemaVersion": "1.0.0",
+        "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
+        "participantId": "simulated-profile:sim_high_protection",
+        "sessionId": "session:sim_high_protection",
+        "startedAt": "2026-01-01T00:00:00.000Z",
+        "completedAt": "2026-01-01T00:00:00.000Z",
+        "userAgent": "deterministic-pre-expert-simulation",
+        "viewportHistory": [],
+        "originalSceneOrder": [
+          "scene_private_family_party",
+          "scene_public_cafe",
+          "scene_semipublic_hospital"
+        ],
+        "randomizedSceneOrder": [
+          "scene_private_family_party",
+          "scene_public_cafe",
+          "scene_semipublic_hospital"
+        ],
+        "consent": {
+          "agreed": true,
+          "prolificId": "simulated-profile:sim_high_protection",
+          "answeredAt": "2026-01-01T00:00:00.000Z"
+        },
+        "q10": [
+          {
+            "questionId": "Q1",
+            "value": 5,
+            "label": "Do not use it unless explicitly requested",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 5
+          },
+          {
+            "questionId": "Q2",
+            "value": 5,
+            "label": "Do not use it unless explicitly requested",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 5
+          },
+          {
+            "questionId": "Q3",
+            "value": 5,
+            "label": "Do not use it unless explicitly requested",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 5
+          },
+          {
+            "questionId": "Q4",
+            "value": 5,
+            "label": "Do not use it unless explicitly requested",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 5
+          },
+          {
+            "questionId": "Q5",
+            "value": 5,
+            "label": "Do not use it unless explicitly requested",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 5
+          },
+          {
+            "questionId": "Q6",
+            "value": 5,
+            "label": "Do not use it unless explicitly requested",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 5
+          },
+          {
+            "questionId": "Q7",
+            "value": 5,
+            "label": "Avoid the inference unless requested",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 5
+          },
+          {
+            "questionId": "Q8",
+            "value": 5,
+            "label": "Show every possible risk",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 5
+          },
+          {
+            "questionId": "Q9",
+            "value": 5,
+            "label": "Avoid using the information until approved",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 5
+          },
+          {
+            "questionId": "Q10",
+            "value": 5,
+            "label": "Avoid it unless requested",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 5
+          }
+        ],
+        "probe": [
+          {
+            "sceneId": "scene_private_family_party",
+            "startedAt": "2026-01-01T00:00:00.000Z",
+            "completedAt": "2026-01-01T00:00:00.000Z",
+            "pointSelections": [],
+            "categoryResponses": [
+              {
+                "categoryId": "biometric_data",
+                "presentationOrder": 0,
+                "linkedDetectionIds": [
+                  "home_adult_faces",
+                  "home_child_face"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 3,
+                "preferredAction": 4,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "children_images",
+                "presentationOrder": 1,
+                "linkedDetectionIds": [
+                  "home_child_person"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 3,
+                "preferredAction": 4,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "pii",
+                "presentationOrder": 2,
+                "linkedDetectionIds": [
+                  "home_report_card"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 3,
+                "preferredAction": 4,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "legal_sensitivity_information",
+                "presentationOrder": 3,
+                "linkedDetectionIds": [
+                  "home_wall_rifle"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 3,
+                "preferredAction": 4,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "personal_life",
+                "presentationOrder": 4,
+                "linkedDetectionIds": [
+                  "home_family_gathering",
+                  "home_family_photos",
+                  "home_birthday_sign",
+                  "home_child_toys"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 3,
+                "preferredAction": 4,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              }
+            ]
+          },
+          {
+            "sceneId": "scene_public_cafe",
+            "startedAt": "2026-01-01T00:00:00.000Z",
+            "completedAt": "2026-01-01T00:00:00.000Z",
+            "pointSelections": [],
+            "categoryResponses": [
+              {
+                "categoryId": "biometric_data",
+                "presentationOrder": 0,
+                "linkedDetectionIds": [
+                  "cafe_visible_faces"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 3,
+                "preferredAction": 4,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "children_images",
+                "presentationOrder": 1,
+                "linkedDetectionIds": [
+                  "cafe_child"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 3,
+                "preferredAction": 4,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "pii",
+                "presentationOrder": 2,
+                "linkedDetectionIds": [
+                  "cafe_laptop_email",
+                  "cafe_phone_contact",
+                  "cafe_receipt"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 3,
+                "preferredAction": 4,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "background_individuals",
+                "presentationOrder": 3,
+                "linkedDetectionIds": [
+                  "cafe_bystanders"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 3,
+                "preferredAction": 4,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              }
+            ]
+          },
+          {
+            "sceneId": "scene_semipublic_hospital",
+            "startedAt": "2026-01-01T00:00:00.000Z",
+            "completedAt": "2026-01-01T00:00:00.000Z",
+            "pointSelections": [],
+            "categoryResponses": [
+              {
+                "categoryId": "biometric_data",
+                "presentationOrder": 0,
+                "linkedDetectionIds": [
+                  "hospital_visible_faces"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 3,
+                "preferredAction": 4,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "pii",
+                "presentationOrder": 1,
+                "linkedDetectionIds": [
+                  "hospital_intake_form",
+                  "hospital_prescription_bottle",
+                  "hospital_wristband"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 3,
+                "preferredAction": 4,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              }
+            ]
+          }
+        ],
+        "profileConfirmation": null,
+        "timing": {
+          "q10DurationMs": 1000,
+          "probeStartedAt": "2026-01-01T00:00:00.000Z",
+          "probeCompletedAt": "2026-01-01T00:00:00.000Z",
+          "probeDurationMs": 1000,
+          "totalDurationMs": 2000
+        }
+      }
+    },
+    {
+      "profileId": "sim_context_dependent",
+      "label": "Context dependent",
+      "rationale": "Uses different actions for private, public, and semi-public observations.",
+      "response": {
+        "schemaVersion": "1.0.0",
+        "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
+        "participantId": "simulated-profile:sim_context_dependent",
+        "sessionId": "session:sim_context_dependent",
+        "startedAt": "2026-01-01T00:00:00.000Z",
+        "completedAt": "2026-01-01T00:00:00.000Z",
+        "userAgent": "deterministic-pre-expert-simulation",
+        "viewportHistory": [],
+        "originalSceneOrder": [
+          "scene_private_family_party",
+          "scene_public_cafe",
+          "scene_semipublic_hospital"
+        ],
+        "randomizedSceneOrder": [
+          "scene_private_family_party",
+          "scene_public_cafe",
+          "scene_semipublic_hospital"
+        ],
+        "consent": {
+          "agreed": true,
+          "prolificId": "simulated-profile:sim_context_dependent",
+          "answeredAt": "2026-01-01T00:00:00.000Z"
+        },
+        "q10": [
+          {
+            "questionId": "Q1",
+            "value": 3,
+            "label": "Give a brief reminder",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 3
+          },
+          {
+            "questionId": "Q2",
+            "value": 3,
+            "label": "Give a brief reminder",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 3
+          },
+          {
+            "questionId": "Q3",
+            "value": 3,
+            "label": "Give a brief reminder",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 3
+          },
+          {
+            "questionId": "Q4",
+            "value": 3,
+            "label": "Give a brief reminder",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 3
+          },
+          {
+            "questionId": "Q5",
+            "value": 3,
+            "label": "Give a brief reminder",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 3
+          },
+          {
+            "questionId": "Q6",
+            "value": 3,
+            "label": "Give a brief reminder",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 3
+          },
+          {
+            "questionId": "Q7",
+            "value": 2,
+            "label": "Remind only for likely/serious cases",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 2
+          },
+          {
+            "questionId": "Q8",
+            "value": 4,
+            "label": "Show most plausible risks",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 4
+          },
+          {
+            "questionId": "Q9",
+            "value": 2,
+            "label": "Show a quiet indicator",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 2
+          },
+          {
+            "questionId": "Q10",
+            "value": 2,
+            "label": "Remind only if serious",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 2
+          }
+        ],
+        "probe": [
+          {
+            "sceneId": "scene_private_family_party",
+            "startedAt": "2026-01-01T00:00:00.000Z",
+            "completedAt": "2026-01-01T00:00:00.000Z",
+            "pointSelections": [],
+            "categoryResponses": [
+              {
+                "categoryId": "biometric_data",
+                "presentationOrder": 0,
+                "linkedDetectionIds": [
+                  "home_adult_faces",
+                  "home_child_face"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 2,
+                "preferredAction": 1,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "children_images",
+                "presentationOrder": 1,
+                "linkedDetectionIds": [
+                  "home_child_person"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 2,
+                "preferredAction": 2,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "pii",
+                "presentationOrder": 2,
+                "linkedDetectionIds": [
+                  "home_report_card"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 2,
+                "preferredAction": 4,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "legal_sensitivity_information",
+                "presentationOrder": 3,
+                "linkedDetectionIds": [
+                  "home_wall_rifle"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 2,
+                "preferredAction": 2,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "personal_life",
+                "presentationOrder": 4,
+                "linkedDetectionIds": [
+                  "home_family_gathering",
+                  "home_family_photos",
+                  "home_birthday_sign",
+                  "home_child_toys"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 2,
+                "preferredAction": 1,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              }
+            ]
+          },
+          {
+            "sceneId": "scene_public_cafe",
+            "startedAt": "2026-01-01T00:00:00.000Z",
+            "completedAt": "2026-01-01T00:00:00.000Z",
+            "pointSelections": [],
+            "categoryResponses": [
+              {
+                "categoryId": "biometric_data",
+                "presentationOrder": 0,
+                "linkedDetectionIds": [
+                  "cafe_visible_faces"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 2,
+                "preferredAction": 2,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "children_images",
+                "presentationOrder": 1,
+                "linkedDetectionIds": [
+                  "cafe_child"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 2,
+                "preferredAction": 2,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "pii",
+                "presentationOrder": 2,
+                "linkedDetectionIds": [
+                  "cafe_laptop_email",
+                  "cafe_phone_contact",
+                  "cafe_receipt"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 2,
+                "preferredAction": 3,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "background_individuals",
+                "presentationOrder": 3,
+                "linkedDetectionIds": [
+                  "cafe_bystanders"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 2,
+                "preferredAction": 3,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              }
+            ]
+          },
+          {
+            "sceneId": "scene_semipublic_hospital",
+            "startedAt": "2026-01-01T00:00:00.000Z",
+            "completedAt": "2026-01-01T00:00:00.000Z",
+            "pointSelections": [],
+            "categoryResponses": [
+              {
+                "categoryId": "biometric_data",
+                "presentationOrder": 0,
+                "linkedDetectionIds": [
+                  "hospital_visible_faces"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 2,
+                "preferredAction": 2,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "pii",
+                "presentationOrder": 1,
+                "linkedDetectionIds": [
+                  "hospital_intake_form",
+                  "hospital_prescription_bottle",
+                  "hospital_wristband"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 2,
+                "preferredAction": 3,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              }
+            ]
+          }
+        ],
+        "profileConfirmation": null,
+        "timing": {
+          "q10DurationMs": 1000,
+          "probeStartedAt": "2026-01-01T00:00:00.000Z",
+          "probeCompletedAt": "2026-01-01T00:00:00.000Z",
+          "probeDurationMs": 1000,
+          "totalDurationMs": 2000
+        }
+      }
+    },
+    {
+      "profileId": "sim_uncertainty_sensitive",
+      "label": "Uncertainty sensitive",
+      "rationale": "Usually handles silently but avoids use when a cue is uncertain.",
+      "response": {
+        "schemaVersion": "1.0.0",
+        "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
+        "participantId": "simulated-profile:sim_uncertainty_sensitive",
+        "sessionId": "session:sim_uncertainty_sensitive",
+        "startedAt": "2026-01-01T00:00:00.000Z",
+        "completedAt": "2026-01-01T00:00:00.000Z",
+        "userAgent": "deterministic-pre-expert-simulation",
+        "viewportHistory": [],
+        "originalSceneOrder": [
+          "scene_private_family_party",
+          "scene_public_cafe",
+          "scene_semipublic_hospital"
+        ],
+        "randomizedSceneOrder": [
+          "scene_private_family_party",
+          "scene_public_cafe",
+          "scene_semipublic_hospital"
+        ],
+        "consent": {
+          "agreed": true,
+          "prolificId": "simulated-profile:sim_uncertainty_sensitive",
+          "answeredAt": "2026-01-01T00:00:00.000Z"
+        },
+        "q10": [
+          {
+            "questionId": "Q1",
+            "value": 2,
+            "label": "Handle silently and avoid unnecessary detail",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 2
+          },
+          {
+            "questionId": "Q2",
+            "value": 2,
+            "label": "Handle silently and avoid unnecessary detail",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 2
+          },
+          {
+            "questionId": "Q3",
+            "value": 2,
+            "label": "Handle silently and avoid unnecessary detail",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 2
+          },
+          {
+            "questionId": "Q4",
+            "value": 2,
+            "label": "Handle silently and avoid unnecessary detail",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 2
+          },
+          {
+            "questionId": "Q5",
+            "value": 2,
+            "label": "Handle silently and avoid unnecessary detail",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 2
+          },
+          {
+            "questionId": "Q6",
+            "value": 2,
+            "label": "Handle silently and avoid unnecessary detail",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 2
+          },
+          {
+            "questionId": "Q7",
+            "value": 3,
+            "label": "Give a brief reminder",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 3
+          },
+          {
+            "questionId": "Q8",
+            "value": 5,
+            "label": "Show every possible risk",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 5
+          },
+          {
+            "questionId": "Q9",
+            "value": 5,
+            "label": "Avoid using the information until approved",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 5
+          },
+          {
+            "questionId": "Q10",
+            "value": 1,
+            "label": "Do nothing",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 1
+          }
+        ],
+        "probe": [
+          {
+            "sceneId": "scene_private_family_party",
+            "startedAt": "2026-01-01T00:00:00.000Z",
+            "completedAt": "2026-01-01T00:00:00.000Z",
+            "pointSelections": [],
+            "categoryResponses": [
+              {
+                "categoryId": "biometric_data",
+                "presentationOrder": 0,
+                "linkedDetectionIds": [
+                  "home_adult_faces",
+                  "home_child_face"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 3,
+                "preferredAction": 1,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "children_images",
+                "presentationOrder": 1,
+                "linkedDetectionIds": [
+                  "home_child_person"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 3,
+                "preferredAction": 1,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "pii",
+                "presentationOrder": 2,
+                "linkedDetectionIds": [
+                  "home_report_card"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 3,
+                "preferredAction": 1,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "legal_sensitivity_information",
+                "presentationOrder": 3,
+                "linkedDetectionIds": [
+                  "home_wall_rifle"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 3,
+                "preferredAction": 1,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "personal_life",
+                "presentationOrder": 4,
+                "linkedDetectionIds": [
+                  "home_family_gathering",
+                  "home_family_photos",
+                  "home_birthday_sign",
+                  "home_child_toys"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 3,
+                "preferredAction": 1,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              }
+            ]
+          },
+          {
+            "sceneId": "scene_public_cafe",
+            "startedAt": "2026-01-01T00:00:00.000Z",
+            "completedAt": "2026-01-01T00:00:00.000Z",
+            "pointSelections": [],
+            "categoryResponses": [
+              {
+                "categoryId": "biometric_data",
+                "presentationOrder": 0,
+                "linkedDetectionIds": [
+                  "cafe_visible_faces"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 3,
+                "preferredAction": 1,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "children_images",
+                "presentationOrder": 1,
+                "linkedDetectionIds": [
+                  "cafe_child"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 3,
+                "preferredAction": 1,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "pii",
+                "presentationOrder": 2,
+                "linkedDetectionIds": [
+                  "cafe_laptop_email",
+                  "cafe_phone_contact",
+                  "cafe_receipt"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 3,
+                "preferredAction": 1,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "background_individuals",
+                "presentationOrder": 3,
+                "linkedDetectionIds": [
+                  "cafe_bystanders"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 3,
+                "preferredAction": 1,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              }
+            ]
+          },
+          {
+            "sceneId": "scene_semipublic_hospital",
+            "startedAt": "2026-01-01T00:00:00.000Z",
+            "completedAt": "2026-01-01T00:00:00.000Z",
+            "pointSelections": [],
+            "categoryResponses": [
+              {
+                "categoryId": "biometric_data",
+                "presentationOrder": 0,
+                "linkedDetectionIds": [
+                  "hospital_visible_faces"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 3,
+                "preferredAction": 1,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "pii",
+                "presentationOrder": 1,
+                "linkedDetectionIds": [
+                  "hospital_intake_form",
+                  "hospital_prescription_bottle",
+                  "hospital_wristband"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 3,
+                "preferredAction": 1,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              }
+            ]
+          }
+        ],
+        "profileConfirmation": null,
+        "timing": {
+          "q10DurationMs": 1000,
+          "probeStartedAt": "2026-01-01T00:00:00.000Z",
+          "probeCompletedAt": "2026-01-01T00:00:00.000Z",
+          "probeDurationMs": 1000,
+          "totalDurationMs": 2000
+        }
+      }
+    },
+    {
+      "profileId": "sim_reminder_averse",
+      "label": "Reminder averse",
+      "rationale": "Requests reminders in principle but Q8 retains them only at risk tier five.",
+      "response": {
+        "schemaVersion": "1.0.0",
+        "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
+        "participantId": "simulated-profile:sim_reminder_averse",
+        "sessionId": "session:sim_reminder_averse",
+        "startedAt": "2026-01-01T00:00:00.000Z",
+        "completedAt": "2026-01-01T00:00:00.000Z",
+        "userAgent": "deterministic-pre-expert-simulation",
+        "viewportHistory": [],
+        "originalSceneOrder": [
+          "scene_private_family_party",
+          "scene_public_cafe",
+          "scene_semipublic_hospital"
+        ],
+        "randomizedSceneOrder": [
+          "scene_private_family_party",
+          "scene_public_cafe",
+          "scene_semipublic_hospital"
+        ],
+        "consent": {
+          "agreed": true,
+          "prolificId": "simulated-profile:sim_reminder_averse",
+          "answeredAt": "2026-01-01T00:00:00.000Z"
+        },
+        "q10": [
+          {
+            "questionId": "Q1",
+            "value": 3,
+            "label": "Give a brief reminder",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 3
+          },
+          {
+            "questionId": "Q2",
+            "value": 3,
+            "label": "Give a brief reminder",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 3
+          },
+          {
+            "questionId": "Q3",
+            "value": 3,
+            "label": "Give a brief reminder",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 3
+          },
+          {
+            "questionId": "Q4",
+            "value": 3,
+            "label": "Give a brief reminder",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 3
+          },
+          {
+            "questionId": "Q5",
+            "value": 3,
+            "label": "Give a brief reminder",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 3
+          },
+          {
+            "questionId": "Q6",
+            "value": 3,
+            "label": "Give a brief reminder",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 3
+          },
+          {
+            "questionId": "Q7",
+            "value": 1,
+            "label": "Ignore it",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 1
+          },
+          {
+            "questionId": "Q8",
+            "value": 1,
+            "label": "Show very few reminders",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 1
+          },
+          {
+            "questionId": "Q9",
+            "value": 1,
+            "label": "Do nothing",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 1
+          },
+          {
+            "questionId": "Q10",
+            "value": 1,
+            "label": "Do nothing",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 1
+          }
+        ],
+        "probe": [
+          {
+            "sceneId": "scene_private_family_party",
+            "startedAt": "2026-01-01T00:00:00.000Z",
+            "completedAt": "2026-01-01T00:00:00.000Z",
+            "pointSelections": [],
+            "categoryResponses": [
+              {
+                "categoryId": "biometric_data",
+                "presentationOrder": 0,
+                "linkedDetectionIds": [
+                  "home_adult_faces",
+                  "home_child_face"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 1,
+                "preferredAction": 2,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "children_images",
+                "presentationOrder": 1,
+                "linkedDetectionIds": [
+                  "home_child_person"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 1,
+                "preferredAction": 2,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "pii",
+                "presentationOrder": 2,
+                "linkedDetectionIds": [
+                  "home_report_card"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 1,
+                "preferredAction": 2,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "legal_sensitivity_information",
+                "presentationOrder": 3,
+                "linkedDetectionIds": [
+                  "home_wall_rifle"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 1,
+                "preferredAction": 2,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "personal_life",
+                "presentationOrder": 4,
+                "linkedDetectionIds": [
+                  "home_family_gathering",
+                  "home_family_photos",
+                  "home_birthday_sign",
+                  "home_child_toys"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 1,
+                "preferredAction": 2,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              }
+            ]
+          },
+          {
+            "sceneId": "scene_public_cafe",
+            "startedAt": "2026-01-01T00:00:00.000Z",
+            "completedAt": "2026-01-01T00:00:00.000Z",
+            "pointSelections": [],
+            "categoryResponses": [
+              {
+                "categoryId": "biometric_data",
+                "presentationOrder": 0,
+                "linkedDetectionIds": [
+                  "cafe_visible_faces"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 1,
+                "preferredAction": 2,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "children_images",
+                "presentationOrder": 1,
+                "linkedDetectionIds": [
+                  "cafe_child"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 1,
+                "preferredAction": 2,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "pii",
+                "presentationOrder": 2,
+                "linkedDetectionIds": [
+                  "cafe_laptop_email",
+                  "cafe_phone_contact",
+                  "cafe_receipt"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 1,
+                "preferredAction": 2,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "background_individuals",
+                "presentationOrder": 3,
+                "linkedDetectionIds": [
+                  "cafe_bystanders"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 1,
+                "preferredAction": 2,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              }
+            ]
+          },
+          {
+            "sceneId": "scene_semipublic_hospital",
+            "startedAt": "2026-01-01T00:00:00.000Z",
+            "completedAt": "2026-01-01T00:00:00.000Z",
+            "pointSelections": [],
+            "categoryResponses": [
+              {
+                "categoryId": "biometric_data",
+                "presentationOrder": 0,
+                "linkedDetectionIds": [
+                  "hospital_visible_faces"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 1,
+                "preferredAction": 2,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              },
+              {
+                "categoryId": "pii",
+                "presentationOrder": 1,
+                "linkedDetectionIds": [
+                  "hospital_intake_form",
+                  "hospital_prescription_bottle",
+                  "hospital_wristband"
+                ],
+                "spontaneouslySelected": false,
+                "awarenessStatus": 1,
+                "preferredAction": 2,
+                "evidenceOpened": false,
+                "evidenceToggleCount": 0,
+                "changes": 0,
+                "durationMs": 1000
+              }
+            ]
+          }
+        ],
+        "profileConfirmation": null,
+        "timing": {
+          "q10DurationMs": 1000,
+          "probeStartedAt": "2026-01-01T00:00:00.000Z",
+          "probeCompletedAt": "2026-01-01T00:00:00.000Z",
+          "probeDurationMs": 1000,
+          "totalDurationMs": 2000
+        }
+      }
+    }
+  ]
+}

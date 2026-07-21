@@ -1,0 +1,333 @@
+{
+  "schemaVersion": "vprivcal-pilot-vlm-detections-1.0.0",
+  "nonEmpirical": true,
+  "purpose": "VLM-assisted visual review of the six cut pilot videos for deterministic pre-expert policy verification. These observations are simulated-study inputs, not detector-accuracy evidence or human-coded ground truth.",
+  "manualVerificationRequired": true,
+  "generatedAt": "2026-07-21",
+  "taxonomySource": "public/data/vprivcal_detections.json",
+  "analysisMethod": {
+    "reviewer": "OpenAI Codex integrated visual capability",
+    "sampling": "Contact sheets sampled at approximately two-second intervals, with full-resolution evidence frames inspected for small or textual content.",
+    "tierProvenance": "Likelihood and severity tiers are pre-expert researcher heuristics for exercising the rule engine; they are not calibrated probabilities.",
+    "limitations": [
+      "The review is visual-only and does not infer identity, demographic attributes, or intent.",
+      "A sampled-frame review can miss short-lived content between samples.",
+      "Religious or cultural meaning is recorded as uncertain when the pixels support only an offering-like arrangement.",
+      "Human confirmation is required before treating these labels as study ground truth."
+    ]
+  },
+  "sourceDirectory": "source materials/pilot videos",
+  "counts": {
+    "reviewedVideos": 6,
+    "configuredDetections": 6,
+    "configuredPolicyCandidates": 4,
+    "configuredNegativeControls": 2,
+    "uncertainPolicyCandidates": 1
+  },
+  "configuredDetections": [
+    {
+      "detectionId": "pilot_01_children_in_home",
+      "label": "Two children visible at close range in a private home",
+      "expectedPrivacyCue": true,
+      "manualReviewStatus": "vlm_reviewed_needs_human_confirmation",
+      "manualReviewNote": "Two children remain visible throughout most sampled frames. Their faces are blurred in the supplied video, so biometric identification is not claimed. The home interior also reveals personal-life context.",
+      "source": {
+        "fileName": "47249b6c-5d9c-44dd-9ab9-a68fa59ccb3f 00_07_45-00_08_06.mp4",
+        "durationSec": 21.233333,
+        "width": 1440,
+        "height": 1080,
+        "sampledAtSec": [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20
+        ]
+      },
+      "observedEvidence": [
+        "Two child-sized people are the primary foreground subjects.",
+        "The setting is an indoor domestic dining or living area.",
+        "Faces are already visibly blurred in the supplied frames."
+      ],
+      "negativeFindings": [
+        "No readable names, addresses, account details, or other textual PII were observed.",
+        "No unblurred face-level biometric identification is asserted."
+      ],
+      "vlmAssessment": {
+        "observationConfidence": "high",
+        "privacyInterpretationConfidence": "high"
+      },
+      "policyCandidate": {
+        "candidateId": "pilot_01_children_in_home",
+        "stableRegionId": "video:47249b6c-5d9c-44dd-9ab9-a68fa59ccb3f:0-21.233333",
+        "categoryIds": [
+          "children_images",
+          "personal_life"
+        ],
+        "scenarioType": "private",
+        "isInference": false,
+        "isUncertain": false,
+        "taskRelevant": true,
+        "explicitlyRequested": false,
+        "likelihoodTier": 5,
+        "severityTier": 4,
+        "reasonCodes": [
+          "vlm_visual_review",
+          "children_directly_visible",
+          "private_home_context",
+          "faces_blurred_in_source"
+        ]
+      }
+    },
+    {
+      "detectionId": "pilot_02_outdoor_offering",
+      "label": "Offering-like arrangement in a private garden",
+      "expectedPrivacyCue": true,
+      "manualReviewStatus": "vlm_reviewed_needs_human_confirmation",
+      "manualReviewNote": "A bowl or plate containing food-like items is visible beside a small flame and plants. The arrangement may indicate a household ritual or offering, but that cultural or religious interpretation cannot be confirmed from pixels alone.",
+      "source": {
+        "fileName": "story_02_clip_05 00_01_34-00_01_46.mp4",
+        "durationSec": 12.244303,
+        "width": 1440,
+        "height": 1080,
+        "sampledAtSec": [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12
+        ]
+      },
+      "observedEvidence": [
+        "A food-like bowl or plate is positioned at the edge of a private garden.",
+        "A small flame or burning material is visible beside the arrangement.",
+        "The camera wearer approaches and interacts with nearby plants."
+      ],
+      "negativeFindings": [
+        "No person other than the camera wearer's arm is clearly visible.",
+        "No text or identity information is readable.",
+        "The scene does not by itself prove a religious or cultural practice."
+      ],
+      "vlmAssessment": {
+        "observationConfidence": "high",
+        "privacyInterpretationConfidence": "medium"
+      },
+      "policyCandidate": {
+        "candidateId": "pilot_02_outdoor_offering",
+        "stableRegionId": "video:story_02:clip_05:94-106",
+        "categoryIds": [
+          "legal_sensitivity_information",
+          "personal_life"
+        ],
+        "scenarioType": "private",
+        "isInference": true,
+        "isUncertain": true,
+        "taskRelevant": false,
+        "explicitlyRequested": false,
+        "likelihoodTier": 3,
+        "severityTier": 4,
+        "reasonCodes": [
+          "vlm_visual_review",
+          "private_home_context",
+          "offering_or_ritual_inference_uncertain",
+          "task_relevance_not_visually_established"
+        ]
+      }
+    },
+    {
+      "detectionId": "pilot_03_visible_name_craft",
+      "label": "Personal name visible on a handmade craft",
+      "expectedPrivacyCue": true,
+      "manualReviewStatus": "vlm_reviewed_needs_human_confirmation",
+      "manualReviewNote": "The name GABRIELE is legible in large letters on an elephant-themed felt craft. The craft style could be child-related, but no child is visible and the policy cue is limited to direct PII.",
+      "source": {
+        "fileName": "story_04_clip_05 00_00_09-00_00_21.mp4",
+        "durationSec": 14.333333,
+        "width": 1440,
+        "height": 1080,
+        "sampledAtSec": [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14
+        ]
+      },
+      "observedEvidence": [
+        "The text GABRIELE is legible across multiple sampled frames.",
+        "The text appears on a handmade elephant-themed felt craft."
+      ],
+      "negativeFindings": [
+        "No child is visible in the sampled frames.",
+        "The craft's intended owner or maker cannot be established visually."
+      ],
+      "vlmAssessment": {
+        "observationConfidence": "high",
+        "privacyInterpretationConfidence": "high"
+      },
+      "policyCandidate": {
+        "candidateId": "pilot_03_visible_name_craft",
+        "stableRegionId": "video:story_04:clip_05:9-21",
+        "categoryIds": [
+          "pii"
+        ],
+        "scenarioType": "private",
+        "isInference": false,
+        "isUncertain": false,
+        "taskRelevant": false,
+        "explicitlyRequested": false,
+        "likelihoodTier": 5,
+        "severityTier": 3,
+        "reasonCodes": [
+          "vlm_visual_review",
+          "readable_personal_name",
+          "child_presence_not_observed",
+          "task_relevance_not_visually_established"
+        ]
+      }
+    },
+    {
+      "detectionId": "pilot_04_basketball_player",
+      "label": "Another basketball player captured in a public court",
+      "expectedPrivacyCue": true,
+      "manualReviewStatus": "vlm_reviewed_needs_human_confirmation",
+      "manualReviewNote": "At least one other player is clearly present and is a primary foreground subject in several frames. Motion blur limits face detail but does not remove the background-individual privacy cue.",
+      "source": {
+        "fileName": "story_12_clip_02 00_00_00-00_00_12.mp4",
+        "durationSec": 12.566667,
+        "width": 1440,
+        "height": 1080,
+        "sampledAtSec": [
+          0,
+          0.5,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12
+        ]
+      },
+      "observedEvidence": [
+        "Another person is visibly playing basketball near the camera wearer.",
+        "The scene is an outdoor shared court under public lighting.",
+        "Clothing, body shape, and a motion-blurred face are visible."
+      ],
+      "negativeFindings": [
+        "No readable name, number, or other textual identifier is observed.",
+        "Fine facial detail is limited by motion blur."
+      ],
+      "vlmAssessment": {
+        "observationConfidence": "high",
+        "privacyInterpretationConfidence": "high"
+      },
+      "policyCandidate": {
+        "candidateId": "pilot_04_basketball_player",
+        "stableRegionId": "video:story_12:clip_02:0-12",
+        "categoryIds": [
+          "background_individuals",
+          "biometric_data"
+        ],
+        "scenarioType": "public",
+        "isInference": false,
+        "isUncertain": false,
+        "taskRelevant": true,
+        "explicitlyRequested": false,
+        "likelihoodTier": 5,
+        "severityTier": 3,
+        "reasonCodes": [
+          "vlm_visual_review",
+          "other_person_directly_visible",
+          "public_shared_space",
+          "face_detail_motion_blurred"
+        ]
+      }
+    },
+    {
+      "detectionId": "pilot_05_lab_control_screen",
+      "label": "Laboratory temperature-control interface without visible PII",
+      "expectedPrivacyCue": false,
+      "manualReviewStatus": "vlm_rejected_taxonomy_mismatch",
+      "manualReviewNote": "The screen shows an MTI Temperature Control System interface and plotted operational values. No name, patient record, account identifier, or other readable PII is visible. Confidential workplace information is plausible, but it is not represented by the current six-category VPrivCal taxonomy and must not be mislabeled as PII.",
+      "source": {
+        "fileName": "story_12_clip_03 00_00_46-00_00_58.mp4",
+        "durationSec": 15.9,
+        "width": 1440,
+        "height": 1080,
+        "sampledAtSec": [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          11,
+          12,
+          14
+        ]
+      },
+      "observedEvidence": [
+        "A laboratory workstation and equipment are visible.",
+        "The screen title reads MTI Temperature Control System MTS-01.",
+        "Operational controls and a plotted curve are visible."
+      ],
+      "negativeFindings": [
+        "No personally identifiable information is readable.",
+        "No person other than the camera wearer's gloved hands is visible.",
+        "The current VPrivCal taxonomy has no dedicated confidential-workplace-data category."
+      ],
+      "vlmAssessment": {
+        "observationConfidence": "high",
+        "privacyInterpretationConfidence": "medium"
+      },
+      "policyCandidate": null
+    },
+    {
+      "detectionId": "pilot_06_gaming_screen",
+      "label": "Gaming workstation with no wearer face visible",
+      "expectedPrivacyCue": false,
+      "manualReviewStatus": "rejected_false_positive",
+      "manualReviewNote": "The clip consistently shows a fighting game on a monitor, a laptop, a phone, and desk equipment. No wearer face, reflected face, or readable personal account information is visible.",
+      "source": {
+        "fileName": "story_12_clip_05 00_00_00-00_00_12.mp4",
+        "durationSec": 12.599675,
+        "width": 1440,
+        "height": 1080,
+        "sampledAtSec": [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12
+        ]
+      },
+      "observedEvidence": [
+        "A fighting game is shown on the main monitor.",
+        "A laptop, phone, keyboard, controller, and desk are visible."
+      ],
+      "negativeFindings": [
+        "No camera-wearer face or reflected face is visible.",
+        "No readable personal account name or message is visible."
+      ],
+      "vlmAssessment": {
+        "observationConfidence": "high",
+        "privacyInterpretationConfidence": "high"
+      },
+      "policyCandidate": null
+    }
+  ],
+  "ego4dManualReviewCandidates": []
+}

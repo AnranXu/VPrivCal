@@ -76,27 +76,19 @@
     },
     "preferredAction": {
       "id": "preferred_action",
-      "prompt": "When similar content appears in the future, what should the assistant do?",
+      "prompt": "When should the assistant show a privacy reminder for similar visual content?",
       "options": [
         {
           "value": 0,
-          "label": "No intervention"
+          "label": "Do not show reminders for this category"
         },
         {
           "value": 1,
-          "label": "Handle it silently"
+          "label": "Show reminders only when identifying or sensitive details are exposed"
         },
         {
           "value": 2,
-          "label": "Give a brief reminder"
-        },
-        {
-          "value": 3,
-          "label": "Ask before using it"
-        },
-        {
-          "value": 4,
-          "label": "Avoid using it unless I explicitly request it"
+          "label": "Show reminders whenever this verified category is present"
         }
       ]
     }

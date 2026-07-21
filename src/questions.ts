@@ -1,15 +1,16 @@
 import type { Q10Option, Q10Question } from './types';
 
 export const sharedActionScale: Q10Option[] = [
-  { value: 1, label: 'Use for the current task without interruption' },
-  { value: 2, label: 'Handle silently and avoid unnecessary detail' },
-  { value: 3, label: 'Give a brief reminder' },
-  { value: 4, label: 'Ask before using it' },
-  { value: 5, label: 'Do not use it unless explicitly requested' },
+  { value: 1, label: 'Do not show reminders for this category' },
+  {
+    value: 2,
+    label: 'Show reminders only when identifying or sensitive details are exposed',
+  },
+  { value: 3, label: 'Show reminders whenever this verified category is present' },
 ];
 
 const sharedPrompt =
-  'When this type of information appears in an egocentric image or video, what should the assistant do by default?';
+  'When this type of information appears in an egocentric image or video, when should the assistant show a privacy reminder?';
 
 export const q10Questions: Q10Question[] = [
   {
@@ -74,56 +75,41 @@ export const q10Questions: Q10Question[] = [
     id: 'Q7',
     title: 'Inferred risks',
     prompt:
-      'When a visual cue supports a sensitive inference, should the system ignore it, remind only for likely/serious cases, give a brief reminder, ask first, or avoid the inference unless requested?',
+      'When a visual cue supports a sensitive inference, should the assistant show a brief privacy reminder?',
     policyParameter: 'inference_reminder_level',
     options: [
-      { value: 1, label: 'Ignore it' },
-      { value: 2, label: 'Remind only for likely/serious cases' },
-      { value: 3, label: 'Give a brief reminder' },
-      { value: 4, label: 'Ask first' },
-      { value: 5, label: 'Avoid the inference unless requested' },
+      { value: 1, label: 'Do not show a privacy reminder' },
+      { value: 3, label: 'Show a brief privacy reminder' },
     ],
   },
   {
     id: 'Q8',
-    title: 'Reminder sensitivity',
+    title: 'Other verified privacy categories',
     prompt:
-      'Should the system show very few reminders, serious/likely reminders only, balance misses and false alarms, show most plausible risks, or show every possible risk?',
-    policyParameter: 'reminder_sensitivity',
-    options: [
-      { value: 1, label: 'Show very few reminders' },
-      { value: 2, label: 'Show serious/likely reminders only' },
-      { value: 3, label: 'Balance misses and false alarms' },
-      { value: 4, label: 'Show most plausible risks' },
-      { value: 5, label: 'Show every possible risk' },
-    ],
+      'If experts verify a privacy category that was not covered above, when should the assistant show a reminder?',
+    policyParameter: 'unlisted_category_trigger',
+    options: sharedActionScale,
   },
   {
     id: 'Q9',
     title: 'Uncertainty',
     prompt:
-      'When sensitivity is uncertain, should the system do nothing, show a quiet indicator, give a brief uncertain reminder, ask first, or avoid using the information until approved?',
+      'When the assistant is unsure whether a cue is privacy-sensitive, should it show a brief privacy reminder?',
     policyParameter: 'uncertain_risk_action',
     options: [
-      { value: 1, label: 'Do nothing' },
-      { value: 2, label: 'Show a quiet indicator' },
-      { value: 3, label: 'Give a brief uncertain reminder' },
-      { value: 4, label: 'Ask first' },
-      { value: 5, label: 'Avoid using the information until approved' },
+      { value: 1, label: 'Do not show a privacy reminder' },
+      { value: 3, label: 'Show a brief privacy reminder' },
     ],
   },
   {
     id: 'Q10',
     title: 'Task relevance',
     prompt:
-      'When sensitive content is visible but not needed for the task, should the system do nothing, remind only if serious, show a brief indicator, ask first, or avoid it unless requested?',
+      'When privacy-sensitive content is visible but not needed for the current task, should the assistant show a brief privacy reminder?',
     policyParameter: 'task_irrelevant_action',
     options: [
-      { value: 1, label: 'Do nothing' },
-      { value: 2, label: 'Remind only if serious' },
-      { value: 3, label: 'Show a brief indicator' },
-      { value: 4, label: 'Ask first' },
-      { value: 5, label: 'Avoid it unless requested' },
+      { value: 1, label: 'Do not show a privacy reminder' },
+      { value: 3, label: 'Show a brief privacy reminder' },
     ],
   },
 ];
@@ -137,5 +123,27 @@ export const profileConfirmationOptions = [
 
 export const probeQuestionPrompts = {
   awareness: 'Before the highlight, how had you noticed this visual content?',
-  action: 'What should the assistant do with similar visual content?',
+  action: 'When should the assistant show a privacy reminder for similar visual content?',
+} as const;
+
+export const heldOutAcceptanceQuestions = {
+  acceptance: {
+    id: 'reminder_decision_acceptance',
+    prompt: "How acceptable was the assistant's reminder decision for this video?",
+    options: [
+      { value: 1, label: 'Not at all acceptable' },
+      { value: 2, label: 'Slightly acceptable' },
+      { value: 3, label: 'Moderately acceptable' },
+      { value: 4, label: 'Very acceptable' },
+      { value: 5, label: 'Completely acceptable' },
+    ],
+  },
+  preferredDecision: {
+    id: 'preferred_reminder_decision',
+    prompt: 'What should the assistant have done for this video?',
+    options: [
+      { value: 0, label: 'Do not show a privacy reminder' },
+      { value: 1, label: 'Show a brief privacy reminder' },
+    ],
+  },
 } as const;

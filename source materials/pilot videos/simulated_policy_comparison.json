@@ -10,7 +10,7 @@
   },
   "software": {
     "simulationVersion": "vprivcal-pre-expert-simulation-1.0.0",
-    "policyFilterAlgorithmVersion": "1.0.0",
+    "policyFilterAlgorithmVersion": "3.0.0-three-option-trigger",
     "detectionSchemaVersion": "vprivcal-pilot-vlm-detections-1.0.0",
     "proofOfConceptGuardrailConfigId": "vprivcal-proof-of-concept-v1"
   },
@@ -54,7 +54,7 @@
           {
             "questionId": "Q1",
             "value": 1,
-            "label": "Use for the current task without interruption",
+            "label": "Do not show reminders for this category",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
@@ -63,7 +63,7 @@
           {
             "questionId": "Q2",
             "value": 1,
-            "label": "Use for the current task without interruption",
+            "label": "Do not show reminders for this category",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
@@ -72,7 +72,7 @@
           {
             "questionId": "Q3",
             "value": 1,
-            "label": "Use for the current task without interruption",
+            "label": "Do not show reminders for this category",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
@@ -81,7 +81,7 @@
           {
             "questionId": "Q4",
             "value": 1,
-            "label": "Use for the current task without interruption",
+            "label": "Do not show reminders for this category",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
@@ -90,7 +90,7 @@
           {
             "questionId": "Q5",
             "value": 1,
-            "label": "Use for the current task without interruption",
+            "label": "Do not show reminders for this category",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
@@ -99,7 +99,7 @@
           {
             "questionId": "Q6",
             "value": 1,
-            "label": "Use for the current task without interruption",
+            "label": "Do not show reminders for this category",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
@@ -108,7 +108,7 @@
           {
             "questionId": "Q7",
             "value": 1,
-            "label": "Ignore it",
+            "label": "Do not show a privacy reminder",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
@@ -117,7 +117,7 @@
           {
             "questionId": "Q8",
             "value": 1,
-            "label": "Show very few reminders",
+            "label": "Do not show reminders for this category",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
@@ -126,7 +126,7 @@
           {
             "questionId": "Q9",
             "value": 1,
-            "label": "Do nothing",
+            "label": "Do not show a privacy reminder",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
@@ -135,7 +135,7 @@
           {
             "questionId": "Q10",
             "value": 1,
-            "label": "Do nothing",
+            "label": "Do not show a privacy reminder",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
@@ -340,7 +340,7 @@
         }
       },
       "compiledPolicy": {
-        "algorithmVersion": "1.0.0",
+        "algorithmVersion": "3.0.0-three-option-trigger",
         "schemaVersion": "1.0.0",
         "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
         "aggregation": {
@@ -352,9 +352,9 @@
           "biometric_data": {
             "categoryId": "biometric_data",
             "q10Prior": 0,
-            "q10PriorLabel": "Use for the current task without interruption",
+            "q10PriorLabel": "Do not show reminders for this category",
             "generalAction": 0,
-            "generalActionLabel": "No intervention",
+            "generalActionLabel": "Do not show reminders for this category",
             "contextActions": {
               "private": 0,
               "public": 0,
@@ -366,7 +366,7 @@
                 "sceneId": "scene_private_family_party",
                 "scenarioType": "private",
                 "action": 0,
-                "actionLabel": "No intervention",
+                "actionLabel": "Do not show reminders for this category",
                 "awarenessStatus": 1,
                 "spontaneouslySelected": false
               },
@@ -375,7 +375,7 @@
                 "sceneId": "scene_public_cafe",
                 "scenarioType": "public",
                 "action": 0,
-                "actionLabel": "No intervention",
+                "actionLabel": "Do not show reminders for this category",
                 "awarenessStatus": 1,
                 "spontaneouslySelected": false
               },
@@ -384,7 +384,7 @@
                 "sceneId": "scene_semipublic_hospital",
                 "scenarioType": "semi-public",
                 "action": 0,
-                "actionLabel": "No intervention",
+                "actionLabel": "Do not show reminders for this category",
                 "awarenessStatus": 1,
                 "spontaneouslySelected": false
               }
@@ -399,9 +399,9 @@
           "children_images": {
             "categoryId": "children_images",
             "q10Prior": 0,
-            "q10PriorLabel": "Use for the current task without interruption",
+            "q10PriorLabel": "Do not show reminders for this category",
             "generalAction": 0,
-            "generalActionLabel": "No intervention",
+            "generalActionLabel": "Do not show reminders for this category",
             "contextActions": {
               "private": 0,
               "public": 0
@@ -412,7 +412,7 @@
                 "sceneId": "scene_private_family_party",
                 "scenarioType": "private",
                 "action": 0,
-                "actionLabel": "No intervention",
+                "actionLabel": "Do not show reminders for this category",
                 "awarenessStatus": 1,
                 "spontaneouslySelected": false
               },
@@ -421,7 +421,7 @@
                 "sceneId": "scene_public_cafe",
                 "scenarioType": "public",
                 "action": 0,
-                "actionLabel": "No intervention",
+                "actionLabel": "Do not show reminders for this category",
                 "awarenessStatus": 1,
                 "spontaneouslySelected": false
               }
@@ -436,9 +436,9 @@
           "pii": {
             "categoryId": "pii",
             "q10Prior": 0,
-            "q10PriorLabel": "Use for the current task without interruption",
+            "q10PriorLabel": "Do not show reminders for this category",
             "generalAction": 0,
-            "generalActionLabel": "No intervention",
+            "generalActionLabel": "Do not show reminders for this category",
             "contextActions": {
               "private": 0,
               "public": 0,
@@ -450,7 +450,7 @@
                 "sceneId": "scene_private_family_party",
                 "scenarioType": "private",
                 "action": 0,
-                "actionLabel": "No intervention",
+                "actionLabel": "Do not show reminders for this category",
                 "awarenessStatus": 1,
                 "spontaneouslySelected": false
               },
@@ -459,7 +459,7 @@
                 "sceneId": "scene_public_cafe",
                 "scenarioType": "public",
                 "action": 0,
-                "actionLabel": "No intervention",
+                "actionLabel": "Do not show reminders for this category",
                 "awarenessStatus": 1,
                 "spontaneouslySelected": false
               },
@@ -468,7 +468,7 @@
                 "sceneId": "scene_semipublic_hospital",
                 "scenarioType": "semi-public",
                 "action": 0,
-                "actionLabel": "No intervention",
+                "actionLabel": "Do not show reminders for this category",
                 "awarenessStatus": 1,
                 "spontaneouslySelected": false
               }
@@ -483,9 +483,9 @@
           "legal_sensitivity_information": {
             "categoryId": "legal_sensitivity_information",
             "q10Prior": 0,
-            "q10PriorLabel": "Use for the current task without interruption",
+            "q10PriorLabel": "Do not show reminders for this category",
             "generalAction": 0,
-            "generalActionLabel": "No intervention",
+            "generalActionLabel": "Do not show reminders for this category",
             "contextActions": {
               "private": 0
             },
@@ -495,7 +495,7 @@
                 "sceneId": "scene_private_family_party",
                 "scenarioType": "private",
                 "action": 0,
-                "actionLabel": "No intervention",
+                "actionLabel": "Do not show reminders for this category",
                 "awarenessStatus": 1,
                 "spontaneouslySelected": false
               }
@@ -510,9 +510,9 @@
           "personal_life": {
             "categoryId": "personal_life",
             "q10Prior": 0,
-            "q10PriorLabel": "Use for the current task without interruption",
+            "q10PriorLabel": "Do not show reminders for this category",
             "generalAction": 0,
-            "generalActionLabel": "No intervention",
+            "generalActionLabel": "Do not show reminders for this category",
             "contextActions": {
               "private": 0
             },
@@ -522,7 +522,7 @@
                 "sceneId": "scene_private_family_party",
                 "scenarioType": "private",
                 "action": 0,
-                "actionLabel": "No intervention",
+                "actionLabel": "Do not show reminders for this category",
                 "awarenessStatus": 1,
                 "spontaneouslySelected": false
               }
@@ -537,9 +537,9 @@
           "background_individuals": {
             "categoryId": "background_individuals",
             "q10Prior": 0,
-            "q10PriorLabel": "Use for the current task without interruption",
+            "q10PriorLabel": "Do not show reminders for this category",
             "generalAction": 0,
-            "generalActionLabel": "No intervention",
+            "generalActionLabel": "Do not show reminders for this category",
             "contextActions": {
               "public": 0
             },
@@ -549,7 +549,7 @@
                 "sceneId": "scene_public_cafe",
                 "scenarioType": "public",
                 "action": 0,
-                "actionLabel": "No intervention",
+                "actionLabel": "Do not show reminders for this category",
                 "awarenessStatus": 1,
                 "spontaneouslySelected": false
               }
@@ -564,7 +564,7 @@
         },
         "crossCutting": {
           "inferenceRule": 1,
-          "reminderSensitivity": 1,
+          "unlistedCategoryTrigger": 0,
           "uncertaintyRule": 1,
           "taskIrrelevantRule": 1
         },
@@ -586,6 +586,7 @@
             "isUncertain": false,
             "taskRelevant": true,
             "explicitlyRequested": false,
+            "exposureLevel": "PRESENCE_ONLY",
             "likelihoodTier": 5,
             "severityTier": 4,
             "reasonCodes": [
@@ -609,10 +610,12 @@
             "scenarioType": "private",
             "likelihoodTier": 5,
             "severityTier": 4,
+            "exposureLevel": "PRESENCE_ONLY",
+            "preferenceTriggerLevel": 0,
             "awarenessGapTieBreak": false,
             "preferenceAction": {
               "rank": 0,
-              "label": "No intervention",
+              "label": "Do not show reminders for this category",
               "presentation": "none",
               "sources": [
                 "probe_context:children_images",
@@ -624,7 +627,7 @@
             },
             "effectiveAction": {
               "rank": 0,
-              "label": "No intervention",
+              "label": "Do not show reminders for this category",
               "presentation": "none",
               "sources": [
                 "probe_context:children_images",
@@ -634,7 +637,8 @@
                 "context_category_action"
               ]
             },
-            "reminderThreshold": 5,
+            "preferenceReminderDecision": "NO_REMINDER",
+            "effectiveReminderDecision": "NO_REMINDER",
             "floorApplied": false,
             "safetyWaiverApplied": false,
             "reasons": [
@@ -646,7 +650,7 @@
               "private_home_context",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "disabled-v1"
           },
@@ -662,10 +666,12 @@
             "scenarioType": "private",
             "likelihoodTier": 5,
             "severityTier": 4,
+            "exposureLevel": "PRESENCE_ONLY",
+            "preferenceTriggerLevel": 0,
             "awarenessGapTieBreak": false,
             "preferenceAction": {
               "rank": 0,
-              "label": "No intervention",
+              "label": "Do not show reminders for this category",
               "presentation": "none",
               "sources": [
                 "probe_context:children_images",
@@ -677,19 +683,22 @@
             },
             "effectiveAction": {
               "rank": 2,
-              "label": "Notify",
+              "label": "Show reminders whenever this verified category is present",
               "presentation": "brief_reminder",
               "sources": [
                 "safety_floor"
               ],
               "reasons": [
+                "category_floor:children_images",
                 "high_confidence_severe_floor"
               ]
             },
-            "reminderThreshold": 5,
+            "preferenceReminderDecision": "NO_REMINDER",
+            "effectiveReminderDecision": "SHOW_REMINDER",
             "floorApplied": true,
             "safetyWaiverApplied": false,
             "reasons": [
+              "category_floor:children_images",
               "context_category_action",
               "high_confidence_severe_floor"
             ],
@@ -699,7 +708,7 @@
               "private_home_context",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "vprivcal-proof-of-concept-v1"
           }
@@ -717,6 +726,7 @@
             "isUncertain": true,
             "taskRelevant": false,
             "explicitlyRequested": false,
+            "exposureLevel": "PRESENCE_ONLY",
             "likelihoodTier": 3,
             "severityTier": 4,
             "reasonCodes": [
@@ -740,10 +750,12 @@
             "scenarioType": "private",
             "likelihoodTier": 3,
             "severityTier": 4,
+            "exposureLevel": "PRESENCE_ONLY",
+            "preferenceTriggerLevel": 0,
             "awarenessGapTieBreak": false,
             "preferenceAction": {
               "rank": 0,
-              "label": "No intervention",
+              "label": "Do not show reminders for this category",
               "presentation": "none",
               "sources": [
                 "Q10",
@@ -754,14 +766,14 @@
               ],
               "reasons": [
                 "context_category_action",
-                "do_nothing_when_task_irrelevant",
-                "do_nothing_when_uncertain",
-                "ignore_inference"
+                "no_reminder_for_inference",
+                "no_reminder_when_task_irrelevant",
+                "no_reminder_when_uncertain"
               ]
             },
             "effectiveAction": {
               "rank": 0,
-              "label": "No intervention",
+              "label": "Do not show reminders for this category",
               "presentation": "none",
               "sources": [
                 "Q10",
@@ -772,19 +784,20 @@
               ],
               "reasons": [
                 "context_category_action",
-                "do_nothing_when_task_irrelevant",
-                "do_nothing_when_uncertain",
-                "ignore_inference"
+                "no_reminder_for_inference",
+                "no_reminder_when_task_irrelevant",
+                "no_reminder_when_uncertain"
               ]
             },
-            "reminderThreshold": 5,
+            "preferenceReminderDecision": "NO_REMINDER",
+            "effectiveReminderDecision": "NO_REMINDER",
             "floorApplied": false,
             "safetyWaiverApplied": false,
             "reasons": [
               "context_category_action",
-              "do_nothing_when_task_irrelevant",
-              "do_nothing_when_uncertain",
-              "ignore_inference"
+              "no_reminder_for_inference",
+              "no_reminder_when_task_irrelevant",
+              "no_reminder_when_uncertain"
             ],
             "reasonCodes": [
               "offering_or_ritual_inference_uncertain",
@@ -792,7 +805,7 @@
               "task_relevance_not_visually_established",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "disabled-v1"
           },
@@ -808,10 +821,12 @@
             "scenarioType": "private",
             "likelihoodTier": 3,
             "severityTier": 4,
+            "exposureLevel": "PRESENCE_ONLY",
+            "preferenceTriggerLevel": 0,
             "awarenessGapTieBreak": false,
             "preferenceAction": {
               "rank": 0,
-              "label": "No intervention",
+              "label": "Do not show reminders for this category",
               "presentation": "none",
               "sources": [
                 "Q10",
@@ -822,14 +837,14 @@
               ],
               "reasons": [
                 "context_category_action",
-                "do_nothing_when_task_irrelevant",
-                "do_nothing_when_uncertain",
-                "ignore_inference"
+                "no_reminder_for_inference",
+                "no_reminder_when_task_irrelevant",
+                "no_reminder_when_uncertain"
               ]
             },
             "effectiveAction": {
               "rank": 0,
-              "label": "No intervention",
+              "label": "Do not show reminders for this category",
               "presentation": "none",
               "sources": [
                 "Q10",
@@ -840,19 +855,20 @@
               ],
               "reasons": [
                 "context_category_action",
-                "do_nothing_when_task_irrelevant",
-                "do_nothing_when_uncertain",
-                "ignore_inference"
+                "no_reminder_for_inference",
+                "no_reminder_when_task_irrelevant",
+                "no_reminder_when_uncertain"
               ]
             },
-            "reminderThreshold": 5,
+            "preferenceReminderDecision": "NO_REMINDER",
+            "effectiveReminderDecision": "NO_REMINDER",
             "floorApplied": false,
             "safetyWaiverApplied": false,
             "reasons": [
               "context_category_action",
-              "do_nothing_when_task_irrelevant",
-              "do_nothing_when_uncertain",
-              "ignore_inference"
+              "no_reminder_for_inference",
+              "no_reminder_when_task_irrelevant",
+              "no_reminder_when_uncertain"
             ],
             "reasonCodes": [
               "offering_or_ritual_inference_uncertain",
@@ -860,7 +876,7 @@
               "task_relevance_not_visually_established",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "vprivcal-proof-of-concept-v1"
           }
@@ -877,6 +893,7 @@
             "isUncertain": false,
             "taskRelevant": false,
             "explicitlyRequested": false,
+            "exposureLevel": "SENSITIVE_DETAIL_EXPOSED",
             "likelihoodTier": 5,
             "severityTier": 3,
             "reasonCodes": [
@@ -899,10 +916,12 @@
             "scenarioType": "private",
             "likelihoodTier": 5,
             "severityTier": 3,
+            "exposureLevel": "SENSITIVE_DETAIL_EXPOSED",
+            "preferenceTriggerLevel": 0,
             "awarenessGapTieBreak": false,
             "preferenceAction": {
               "rank": 0,
-              "label": "No intervention",
+              "label": "Do not show reminders for this category",
               "presentation": "none",
               "sources": [
                 "Q10",
@@ -910,12 +929,12 @@
               ],
               "reasons": [
                 "context_category_action",
-                "do_nothing_when_task_irrelevant"
+                "no_reminder_when_task_irrelevant"
               ]
             },
             "effectiveAction": {
               "rank": 0,
-              "label": "No intervention",
+              "label": "Do not show reminders for this category",
               "presentation": "none",
               "sources": [
                 "Q10",
@@ -923,15 +942,16 @@
               ],
               "reasons": [
                 "context_category_action",
-                "do_nothing_when_task_irrelevant"
+                "no_reminder_when_task_irrelevant"
               ]
             },
-            "reminderThreshold": 5,
+            "preferenceReminderDecision": "NO_REMINDER",
+            "effectiveReminderDecision": "NO_REMINDER",
             "floorApplied": false,
             "safetyWaiverApplied": false,
             "reasons": [
               "context_category_action",
-              "do_nothing_when_task_irrelevant"
+              "no_reminder_when_task_irrelevant"
             ],
             "reasonCodes": [
               "child_presence_not_observed",
@@ -939,7 +959,7 @@
               "task_relevance_not_visually_established",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "disabled-v1"
           },
@@ -954,10 +974,12 @@
             "scenarioType": "private",
             "likelihoodTier": 5,
             "severityTier": 3,
+            "exposureLevel": "SENSITIVE_DETAIL_EXPOSED",
+            "preferenceTriggerLevel": 0,
             "awarenessGapTieBreak": false,
             "preferenceAction": {
               "rank": 0,
-              "label": "No intervention",
+              "label": "Do not show reminders for this category",
               "presentation": "none",
               "sources": [
                 "Q10",
@@ -965,12 +987,12 @@
               ],
               "reasons": [
                 "context_category_action",
-                "do_nothing_when_task_irrelevant"
+                "no_reminder_when_task_irrelevant"
               ]
             },
             "effectiveAction": {
               "rank": 0,
-              "label": "No intervention",
+              "label": "Do not show reminders for this category",
               "presentation": "none",
               "sources": [
                 "Q10",
@@ -978,15 +1000,16 @@
               ],
               "reasons": [
                 "context_category_action",
-                "do_nothing_when_task_irrelevant"
+                "no_reminder_when_task_irrelevant"
               ]
             },
-            "reminderThreshold": 5,
+            "preferenceReminderDecision": "NO_REMINDER",
+            "effectiveReminderDecision": "NO_REMINDER",
             "floorApplied": false,
             "safetyWaiverApplied": false,
             "reasons": [
               "context_category_action",
-              "do_nothing_when_task_irrelevant"
+              "no_reminder_when_task_irrelevant"
             ],
             "reasonCodes": [
               "child_presence_not_observed",
@@ -994,7 +1017,7 @@
               "task_relevance_not_visually_established",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "vprivcal-proof-of-concept-v1"
           }
@@ -1012,6 +1035,7 @@
             "isUncertain": false,
             "taskRelevant": true,
             "explicitlyRequested": false,
+            "exposureLevel": "PRESENCE_ONLY",
             "likelihoodTier": 5,
             "severityTier": 3,
             "reasonCodes": [
@@ -1035,10 +1059,12 @@
             "scenarioType": "public",
             "likelihoodTier": 5,
             "severityTier": 3,
+            "exposureLevel": "PRESENCE_ONLY",
+            "preferenceTriggerLevel": 0,
             "awarenessGapTieBreak": false,
             "preferenceAction": {
               "rank": 0,
-              "label": "No intervention",
+              "label": "Do not show reminders for this category",
               "presentation": "none",
               "sources": [
                 "probe_context:background_individuals",
@@ -1050,7 +1076,7 @@
             },
             "effectiveAction": {
               "rank": 0,
-              "label": "No intervention",
+              "label": "Do not show reminders for this category",
               "presentation": "none",
               "sources": [
                 "probe_context:background_individuals",
@@ -1060,7 +1086,8 @@
                 "context_category_action"
               ]
             },
-            "reminderThreshold": 5,
+            "preferenceReminderDecision": "NO_REMINDER",
+            "effectiveReminderDecision": "NO_REMINDER",
             "floorApplied": false,
             "safetyWaiverApplied": false,
             "reasons": [
@@ -1072,7 +1099,7 @@
               "public_shared_space",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "disabled-v1"
           },
@@ -1088,10 +1115,12 @@
             "scenarioType": "public",
             "likelihoodTier": 5,
             "severityTier": 3,
+            "exposureLevel": "PRESENCE_ONLY",
+            "preferenceTriggerLevel": 0,
             "awarenessGapTieBreak": false,
             "preferenceAction": {
               "rank": 0,
-              "label": "No intervention",
+              "label": "Do not show reminders for this category",
               "presentation": "none",
               "sources": [
                 "probe_context:background_individuals",
@@ -1102,9 +1131,9 @@
               ]
             },
             "effectiveAction": {
-              "rank": 1,
-              "label": "Handle silently",
-              "presentation": "silent",
+              "rank": 2,
+              "label": "Show reminders whenever this verified category is present",
+              "presentation": "brief_reminder",
               "sources": [
                 "safety_floor"
               ],
@@ -1112,7 +1141,8 @@
                 "category_floor:background_individuals"
               ]
             },
-            "reminderThreshold": 5,
+            "preferenceReminderDecision": "NO_REMINDER",
+            "effectiveReminderDecision": "SHOW_REMINDER",
             "floorApplied": true,
             "safetyWaiverApplied": false,
             "reasons": [
@@ -1125,7 +1155,7 @@
               "public_shared_space",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "vprivcal-proof-of-concept-v1"
           }
@@ -1148,14 +1178,14 @@
           "observations": 4,
           "exactAgreementCount": 2,
           "exactAgreementRate": 0.5,
-          "meanAbsoluteRankError": 0.75
+          "meanAbsoluteRankError": 1
         }
       }
     },
     {
       "profileId": "sim_high_protection",
-      "label": "High protection",
-      "rationale": "Requests avoidance for every category and cross-cutting condition.",
+      "label": "Reminder for every cue",
+      "rationale": "Requests a visible reminder for every category and cross-cutting condition.",
       "response": {
         "schemaVersion": "1.0.0",
         "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
@@ -1183,93 +1213,93 @@
         "q10": [
           {
             "questionId": "Q1",
-            "value": 5,
-            "label": "Do not use it unless explicitly requested",
+            "value": 3,
+            "label": "Show reminders whenever this verified category is present",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
-            "finalResponse": 5
+            "finalResponse": 3
           },
           {
             "questionId": "Q2",
-            "value": 5,
-            "label": "Do not use it unless explicitly requested",
+            "value": 3,
+            "label": "Show reminders whenever this verified category is present",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
-            "finalResponse": 5
+            "finalResponse": 3
           },
           {
             "questionId": "Q3",
-            "value": 5,
-            "label": "Do not use it unless explicitly requested",
+            "value": 3,
+            "label": "Show reminders whenever this verified category is present",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
-            "finalResponse": 5
+            "finalResponse": 3
           },
           {
             "questionId": "Q4",
-            "value": 5,
-            "label": "Do not use it unless explicitly requested",
+            "value": 3,
+            "label": "Show reminders whenever this verified category is present",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
-            "finalResponse": 5
+            "finalResponse": 3
           },
           {
             "questionId": "Q5",
-            "value": 5,
-            "label": "Do not use it unless explicitly requested",
+            "value": 3,
+            "label": "Show reminders whenever this verified category is present",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
-            "finalResponse": 5
+            "finalResponse": 3
           },
           {
             "questionId": "Q6",
-            "value": 5,
-            "label": "Do not use it unless explicitly requested",
+            "value": 3,
+            "label": "Show reminders whenever this verified category is present",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
-            "finalResponse": 5
+            "finalResponse": 3
           },
           {
             "questionId": "Q7",
-            "value": 5,
-            "label": "Avoid the inference unless requested",
+            "value": 3,
+            "label": "Show a brief privacy reminder",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
-            "finalResponse": 5
+            "finalResponse": 3
           },
           {
             "questionId": "Q8",
-            "value": 5,
-            "label": "Show every possible risk",
+            "value": 3,
+            "label": "Show reminders whenever this verified category is present",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
-            "finalResponse": 5
+            "finalResponse": 3
           },
           {
             "questionId": "Q9",
-            "value": 5,
-            "label": "Avoid using the information until approved",
+            "value": 3,
+            "label": "Show a brief privacy reminder",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
-            "finalResponse": 5
+            "finalResponse": 3
           },
           {
             "questionId": "Q10",
-            "value": 5,
-            "label": "Avoid it unless requested",
+            "value": 3,
+            "label": "Show a brief privacy reminder",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
-            "finalResponse": 5
+            "finalResponse": 3
           }
         ],
         "probe": [
@@ -1288,7 +1318,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 3,
-                "preferredAction": 4,
+                "preferredAction": 2,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -1302,7 +1332,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 3,
-                "preferredAction": 4,
+                "preferredAction": 2,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -1316,7 +1346,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 3,
-                "preferredAction": 4,
+                "preferredAction": 2,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -1330,7 +1360,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 3,
-                "preferredAction": 4,
+                "preferredAction": 2,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -1347,7 +1377,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 3,
-                "preferredAction": 4,
+                "preferredAction": 2,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -1369,7 +1399,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 3,
-                "preferredAction": 4,
+                "preferredAction": 2,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -1383,7 +1413,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 3,
-                "preferredAction": 4,
+                "preferredAction": 2,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -1399,7 +1429,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 3,
-                "preferredAction": 4,
+                "preferredAction": 2,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -1413,7 +1443,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 3,
-                "preferredAction": 4,
+                "preferredAction": 2,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -1435,7 +1465,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 3,
-                "preferredAction": 4,
+                "preferredAction": 2,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -1451,7 +1481,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 3,
-                "preferredAction": 4,
+                "preferredAction": 2,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -1470,7 +1500,7 @@
         }
       },
       "compiledPolicy": {
-        "algorithmVersion": "1.0.0",
+        "algorithmVersion": "3.0.0-three-option-trigger",
         "schemaVersion": "1.0.0",
         "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
         "aggregation": {
@@ -1481,22 +1511,22 @@
         "categories": {
           "biometric_data": {
             "categoryId": "biometric_data",
-            "q10Prior": 4,
-            "q10PriorLabel": "Do not use it unless explicitly requested",
-            "generalAction": 4,
-            "generalActionLabel": "Avoid unless explicitly requested",
+            "q10Prior": 2,
+            "q10PriorLabel": "Show reminders whenever this verified category is present",
+            "generalAction": 2,
+            "generalActionLabel": "Show reminders whenever this verified category is present",
             "contextActions": {
-              "private": 4,
-              "public": 4,
-              "semi-public": 4
+              "private": 2,
+              "public": 2,
+              "semi-public": 2
             },
             "observations": [
               {
                 "categoryId": "biometric_data",
                 "sceneId": "scene_private_family_party",
                 "scenarioType": "private",
-                "action": 4,
-                "actionLabel": "Avoid using it unless I explicitly request it",
+                "action": 2,
+                "actionLabel": "Show reminders whenever this verified category is present",
                 "awarenessStatus": 3,
                 "spontaneouslySelected": false
               },
@@ -1504,8 +1534,8 @@
                 "categoryId": "biometric_data",
                 "sceneId": "scene_public_cafe",
                 "scenarioType": "public",
-                "action": 4,
-                "actionLabel": "Avoid using it unless I explicitly request it",
+                "action": 2,
+                "actionLabel": "Show reminders whenever this verified category is present",
                 "awarenessStatus": 3,
                 "spontaneouslySelected": false
               },
@@ -1513,8 +1543,8 @@
                 "categoryId": "biometric_data",
                 "sceneId": "scene_semipublic_hospital",
                 "scenarioType": "semi-public",
-                "action": 4,
-                "actionLabel": "Avoid using it unless I explicitly request it",
+                "action": 2,
+                "actionLabel": "Show reminders whenever this verified category is present",
                 "awarenessStatus": 3,
                 "spontaneouslySelected": false
               }
@@ -1528,21 +1558,21 @@
           },
           "children_images": {
             "categoryId": "children_images",
-            "q10Prior": 4,
-            "q10PriorLabel": "Do not use it unless explicitly requested",
-            "generalAction": 4,
-            "generalActionLabel": "Avoid unless explicitly requested",
+            "q10Prior": 2,
+            "q10PriorLabel": "Show reminders whenever this verified category is present",
+            "generalAction": 2,
+            "generalActionLabel": "Show reminders whenever this verified category is present",
             "contextActions": {
-              "private": 4,
-              "public": 4
+              "private": 2,
+              "public": 2
             },
             "observations": [
               {
                 "categoryId": "children_images",
                 "sceneId": "scene_private_family_party",
                 "scenarioType": "private",
-                "action": 4,
-                "actionLabel": "Avoid using it unless I explicitly request it",
+                "action": 2,
+                "actionLabel": "Show reminders whenever this verified category is present",
                 "awarenessStatus": 3,
                 "spontaneouslySelected": false
               },
@@ -1550,8 +1580,8 @@
                 "categoryId": "children_images",
                 "sceneId": "scene_public_cafe",
                 "scenarioType": "public",
-                "action": 4,
-                "actionLabel": "Avoid using it unless I explicitly request it",
+                "action": 2,
+                "actionLabel": "Show reminders whenever this verified category is present",
                 "awarenessStatus": 3,
                 "spontaneouslySelected": false
               }
@@ -1565,22 +1595,22 @@
           },
           "pii": {
             "categoryId": "pii",
-            "q10Prior": 4,
-            "q10PriorLabel": "Do not use it unless explicitly requested",
-            "generalAction": 4,
-            "generalActionLabel": "Avoid unless explicitly requested",
+            "q10Prior": 2,
+            "q10PriorLabel": "Show reminders whenever this verified category is present",
+            "generalAction": 2,
+            "generalActionLabel": "Show reminders whenever this verified category is present",
             "contextActions": {
-              "private": 4,
-              "public": 4,
-              "semi-public": 4
+              "private": 2,
+              "public": 2,
+              "semi-public": 2
             },
             "observations": [
               {
                 "categoryId": "pii",
                 "sceneId": "scene_private_family_party",
                 "scenarioType": "private",
-                "action": 4,
-                "actionLabel": "Avoid using it unless I explicitly request it",
+                "action": 2,
+                "actionLabel": "Show reminders whenever this verified category is present",
                 "awarenessStatus": 3,
                 "spontaneouslySelected": false
               },
@@ -1588,8 +1618,8 @@
                 "categoryId": "pii",
                 "sceneId": "scene_public_cafe",
                 "scenarioType": "public",
-                "action": 4,
-                "actionLabel": "Avoid using it unless I explicitly request it",
+                "action": 2,
+                "actionLabel": "Show reminders whenever this verified category is present",
                 "awarenessStatus": 3,
                 "spontaneouslySelected": false
               },
@@ -1597,8 +1627,8 @@
                 "categoryId": "pii",
                 "sceneId": "scene_semipublic_hospital",
                 "scenarioType": "semi-public",
-                "action": 4,
-                "actionLabel": "Avoid using it unless I explicitly request it",
+                "action": 2,
+                "actionLabel": "Show reminders whenever this verified category is present",
                 "awarenessStatus": 3,
                 "spontaneouslySelected": false
               }
@@ -1612,20 +1642,20 @@
           },
           "legal_sensitivity_information": {
             "categoryId": "legal_sensitivity_information",
-            "q10Prior": 4,
-            "q10PriorLabel": "Do not use it unless explicitly requested",
-            "generalAction": 4,
-            "generalActionLabel": "Avoid unless explicitly requested",
+            "q10Prior": 2,
+            "q10PriorLabel": "Show reminders whenever this verified category is present",
+            "generalAction": 2,
+            "generalActionLabel": "Show reminders whenever this verified category is present",
             "contextActions": {
-              "private": 4
+              "private": 2
             },
             "observations": [
               {
                 "categoryId": "legal_sensitivity_information",
                 "sceneId": "scene_private_family_party",
                 "scenarioType": "private",
-                "action": 4,
-                "actionLabel": "Avoid using it unless I explicitly request it",
+                "action": 2,
+                "actionLabel": "Show reminders whenever this verified category is present",
                 "awarenessStatus": 3,
                 "spontaneouslySelected": false
               }
@@ -1639,20 +1669,20 @@
           },
           "personal_life": {
             "categoryId": "personal_life",
-            "q10Prior": 4,
-            "q10PriorLabel": "Do not use it unless explicitly requested",
-            "generalAction": 4,
-            "generalActionLabel": "Avoid unless explicitly requested",
+            "q10Prior": 2,
+            "q10PriorLabel": "Show reminders whenever this verified category is present",
+            "generalAction": 2,
+            "generalActionLabel": "Show reminders whenever this verified category is present",
             "contextActions": {
-              "private": 4
+              "private": 2
             },
             "observations": [
               {
                 "categoryId": "personal_life",
                 "sceneId": "scene_private_family_party",
                 "scenarioType": "private",
-                "action": 4,
-                "actionLabel": "Avoid using it unless I explicitly request it",
+                "action": 2,
+                "actionLabel": "Show reminders whenever this verified category is present",
                 "awarenessStatus": 3,
                 "spontaneouslySelected": false
               }
@@ -1666,20 +1696,20 @@
           },
           "background_individuals": {
             "categoryId": "background_individuals",
-            "q10Prior": 4,
-            "q10PriorLabel": "Do not use it unless explicitly requested",
-            "generalAction": 4,
-            "generalActionLabel": "Avoid unless explicitly requested",
+            "q10Prior": 2,
+            "q10PriorLabel": "Show reminders whenever this verified category is present",
+            "generalAction": 2,
+            "generalActionLabel": "Show reminders whenever this verified category is present",
             "contextActions": {
-              "public": 4
+              "public": 2
             },
             "observations": [
               {
                 "categoryId": "background_individuals",
                 "sceneId": "scene_public_cafe",
                 "scenarioType": "public",
-                "action": 4,
-                "actionLabel": "Avoid using it unless I explicitly request it",
+                "action": 2,
+                "actionLabel": "Show reminders whenever this verified category is present",
                 "awarenessStatus": 3,
                 "spontaneouslySelected": false
               }
@@ -1693,10 +1723,10 @@
           }
         },
         "crossCutting": {
-          "inferenceRule": 5,
-          "reminderSensitivity": 5,
-          "uncertaintyRule": 5,
-          "taskIrrelevantRule": 5
+          "inferenceRule": 3,
+          "unlistedCategoryTrigger": 2,
+          "uncertaintyRule": 3,
+          "taskIrrelevantRule": 3
         },
         "confirmation": {
           "status": "not_collected"
@@ -1716,6 +1746,7 @@
             "isUncertain": false,
             "taskRelevant": true,
             "explicitlyRequested": false,
+            "exposureLevel": "PRESENCE_ONLY",
             "likelihoodTier": 5,
             "severityTier": 4,
             "reasonCodes": [
@@ -1725,7 +1756,7 @@
               "faces_blurred_in_source"
             ]
           },
-          "expectedPreferenceRank": 4,
+          "expectedPreferenceRank": 2,
           "nonFilteredBaselineRank": 0,
           "personalizedDecision": {
             "status": "DECIDED",
@@ -1739,36 +1770,44 @@
             "scenarioType": "private",
             "likelihoodTier": 5,
             "severityTier": 4,
+            "exposureLevel": "PRESENCE_ONLY",
+            "preferenceTriggerLevel": 2,
             "awarenessGapTieBreak": true,
             "preferenceAction": {
-              "rank": 4,
-              "label": "Avoid unless explicitly requested",
-              "presentation": "avoid",
+              "rank": 2,
+              "label": "Show reminders whenever this verified category is present",
+              "presentation": "brief_reminder",
               "sources": [
+                "exposure_rule",
                 "probe_context:children_images",
                 "probe_context:personal_life"
               ],
               "reasons": [
-                "context_category_action"
+                "context_category_action",
+                "verified_category_presence_threshold_met"
               ]
             },
             "effectiveAction": {
-              "rank": 4,
-              "label": "Avoid unless explicitly requested",
-              "presentation": "avoid",
+              "rank": 2,
+              "label": "Show reminders whenever this verified category is present",
+              "presentation": "brief_reminder",
               "sources": [
+                "exposure_rule",
                 "probe_context:children_images",
                 "probe_context:personal_life"
               ],
               "reasons": [
-                "context_category_action"
+                "context_category_action",
+                "verified_category_presence_threshold_met"
               ]
             },
-            "reminderThreshold": 1,
+            "preferenceReminderDecision": "SHOW_REMINDER",
+            "effectiveReminderDecision": "SHOW_REMINDER",
             "floorApplied": false,
             "safetyWaiverApplied": false,
             "reasons": [
-              "context_category_action"
+              "context_category_action",
+              "verified_category_presence_threshold_met"
             ],
             "reasonCodes": [
               "children_directly_visible",
@@ -1776,7 +1815,7 @@
               "private_home_context",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "disabled-v1"
           },
@@ -1792,37 +1831,49 @@
             "scenarioType": "private",
             "likelihoodTier": 5,
             "severityTier": 4,
+            "exposureLevel": "PRESENCE_ONLY",
+            "preferenceTriggerLevel": 2,
             "awarenessGapTieBreak": true,
             "preferenceAction": {
-              "rank": 4,
-              "label": "Avoid unless explicitly requested",
-              "presentation": "avoid",
+              "rank": 2,
+              "label": "Show reminders whenever this verified category is present",
+              "presentation": "brief_reminder",
               "sources": [
+                "exposure_rule",
                 "probe_context:children_images",
                 "probe_context:personal_life"
               ],
               "reasons": [
-                "context_category_action"
+                "context_category_action",
+                "verified_category_presence_threshold_met"
               ]
             },
             "effectiveAction": {
-              "rank": 4,
-              "label": "Avoid unless explicitly requested",
-              "presentation": "avoid",
+              "rank": 2,
+              "label": "Show reminders whenever this verified category is present",
+              "presentation": "brief_reminder",
               "sources": [
+                "exposure_rule",
                 "probe_context:children_images",
-                "probe_context:personal_life"
+                "probe_context:personal_life",
+                "safety_floor"
               ],
               "reasons": [
-                "context_category_action"
+                "category_floor:children_images",
+                "context_category_action",
+                "high_confidence_severe_floor",
+                "verified_category_presence_threshold_met"
               ]
             },
-            "reminderThreshold": 1,
+            "preferenceReminderDecision": "SHOW_REMINDER",
+            "effectiveReminderDecision": "SHOW_REMINDER",
             "floorApplied": false,
             "safetyWaiverApplied": false,
             "reasons": [
+              "category_floor:children_images",
               "context_category_action",
-              "high_confidence_severe_floor"
+              "high_confidence_severe_floor",
+              "verified_category_presence_threshold_met"
             ],
             "reasonCodes": [
               "children_directly_visible",
@@ -1830,7 +1881,7 @@
               "private_home_context",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "vprivcal-proof-of-concept-v1"
           }
@@ -1848,6 +1899,7 @@
             "isUncertain": true,
             "taskRelevant": false,
             "explicitlyRequested": false,
+            "exposureLevel": "PRESENCE_ONLY",
             "likelihoodTier": 3,
             "severityTier": 4,
             "reasonCodes": [
@@ -1857,7 +1909,7 @@
               "task_relevance_not_visually_established"
             ]
           },
-          "expectedPreferenceRank": 4,
+          "expectedPreferenceRank": 2,
           "nonFilteredBaselineRank": 0,
           "personalizedDecision": {
             "status": "DECIDED",
@@ -1871,51 +1923,59 @@
             "scenarioType": "private",
             "likelihoodTier": 3,
             "severityTier": 4,
+            "exposureLevel": "PRESENCE_ONLY",
+            "preferenceTriggerLevel": 2,
             "awarenessGapTieBreak": true,
             "preferenceAction": {
-              "rank": 4,
-              "label": "Avoid unless explicitly requested",
-              "presentation": "avoid",
+              "rank": 2,
+              "label": "Show reminders whenever this verified category is present",
+              "presentation": "brief_uncertain_reminder",
               "sources": [
                 "Q10",
                 "Q7",
                 "Q9",
+                "exposure_rule",
                 "probe_context:legal_sensitivity_information",
                 "probe_context:personal_life"
               ],
               "reasons": [
-                "avoid_inference_unless_requested",
-                "avoid_task_irrelevant_use_unless_requested",
-                "avoid_uncertain_use_until_approved",
-                "context_category_action"
+                "brief_task_irrelevant_reminder",
+                "brief_uncertain_reminder",
+                "context_category_action",
+                "remind_for_inference",
+                "verified_category_presence_threshold_met"
               ]
             },
             "effectiveAction": {
-              "rank": 4,
-              "label": "Avoid unless explicitly requested",
-              "presentation": "avoid",
+              "rank": 2,
+              "label": "Show reminders whenever this verified category is present",
+              "presentation": "brief_uncertain_reminder",
               "sources": [
                 "Q10",
                 "Q7",
                 "Q9",
+                "exposure_rule",
                 "probe_context:legal_sensitivity_information",
                 "probe_context:personal_life"
               ],
               "reasons": [
-                "avoid_inference_unless_requested",
-                "avoid_task_irrelevant_use_unless_requested",
-                "avoid_uncertain_use_until_approved",
-                "context_category_action"
+                "brief_task_irrelevant_reminder",
+                "brief_uncertain_reminder",
+                "context_category_action",
+                "remind_for_inference",
+                "verified_category_presence_threshold_met"
               ]
             },
-            "reminderThreshold": 1,
+            "preferenceReminderDecision": "SHOW_REMINDER",
+            "effectiveReminderDecision": "SHOW_REMINDER",
             "floorApplied": false,
             "safetyWaiverApplied": false,
             "reasons": [
-              "avoid_inference_unless_requested",
-              "avoid_task_irrelevant_use_unless_requested",
-              "avoid_uncertain_use_until_approved",
-              "context_category_action"
+              "brief_task_irrelevant_reminder",
+              "brief_uncertain_reminder",
+              "context_category_action",
+              "remind_for_inference",
+              "verified_category_presence_threshold_met"
             ],
             "reasonCodes": [
               "offering_or_ritual_inference_uncertain",
@@ -1923,7 +1983,7 @@
               "task_relevance_not_visually_established",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "disabled-v1"
           },
@@ -1939,51 +1999,59 @@
             "scenarioType": "private",
             "likelihoodTier": 3,
             "severityTier": 4,
+            "exposureLevel": "PRESENCE_ONLY",
+            "preferenceTriggerLevel": 2,
             "awarenessGapTieBreak": true,
             "preferenceAction": {
-              "rank": 4,
-              "label": "Avoid unless explicitly requested",
-              "presentation": "avoid",
+              "rank": 2,
+              "label": "Show reminders whenever this verified category is present",
+              "presentation": "brief_uncertain_reminder",
               "sources": [
                 "Q10",
                 "Q7",
                 "Q9",
+                "exposure_rule",
                 "probe_context:legal_sensitivity_information",
                 "probe_context:personal_life"
               ],
               "reasons": [
-                "avoid_inference_unless_requested",
-                "avoid_task_irrelevant_use_unless_requested",
-                "avoid_uncertain_use_until_approved",
-                "context_category_action"
+                "brief_task_irrelevant_reminder",
+                "brief_uncertain_reminder",
+                "context_category_action",
+                "remind_for_inference",
+                "verified_category_presence_threshold_met"
               ]
             },
             "effectiveAction": {
-              "rank": 4,
-              "label": "Avoid unless explicitly requested",
-              "presentation": "avoid",
+              "rank": 2,
+              "label": "Show reminders whenever this verified category is present",
+              "presentation": "brief_uncertain_reminder",
               "sources": [
                 "Q10",
                 "Q7",
                 "Q9",
+                "exposure_rule",
                 "probe_context:legal_sensitivity_information",
                 "probe_context:personal_life"
               ],
               "reasons": [
-                "avoid_inference_unless_requested",
-                "avoid_task_irrelevant_use_unless_requested",
-                "avoid_uncertain_use_until_approved",
-                "context_category_action"
+                "brief_task_irrelevant_reminder",
+                "brief_uncertain_reminder",
+                "context_category_action",
+                "remind_for_inference",
+                "verified_category_presence_threshold_met"
               ]
             },
-            "reminderThreshold": 1,
+            "preferenceReminderDecision": "SHOW_REMINDER",
+            "effectiveReminderDecision": "SHOW_REMINDER",
             "floorApplied": false,
             "safetyWaiverApplied": false,
             "reasons": [
-              "avoid_inference_unless_requested",
-              "avoid_task_irrelevant_use_unless_requested",
-              "avoid_uncertain_use_until_approved",
-              "context_category_action"
+              "brief_task_irrelevant_reminder",
+              "brief_uncertain_reminder",
+              "context_category_action",
+              "remind_for_inference",
+              "verified_category_presence_threshold_met"
             ],
             "reasonCodes": [
               "offering_or_ritual_inference_uncertain",
@@ -1991,7 +2059,7 @@
               "task_relevance_not_visually_established",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "vprivcal-proof-of-concept-v1"
           }
@@ -2008,6 +2076,7 @@
             "isUncertain": false,
             "taskRelevant": false,
             "explicitlyRequested": false,
+            "exposureLevel": "SENSITIVE_DETAIL_EXPOSED",
             "likelihoodTier": 5,
             "severityTier": 3,
             "reasonCodes": [
@@ -2017,7 +2086,7 @@
               "task_relevance_not_visually_established"
             ]
           },
-          "expectedPreferenceRank": 4,
+          "expectedPreferenceRank": 2,
           "nonFilteredBaselineRank": 0,
           "personalizedDecision": {
             "status": "DECIDED",
@@ -2030,39 +2099,47 @@
             "scenarioType": "private",
             "likelihoodTier": 5,
             "severityTier": 3,
+            "exposureLevel": "SENSITIVE_DETAIL_EXPOSED",
+            "preferenceTriggerLevel": 2,
             "awarenessGapTieBreak": true,
             "preferenceAction": {
-              "rank": 4,
-              "label": "Avoid unless explicitly requested",
-              "presentation": "avoid",
+              "rank": 2,
+              "label": "Show reminders whenever this verified category is present",
+              "presentation": "brief_reminder",
               "sources": [
                 "Q10",
+                "exposure_rule",
                 "probe_context:pii"
               ],
               "reasons": [
-                "avoid_task_irrelevant_use_unless_requested",
-                "context_category_action"
+                "brief_task_irrelevant_reminder",
+                "context_category_action",
+                "verified_category_presence_threshold_met"
               ]
             },
             "effectiveAction": {
-              "rank": 4,
-              "label": "Avoid unless explicitly requested",
-              "presentation": "avoid",
+              "rank": 2,
+              "label": "Show reminders whenever this verified category is present",
+              "presentation": "brief_reminder",
               "sources": [
                 "Q10",
+                "exposure_rule",
                 "probe_context:pii"
               ],
               "reasons": [
-                "avoid_task_irrelevant_use_unless_requested",
-                "context_category_action"
+                "brief_task_irrelevant_reminder",
+                "context_category_action",
+                "verified_category_presence_threshold_met"
               ]
             },
-            "reminderThreshold": 1,
+            "preferenceReminderDecision": "SHOW_REMINDER",
+            "effectiveReminderDecision": "SHOW_REMINDER",
             "floorApplied": false,
             "safetyWaiverApplied": false,
             "reasons": [
-              "avoid_task_irrelevant_use_unless_requested",
-              "context_category_action"
+              "brief_task_irrelevant_reminder",
+              "context_category_action",
+              "verified_category_presence_threshold_met"
             ],
             "reasonCodes": [
               "child_presence_not_observed",
@@ -2070,7 +2147,7 @@
               "task_relevance_not_visually_established",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "disabled-v1"
           },
@@ -2085,39 +2162,47 @@
             "scenarioType": "private",
             "likelihoodTier": 5,
             "severityTier": 3,
+            "exposureLevel": "SENSITIVE_DETAIL_EXPOSED",
+            "preferenceTriggerLevel": 2,
             "awarenessGapTieBreak": true,
             "preferenceAction": {
-              "rank": 4,
-              "label": "Avoid unless explicitly requested",
-              "presentation": "avoid",
+              "rank": 2,
+              "label": "Show reminders whenever this verified category is present",
+              "presentation": "brief_reminder",
               "sources": [
                 "Q10",
+                "exposure_rule",
                 "probe_context:pii"
               ],
               "reasons": [
-                "avoid_task_irrelevant_use_unless_requested",
-                "context_category_action"
+                "brief_task_irrelevant_reminder",
+                "context_category_action",
+                "verified_category_presence_threshold_met"
               ]
             },
             "effectiveAction": {
-              "rank": 4,
-              "label": "Avoid unless explicitly requested",
-              "presentation": "avoid",
+              "rank": 2,
+              "label": "Show reminders whenever this verified category is present",
+              "presentation": "brief_reminder",
               "sources": [
                 "Q10",
+                "exposure_rule",
                 "probe_context:pii"
               ],
               "reasons": [
-                "avoid_task_irrelevant_use_unless_requested",
-                "context_category_action"
+                "brief_task_irrelevant_reminder",
+                "context_category_action",
+                "verified_category_presence_threshold_met"
               ]
             },
-            "reminderThreshold": 1,
+            "preferenceReminderDecision": "SHOW_REMINDER",
+            "effectiveReminderDecision": "SHOW_REMINDER",
             "floorApplied": false,
             "safetyWaiverApplied": false,
             "reasons": [
-              "avoid_task_irrelevant_use_unless_requested",
-              "context_category_action"
+              "brief_task_irrelevant_reminder",
+              "context_category_action",
+              "verified_category_presence_threshold_met"
             ],
             "reasonCodes": [
               "child_presence_not_observed",
@@ -2125,7 +2210,7 @@
               "task_relevance_not_visually_established",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "vprivcal-proof-of-concept-v1"
           }
@@ -2143,6 +2228,7 @@
             "isUncertain": false,
             "taskRelevant": true,
             "explicitlyRequested": false,
+            "exposureLevel": "PRESENCE_ONLY",
             "likelihoodTier": 5,
             "severityTier": 3,
             "reasonCodes": [
@@ -2152,7 +2238,7 @@
               "face_detail_motion_blurred"
             ]
           },
-          "expectedPreferenceRank": 4,
+          "expectedPreferenceRank": 2,
           "nonFilteredBaselineRank": 0,
           "personalizedDecision": {
             "status": "DECIDED",
@@ -2166,36 +2252,44 @@
             "scenarioType": "public",
             "likelihoodTier": 5,
             "severityTier": 3,
+            "exposureLevel": "PRESENCE_ONLY",
+            "preferenceTriggerLevel": 2,
             "awarenessGapTieBreak": true,
             "preferenceAction": {
-              "rank": 4,
-              "label": "Avoid unless explicitly requested",
-              "presentation": "avoid",
+              "rank": 2,
+              "label": "Show reminders whenever this verified category is present",
+              "presentation": "brief_reminder",
               "sources": [
+                "exposure_rule",
                 "probe_context:background_individuals",
                 "probe_context:biometric_data"
               ],
               "reasons": [
-                "context_category_action"
+                "context_category_action",
+                "verified_category_presence_threshold_met"
               ]
             },
             "effectiveAction": {
-              "rank": 4,
-              "label": "Avoid unless explicitly requested",
-              "presentation": "avoid",
+              "rank": 2,
+              "label": "Show reminders whenever this verified category is present",
+              "presentation": "brief_reminder",
               "sources": [
+                "exposure_rule",
                 "probe_context:background_individuals",
                 "probe_context:biometric_data"
               ],
               "reasons": [
-                "context_category_action"
+                "context_category_action",
+                "verified_category_presence_threshold_met"
               ]
             },
-            "reminderThreshold": 1,
+            "preferenceReminderDecision": "SHOW_REMINDER",
+            "effectiveReminderDecision": "SHOW_REMINDER",
             "floorApplied": false,
             "safetyWaiverApplied": false,
             "reasons": [
-              "context_category_action"
+              "context_category_action",
+              "verified_category_presence_threshold_met"
             ],
             "reasonCodes": [
               "face_detail_motion_blurred",
@@ -2203,7 +2297,7 @@
               "public_shared_space",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "disabled-v1"
           },
@@ -2219,37 +2313,47 @@
             "scenarioType": "public",
             "likelihoodTier": 5,
             "severityTier": 3,
+            "exposureLevel": "PRESENCE_ONLY",
+            "preferenceTriggerLevel": 2,
             "awarenessGapTieBreak": true,
             "preferenceAction": {
-              "rank": 4,
-              "label": "Avoid unless explicitly requested",
-              "presentation": "avoid",
+              "rank": 2,
+              "label": "Show reminders whenever this verified category is present",
+              "presentation": "brief_reminder",
               "sources": [
+                "exposure_rule",
                 "probe_context:background_individuals",
                 "probe_context:biometric_data"
               ],
               "reasons": [
-                "context_category_action"
+                "context_category_action",
+                "verified_category_presence_threshold_met"
               ]
             },
             "effectiveAction": {
-              "rank": 4,
-              "label": "Avoid unless explicitly requested",
-              "presentation": "avoid",
+              "rank": 2,
+              "label": "Show reminders whenever this verified category is present",
+              "presentation": "brief_reminder",
               "sources": [
+                "exposure_rule",
                 "probe_context:background_individuals",
-                "probe_context:biometric_data"
+                "probe_context:biometric_data",
+                "safety_floor"
               ],
               "reasons": [
-                "context_category_action"
+                "category_floor:background_individuals",
+                "context_category_action",
+                "verified_category_presence_threshold_met"
               ]
             },
-            "reminderThreshold": 1,
+            "preferenceReminderDecision": "SHOW_REMINDER",
+            "effectiveReminderDecision": "SHOW_REMINDER",
             "floorApplied": false,
             "safetyWaiverApplied": false,
             "reasons": [
               "category_floor:background_individuals",
-              "context_category_action"
+              "context_category_action",
+              "verified_category_presence_threshold_met"
             ],
             "reasonCodes": [
               "face_detail_motion_blurred",
@@ -2257,7 +2361,7 @@
               "public_shared_space",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "vprivcal-proof-of-concept-v1"
           }
@@ -2268,7 +2372,7 @@
           "observations": 4,
           "exactAgreementCount": 0,
           "exactAgreementRate": 0,
-          "meanAbsoluteRankError": 4
+          "meanAbsoluteRankError": 2
         },
         "personalizedPreference": {
           "observations": 4,
@@ -2287,7 +2391,7 @@
     {
       "profileId": "sim_context_dependent",
       "label": "Context dependent",
-      "rationale": "Uses different actions for private, public, and semi-public observations.",
+      "rationale": "Requests reminders only for selected category-by-context combinations.",
       "response": {
         "schemaVersion": "1.0.0",
         "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
@@ -2315,93 +2419,93 @@
         "q10": [
           {
             "questionId": "Q1",
-            "value": 3,
-            "label": "Give a brief reminder",
+            "value": 1,
+            "label": "Do not show reminders for this category",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
-            "finalResponse": 3
+            "finalResponse": 1
           },
           {
             "questionId": "Q2",
-            "value": 3,
-            "label": "Give a brief reminder",
+            "value": 1,
+            "label": "Do not show reminders for this category",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
-            "finalResponse": 3
+            "finalResponse": 1
           },
           {
             "questionId": "Q3",
-            "value": 3,
-            "label": "Give a brief reminder",
+            "value": 1,
+            "label": "Do not show reminders for this category",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
-            "finalResponse": 3
+            "finalResponse": 1
           },
           {
             "questionId": "Q4",
-            "value": 3,
-            "label": "Give a brief reminder",
+            "value": 1,
+            "label": "Do not show reminders for this category",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
-            "finalResponse": 3
+            "finalResponse": 1
           },
           {
             "questionId": "Q5",
-            "value": 3,
-            "label": "Give a brief reminder",
+            "value": 1,
+            "label": "Do not show reminders for this category",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
-            "finalResponse": 3
+            "finalResponse": 1
           },
           {
             "questionId": "Q6",
+            "value": 1,
+            "label": "Do not show reminders for this category",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 1
+          },
+          {
+            "questionId": "Q7",
+            "value": 1,
+            "label": "Do not show a privacy reminder",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 1
+          },
+          {
+            "questionId": "Q8",
             "value": 3,
-            "label": "Give a brief reminder",
+            "label": "Show reminders whenever this verified category is present",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
             "finalResponse": 3
           },
           {
-            "questionId": "Q7",
-            "value": 2,
-            "label": "Remind only for likely/serious cases",
-            "firstViewedAt": "2026-01-01T00:00:00.000Z",
-            "answeredAt": "2026-01-01T00:00:00.000Z",
-            "changes": 0,
-            "finalResponse": 2
-          },
-          {
-            "questionId": "Q8",
-            "value": 4,
-            "label": "Show most plausible risks",
-            "firstViewedAt": "2026-01-01T00:00:00.000Z",
-            "answeredAt": "2026-01-01T00:00:00.000Z",
-            "changes": 0,
-            "finalResponse": 4
-          },
-          {
             "questionId": "Q9",
-            "value": 2,
-            "label": "Show a quiet indicator",
+            "value": 1,
+            "label": "Do not show a privacy reminder",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
-            "finalResponse": 2
+            "finalResponse": 1
           },
           {
             "questionId": "Q10",
-            "value": 2,
-            "label": "Remind only if serious",
+            "value": 1,
+            "label": "Do not show a privacy reminder",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
-            "finalResponse": 2
+            "finalResponse": 1
           }
         ],
         "probe": [
@@ -2420,7 +2524,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 2,
-                "preferredAction": 1,
+                "preferredAction": 0,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -2448,7 +2552,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 2,
-                "preferredAction": 4,
+                "preferredAction": 2,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -2462,7 +2566,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 2,
-                "preferredAction": 2,
+                "preferredAction": 0,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -2479,7 +2583,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 2,
-                "preferredAction": 1,
+                "preferredAction": 0,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -2531,7 +2635,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 2,
-                "preferredAction": 3,
+                "preferredAction": 2,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -2545,7 +2649,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 2,
-                "preferredAction": 3,
+                "preferredAction": 2,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -2567,7 +2671,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 2,
-                "preferredAction": 2,
+                "preferredAction": 0,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -2583,7 +2687,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 2,
-                "preferredAction": 3,
+                "preferredAction": 2,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -2602,7 +2706,7 @@
         }
       },
       "compiledPolicy": {
-        "algorithmVersion": "1.0.0",
+        "algorithmVersion": "3.0.0-three-option-trigger",
         "schemaVersion": "1.0.0",
         "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
         "aggregation": {
@@ -2613,22 +2717,22 @@
         "categories": {
           "biometric_data": {
             "categoryId": "biometric_data",
-            "q10Prior": 2,
-            "q10PriorLabel": "Give a brief reminder",
-            "generalAction": 2,
-            "generalActionLabel": "Notify",
+            "q10Prior": 0,
+            "q10PriorLabel": "Do not show reminders for this category",
+            "generalAction": 0,
+            "generalActionLabel": "Do not show reminders for this category",
             "contextActions": {
-              "private": 1,
+              "private": 0,
               "public": 2,
-              "semi-public": 2
+              "semi-public": 0
             },
             "observations": [
               {
                 "categoryId": "biometric_data",
                 "sceneId": "scene_private_family_party",
                 "scenarioType": "private",
-                "action": 1,
-                "actionLabel": "Handle it silently",
+                "action": 0,
+                "actionLabel": "Do not show reminders for this category",
                 "awarenessStatus": 2,
                 "spontaneouslySelected": false
               },
@@ -2637,7 +2741,7 @@
                 "sceneId": "scene_public_cafe",
                 "scenarioType": "public",
                 "action": 2,
-                "actionLabel": "Give a brief reminder",
+                "actionLabel": "Show reminders whenever this verified category is present",
                 "awarenessStatus": 2,
                 "spontaneouslySelected": false
               },
@@ -2645,8 +2749,8 @@
                 "categoryId": "biometric_data",
                 "sceneId": "scene_semipublic_hospital",
                 "scenarioType": "semi-public",
-                "action": 2,
-                "actionLabel": "Give a brief reminder",
+                "action": 0,
+                "actionLabel": "Do not show reminders for this category",
                 "awarenessStatus": 2,
                 "spontaneouslySelected": false
               }
@@ -2660,10 +2764,10 @@
           },
           "children_images": {
             "categoryId": "children_images",
-            "q10Prior": 2,
-            "q10PriorLabel": "Give a brief reminder",
+            "q10Prior": 0,
+            "q10PriorLabel": "Do not show reminders for this category",
             "generalAction": 2,
-            "generalActionLabel": "Notify",
+            "generalActionLabel": "Show reminders whenever this verified category is present",
             "contextActions": {
               "private": 2,
               "public": 2
@@ -2674,7 +2778,7 @@
                 "sceneId": "scene_private_family_party",
                 "scenarioType": "private",
                 "action": 2,
-                "actionLabel": "Give a brief reminder",
+                "actionLabel": "Show reminders whenever this verified category is present",
                 "awarenessStatus": 2,
                 "spontaneouslySelected": false
               },
@@ -2683,7 +2787,7 @@
                 "sceneId": "scene_public_cafe",
                 "scenarioType": "public",
                 "action": 2,
-                "actionLabel": "Give a brief reminder",
+                "actionLabel": "Show reminders whenever this verified category is present",
                 "awarenessStatus": 2,
                 "spontaneouslySelected": false
               }
@@ -2697,22 +2801,22 @@
           },
           "pii": {
             "categoryId": "pii",
-            "q10Prior": 2,
-            "q10PriorLabel": "Give a brief reminder",
-            "generalAction": 3,
-            "generalActionLabel": "Ask before use",
+            "q10Prior": 0,
+            "q10PriorLabel": "Do not show reminders for this category",
+            "generalAction": 2,
+            "generalActionLabel": "Show reminders whenever this verified category is present",
             "contextActions": {
-              "private": 4,
-              "public": 3,
-              "semi-public": 3
+              "private": 2,
+              "public": 2,
+              "semi-public": 2
             },
             "observations": [
               {
                 "categoryId": "pii",
                 "sceneId": "scene_private_family_party",
                 "scenarioType": "private",
-                "action": 4,
-                "actionLabel": "Avoid using it unless I explicitly request it",
+                "action": 2,
+                "actionLabel": "Show reminders whenever this verified category is present",
                 "awarenessStatus": 2,
                 "spontaneouslySelected": false
               },
@@ -2720,8 +2824,8 @@
                 "categoryId": "pii",
                 "sceneId": "scene_public_cafe",
                 "scenarioType": "public",
-                "action": 3,
-                "actionLabel": "Ask before using it",
+                "action": 2,
+                "actionLabel": "Show reminders whenever this verified category is present",
                 "awarenessStatus": 2,
                 "spontaneouslySelected": false
               },
@@ -2729,8 +2833,8 @@
                 "categoryId": "pii",
                 "sceneId": "scene_semipublic_hospital",
                 "scenarioType": "semi-public",
-                "action": 3,
-                "actionLabel": "Ask before using it",
+                "action": 2,
+                "actionLabel": "Show reminders whenever this verified category is present",
                 "awarenessStatus": 2,
                 "spontaneouslySelected": false
               }
@@ -2744,20 +2848,20 @@
           },
           "legal_sensitivity_information": {
             "categoryId": "legal_sensitivity_information",
-            "q10Prior": 2,
-            "q10PriorLabel": "Give a brief reminder",
-            "generalAction": 2,
-            "generalActionLabel": "Notify",
+            "q10Prior": 0,
+            "q10PriorLabel": "Do not show reminders for this category",
+            "generalAction": 0,
+            "generalActionLabel": "Do not show reminders for this category",
             "contextActions": {
-              "private": 2
+              "private": 0
             },
             "observations": [
               {
                 "categoryId": "legal_sensitivity_information",
                 "sceneId": "scene_private_family_party",
                 "scenarioType": "private",
-                "action": 2,
-                "actionLabel": "Give a brief reminder",
+                "action": 0,
+                "actionLabel": "Do not show reminders for this category",
                 "awarenessStatus": 2,
                 "spontaneouslySelected": false
               }
@@ -2771,20 +2875,20 @@
           },
           "personal_life": {
             "categoryId": "personal_life",
-            "q10Prior": 2,
-            "q10PriorLabel": "Give a brief reminder",
-            "generalAction": 1,
-            "generalActionLabel": "Handle silently",
+            "q10Prior": 0,
+            "q10PriorLabel": "Do not show reminders for this category",
+            "generalAction": 0,
+            "generalActionLabel": "Do not show reminders for this category",
             "contextActions": {
-              "private": 1
+              "private": 0
             },
             "observations": [
               {
                 "categoryId": "personal_life",
                 "sceneId": "scene_private_family_party",
                 "scenarioType": "private",
-                "action": 1,
-                "actionLabel": "Handle it silently",
+                "action": 0,
+                "actionLabel": "Do not show reminders for this category",
                 "awarenessStatus": 2,
                 "spontaneouslySelected": false
               }
@@ -2798,20 +2902,20 @@
           },
           "background_individuals": {
             "categoryId": "background_individuals",
-            "q10Prior": 2,
-            "q10PriorLabel": "Give a brief reminder",
-            "generalAction": 3,
-            "generalActionLabel": "Ask before use",
+            "q10Prior": 0,
+            "q10PriorLabel": "Do not show reminders for this category",
+            "generalAction": 2,
+            "generalActionLabel": "Show reminders whenever this verified category is present",
             "contextActions": {
-              "public": 3
+              "public": 2
             },
             "observations": [
               {
                 "categoryId": "background_individuals",
                 "sceneId": "scene_public_cafe",
                 "scenarioType": "public",
-                "action": 3,
-                "actionLabel": "Ask before using it",
+                "action": 2,
+                "actionLabel": "Show reminders whenever this verified category is present",
                 "awarenessStatus": 2,
                 "spontaneouslySelected": false
               }
@@ -2825,10 +2929,10 @@
           }
         },
         "crossCutting": {
-          "inferenceRule": 2,
-          "reminderSensitivity": 4,
-          "uncertaintyRule": 2,
-          "taskIrrelevantRule": 2
+          "inferenceRule": 1,
+          "unlistedCategoryTrigger": 2,
+          "uncertaintyRule": 1,
+          "taskIrrelevantRule": 1
         },
         "confirmation": {
           "status": "not_collected"
@@ -2848,6 +2952,7 @@
             "isUncertain": false,
             "taskRelevant": true,
             "explicitlyRequested": false,
+            "exposureLevel": "PRESENCE_ONLY",
             "likelihoodTier": 5,
             "severityTier": 4,
             "reasonCodes": [
@@ -2871,34 +2976,42 @@
             "scenarioType": "private",
             "likelihoodTier": 5,
             "severityTier": 4,
+            "exposureLevel": "PRESENCE_ONLY",
+            "preferenceTriggerLevel": 2,
             "awarenessGapTieBreak": true,
             "preferenceAction": {
               "rank": 2,
-              "label": "Notify",
+              "label": "Show reminders whenever this verified category is present",
               "presentation": "brief_reminder",
               "sources": [
+                "exposure_rule",
                 "probe_context:children_images"
               ],
               "reasons": [
-                "context_category_action"
+                "context_category_action",
+                "verified_category_presence_threshold_met"
               ]
             },
             "effectiveAction": {
               "rank": 2,
-              "label": "Notify",
+              "label": "Show reminders whenever this verified category is present",
               "presentation": "brief_reminder",
               "sources": [
+                "exposure_rule",
                 "probe_context:children_images"
               ],
               "reasons": [
-                "context_category_action"
+                "context_category_action",
+                "verified_category_presence_threshold_met"
               ]
             },
-            "reminderThreshold": 2,
+            "preferenceReminderDecision": "SHOW_REMINDER",
+            "effectiveReminderDecision": "SHOW_REMINDER",
             "floorApplied": false,
             "safetyWaiverApplied": false,
             "reasons": [
-              "context_category_action"
+              "context_category_action",
+              "verified_category_presence_threshold_met"
             ],
             "reasonCodes": [
               "children_directly_visible",
@@ -2906,7 +3019,7 @@
               "private_home_context",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "disabled-v1"
           },
@@ -2922,37 +3035,47 @@
             "scenarioType": "private",
             "likelihoodTier": 5,
             "severityTier": 4,
+            "exposureLevel": "PRESENCE_ONLY",
+            "preferenceTriggerLevel": 2,
             "awarenessGapTieBreak": true,
             "preferenceAction": {
               "rank": 2,
-              "label": "Notify",
+              "label": "Show reminders whenever this verified category is present",
               "presentation": "brief_reminder",
               "sources": [
+                "exposure_rule",
                 "probe_context:children_images"
               ],
               "reasons": [
-                "context_category_action"
+                "context_category_action",
+                "verified_category_presence_threshold_met"
               ]
             },
             "effectiveAction": {
               "rank": 2,
-              "label": "Notify",
+              "label": "Show reminders whenever this verified category is present",
               "presentation": "brief_reminder",
               "sources": [
+                "exposure_rule",
                 "probe_context:children_images",
                 "safety_floor"
               ],
               "reasons": [
+                "category_floor:children_images",
                 "context_category_action",
-                "high_confidence_severe_floor"
+                "high_confidence_severe_floor",
+                "verified_category_presence_threshold_met"
               ]
             },
-            "reminderThreshold": 2,
+            "preferenceReminderDecision": "SHOW_REMINDER",
+            "effectiveReminderDecision": "SHOW_REMINDER",
             "floorApplied": false,
             "safetyWaiverApplied": false,
             "reasons": [
+              "category_floor:children_images",
               "context_category_action",
-              "high_confidence_severe_floor"
+              "high_confidence_severe_floor",
+              "verified_category_presence_threshold_met"
             ],
             "reasonCodes": [
               "children_directly_visible",
@@ -2960,7 +3083,7 @@
               "private_home_context",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "vprivcal-proof-of-concept-v1"
           }
@@ -2978,6 +3101,7 @@
             "isUncertain": true,
             "taskRelevant": false,
             "explicitlyRequested": false,
+            "exposureLevel": "PRESENCE_ONLY",
             "likelihoodTier": 3,
             "severityTier": 4,
             "reasonCodes": [
@@ -2987,7 +3111,7 @@
               "task_relevance_not_visually_established"
             ]
           },
-          "expectedPreferenceRank": 2,
+          "expectedPreferenceRank": 0,
           "nonFilteredBaselineRank": 0,
           "personalizedDecision": {
             "status": "DECIDED",
@@ -3001,51 +3125,54 @@
             "scenarioType": "private",
             "likelihoodTier": 3,
             "severityTier": 4,
+            "exposureLevel": "PRESENCE_ONLY",
+            "preferenceTriggerLevel": 0,
             "awarenessGapTieBreak": true,
             "preferenceAction": {
-              "rank": 2,
-              "label": "Notify",
-              "presentation": "brief_reminder",
+              "rank": 0,
+              "label": "Do not show reminders for this category",
+              "presentation": "none",
               "sources": [
                 "Q10",
                 "Q7",
                 "Q9",
-                "probe_context:legal_sensitivity_information"
+                "probe_context:legal_sensitivity_information",
+                "probe_context:personal_life"
               ],
               "reasons": [
                 "context_category_action",
-                "likely_or_serious_inference",
-                "quiet_uncertainty_indicator",
-                "serious_task_irrelevant_content"
-              ],
-              "minimumRiskTier": 4
+                "no_reminder_for_inference",
+                "no_reminder_when_task_irrelevant",
+                "no_reminder_when_uncertain"
+              ]
             },
             "effectiveAction": {
-              "rank": 2,
-              "label": "Notify",
-              "presentation": "brief_reminder",
+              "rank": 0,
+              "label": "Do not show reminders for this category",
+              "presentation": "none",
               "sources": [
                 "Q10",
                 "Q7",
                 "Q9",
-                "probe_context:legal_sensitivity_information"
+                "probe_context:legal_sensitivity_information",
+                "probe_context:personal_life"
               ],
               "reasons": [
                 "context_category_action",
-                "likely_or_serious_inference",
-                "quiet_uncertainty_indicator",
-                "serious_task_irrelevant_content"
-              ],
-              "minimumRiskTier": 4
+                "no_reminder_for_inference",
+                "no_reminder_when_task_irrelevant",
+                "no_reminder_when_uncertain"
+              ]
             },
-            "reminderThreshold": 2,
+            "preferenceReminderDecision": "NO_REMINDER",
+            "effectiveReminderDecision": "NO_REMINDER",
             "floorApplied": false,
             "safetyWaiverApplied": false,
             "reasons": [
               "context_category_action",
-              "likely_or_serious_inference",
-              "quiet_uncertainty_indicator",
-              "serious_task_irrelevant_content"
+              "no_reminder_for_inference",
+              "no_reminder_when_task_irrelevant",
+              "no_reminder_when_uncertain"
             ],
             "reasonCodes": [
               "offering_or_ritual_inference_uncertain",
@@ -3053,7 +3180,7 @@
               "task_relevance_not_visually_established",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "disabled-v1"
           },
@@ -3069,51 +3196,54 @@
             "scenarioType": "private",
             "likelihoodTier": 3,
             "severityTier": 4,
+            "exposureLevel": "PRESENCE_ONLY",
+            "preferenceTriggerLevel": 0,
             "awarenessGapTieBreak": true,
             "preferenceAction": {
-              "rank": 2,
-              "label": "Notify",
-              "presentation": "brief_reminder",
+              "rank": 0,
+              "label": "Do not show reminders for this category",
+              "presentation": "none",
               "sources": [
                 "Q10",
                 "Q7",
                 "Q9",
-                "probe_context:legal_sensitivity_information"
+                "probe_context:legal_sensitivity_information",
+                "probe_context:personal_life"
               ],
               "reasons": [
                 "context_category_action",
-                "likely_or_serious_inference",
-                "quiet_uncertainty_indicator",
-                "serious_task_irrelevant_content"
-              ],
-              "minimumRiskTier": 4
+                "no_reminder_for_inference",
+                "no_reminder_when_task_irrelevant",
+                "no_reminder_when_uncertain"
+              ]
             },
             "effectiveAction": {
-              "rank": 2,
-              "label": "Notify",
-              "presentation": "brief_reminder",
+              "rank": 0,
+              "label": "Do not show reminders for this category",
+              "presentation": "none",
               "sources": [
                 "Q10",
                 "Q7",
                 "Q9",
-                "probe_context:legal_sensitivity_information"
+                "probe_context:legal_sensitivity_information",
+                "probe_context:personal_life"
               ],
               "reasons": [
                 "context_category_action",
-                "likely_or_serious_inference",
-                "quiet_uncertainty_indicator",
-                "serious_task_irrelevant_content"
-              ],
-              "minimumRiskTier": 4
+                "no_reminder_for_inference",
+                "no_reminder_when_task_irrelevant",
+                "no_reminder_when_uncertain"
+              ]
             },
-            "reminderThreshold": 2,
+            "preferenceReminderDecision": "NO_REMINDER",
+            "effectiveReminderDecision": "NO_REMINDER",
             "floorApplied": false,
             "safetyWaiverApplied": false,
             "reasons": [
               "context_category_action",
-              "likely_or_serious_inference",
-              "quiet_uncertainty_indicator",
-              "serious_task_irrelevant_content"
+              "no_reminder_for_inference",
+              "no_reminder_when_task_irrelevant",
+              "no_reminder_when_uncertain"
             ],
             "reasonCodes": [
               "offering_or_ritual_inference_uncertain",
@@ -3121,7 +3251,7 @@
               "task_relevance_not_visually_established",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "vprivcal-proof-of-concept-v1"
           }
@@ -3138,6 +3268,7 @@
             "isUncertain": false,
             "taskRelevant": false,
             "explicitlyRequested": false,
+            "exposureLevel": "SENSITIVE_DETAIL_EXPOSED",
             "likelihoodTier": 5,
             "severityTier": 3,
             "reasonCodes": [
@@ -3147,7 +3278,7 @@
               "task_relevance_not_visually_established"
             ]
           },
-          "expectedPreferenceRank": 4,
+          "expectedPreferenceRank": 2,
           "nonFilteredBaselineRank": 0,
           "personalizedDecision": {
             "status": "DECIDED",
@@ -3160,35 +3291,42 @@
             "scenarioType": "private",
             "likelihoodTier": 5,
             "severityTier": 3,
+            "exposureLevel": "SENSITIVE_DETAIL_EXPOSED",
+            "preferenceTriggerLevel": 2,
             "awarenessGapTieBreak": true,
             "preferenceAction": {
-              "rank": 4,
-              "label": "Avoid unless explicitly requested",
-              "presentation": "avoid",
+              "rank": 2,
+              "label": "Show reminders whenever this verified category is present",
+              "presentation": "brief_reminder",
               "sources": [
+                "exposure_rule",
                 "probe_context:pii"
               ],
               "reasons": [
-                "context_category_action"
+                "context_category_action",
+                "verified_category_presence_threshold_met"
               ]
             },
             "effectiveAction": {
-              "rank": 4,
-              "label": "Avoid unless explicitly requested",
-              "presentation": "avoid",
+              "rank": 2,
+              "label": "Show reminders whenever this verified category is present",
+              "presentation": "brief_reminder",
               "sources": [
+                "exposure_rule",
                 "probe_context:pii"
               ],
               "reasons": [
-                "context_category_action"
+                "context_category_action",
+                "verified_category_presence_threshold_met"
               ]
             },
-            "reminderThreshold": 2,
+            "preferenceReminderDecision": "SHOW_REMINDER",
+            "effectiveReminderDecision": "SHOW_REMINDER",
             "floorApplied": false,
             "safetyWaiverApplied": false,
             "reasons": [
               "context_category_action",
-              "serious_task_irrelevant_content"
+              "verified_category_presence_threshold_met"
             ],
             "reasonCodes": [
               "child_presence_not_observed",
@@ -3196,7 +3334,7 @@
               "task_relevance_not_visually_established",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "disabled-v1"
           },
@@ -3211,35 +3349,42 @@
             "scenarioType": "private",
             "likelihoodTier": 5,
             "severityTier": 3,
+            "exposureLevel": "SENSITIVE_DETAIL_EXPOSED",
+            "preferenceTriggerLevel": 2,
             "awarenessGapTieBreak": true,
             "preferenceAction": {
-              "rank": 4,
-              "label": "Avoid unless explicitly requested",
-              "presentation": "avoid",
+              "rank": 2,
+              "label": "Show reminders whenever this verified category is present",
+              "presentation": "brief_reminder",
               "sources": [
+                "exposure_rule",
                 "probe_context:pii"
               ],
               "reasons": [
-                "context_category_action"
+                "context_category_action",
+                "verified_category_presence_threshold_met"
               ]
             },
             "effectiveAction": {
-              "rank": 4,
-              "label": "Avoid unless explicitly requested",
-              "presentation": "avoid",
+              "rank": 2,
+              "label": "Show reminders whenever this verified category is present",
+              "presentation": "brief_reminder",
               "sources": [
+                "exposure_rule",
                 "probe_context:pii"
               ],
               "reasons": [
-                "context_category_action"
+                "context_category_action",
+                "verified_category_presence_threshold_met"
               ]
             },
-            "reminderThreshold": 2,
+            "preferenceReminderDecision": "SHOW_REMINDER",
+            "effectiveReminderDecision": "SHOW_REMINDER",
             "floorApplied": false,
             "safetyWaiverApplied": false,
             "reasons": [
               "context_category_action",
-              "serious_task_irrelevant_content"
+              "verified_category_presence_threshold_met"
             ],
             "reasonCodes": [
               "child_presence_not_observed",
@@ -3247,7 +3392,7 @@
               "task_relevance_not_visually_established",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "vprivcal-proof-of-concept-v1"
           }
@@ -3265,6 +3410,7 @@
             "isUncertain": false,
             "taskRelevant": true,
             "explicitlyRequested": false,
+            "exposureLevel": "PRESENCE_ONLY",
             "likelihoodTier": 5,
             "severityTier": 3,
             "reasonCodes": [
@@ -3274,7 +3420,7 @@
               "face_detail_motion_blurred"
             ]
           },
-          "expectedPreferenceRank": 3,
+          "expectedPreferenceRank": 2,
           "nonFilteredBaselineRank": 0,
           "personalizedDecision": {
             "status": "DECIDED",
@@ -3288,34 +3434,44 @@
             "scenarioType": "public",
             "likelihoodTier": 5,
             "severityTier": 3,
+            "exposureLevel": "PRESENCE_ONLY",
+            "preferenceTriggerLevel": 2,
             "awarenessGapTieBreak": true,
             "preferenceAction": {
-              "rank": 3,
-              "label": "Ask before use",
-              "presentation": "ask",
+              "rank": 2,
+              "label": "Show reminders whenever this verified category is present",
+              "presentation": "brief_reminder",
               "sources": [
-                "probe_context:background_individuals"
+                "exposure_rule",
+                "probe_context:background_individuals",
+                "probe_context:biometric_data"
               ],
               "reasons": [
-                "context_category_action"
+                "context_category_action",
+                "verified_category_presence_threshold_met"
               ]
             },
             "effectiveAction": {
-              "rank": 3,
-              "label": "Ask before use",
-              "presentation": "ask",
+              "rank": 2,
+              "label": "Show reminders whenever this verified category is present",
+              "presentation": "brief_reminder",
               "sources": [
-                "probe_context:background_individuals"
+                "exposure_rule",
+                "probe_context:background_individuals",
+                "probe_context:biometric_data"
               ],
               "reasons": [
-                "context_category_action"
+                "context_category_action",
+                "verified_category_presence_threshold_met"
               ]
             },
-            "reminderThreshold": 2,
+            "preferenceReminderDecision": "SHOW_REMINDER",
+            "effectiveReminderDecision": "SHOW_REMINDER",
             "floorApplied": false,
             "safetyWaiverApplied": false,
             "reasons": [
-              "context_category_action"
+              "context_category_action",
+              "verified_category_presence_threshold_met"
             ],
             "reasonCodes": [
               "face_detail_motion_blurred",
@@ -3323,7 +3479,7 @@
               "public_shared_space",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "disabled-v1"
           },
@@ -3339,35 +3495,47 @@
             "scenarioType": "public",
             "likelihoodTier": 5,
             "severityTier": 3,
+            "exposureLevel": "PRESENCE_ONLY",
+            "preferenceTriggerLevel": 2,
             "awarenessGapTieBreak": true,
             "preferenceAction": {
-              "rank": 3,
-              "label": "Ask before use",
-              "presentation": "ask",
+              "rank": 2,
+              "label": "Show reminders whenever this verified category is present",
+              "presentation": "brief_reminder",
               "sources": [
-                "probe_context:background_individuals"
+                "exposure_rule",
+                "probe_context:background_individuals",
+                "probe_context:biometric_data"
               ],
               "reasons": [
-                "context_category_action"
+                "context_category_action",
+                "verified_category_presence_threshold_met"
               ]
             },
             "effectiveAction": {
-              "rank": 3,
-              "label": "Ask before use",
-              "presentation": "ask",
+              "rank": 2,
+              "label": "Show reminders whenever this verified category is present",
+              "presentation": "brief_reminder",
               "sources": [
-                "probe_context:background_individuals"
+                "exposure_rule",
+                "probe_context:background_individuals",
+                "probe_context:biometric_data",
+                "safety_floor"
               ],
               "reasons": [
-                "context_category_action"
+                "category_floor:background_individuals",
+                "context_category_action",
+                "verified_category_presence_threshold_met"
               ]
             },
-            "reminderThreshold": 2,
+            "preferenceReminderDecision": "SHOW_REMINDER",
+            "effectiveReminderDecision": "SHOW_REMINDER",
             "floorApplied": false,
             "safetyWaiverApplied": false,
             "reasons": [
               "category_floor:background_individuals",
-              "context_category_action"
+              "context_category_action",
+              "verified_category_presence_threshold_met"
             ],
             "reasonCodes": [
               "face_detail_motion_blurred",
@@ -3375,7 +3543,7 @@
               "public_shared_space",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "vprivcal-proof-of-concept-v1"
           }
@@ -3384,9 +3552,9 @@
       "metrics": {
         "nonFilteredBaseline": {
           "observations": 4,
-          "exactAgreementCount": 0,
-          "exactAgreementRate": 0,
-          "meanAbsoluteRankError": 2.75
+          "exactAgreementCount": 1,
+          "exactAgreementRate": 0.25,
+          "meanAbsoluteRankError": 1.5
         },
         "personalizedPreference": {
           "observations": 4,
@@ -3405,7 +3573,7 @@
     {
       "profileId": "sim_uncertainty_sensitive",
       "label": "Uncertainty sensitive",
-      "rationale": "Usually handles silently but avoids use when a cue is uncertain.",
+      "rationale": "Requests a reminder only when the VLM cue is uncertain.",
       "response": {
         "schemaVersion": "1.0.0",
         "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
@@ -3433,89 +3601,89 @@
         "q10": [
           {
             "questionId": "Q1",
-            "value": 2,
-            "label": "Handle silently and avoid unnecessary detail",
+            "value": 1,
+            "label": "Do not show reminders for this category",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
-            "finalResponse": 2
+            "finalResponse": 1
           },
           {
             "questionId": "Q2",
-            "value": 2,
-            "label": "Handle silently and avoid unnecessary detail",
+            "value": 1,
+            "label": "Do not show reminders for this category",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
-            "finalResponse": 2
+            "finalResponse": 1
           },
           {
             "questionId": "Q3",
-            "value": 2,
-            "label": "Handle silently and avoid unnecessary detail",
+            "value": 1,
+            "label": "Do not show reminders for this category",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
-            "finalResponse": 2
+            "finalResponse": 1
           },
           {
             "questionId": "Q4",
-            "value": 2,
-            "label": "Handle silently and avoid unnecessary detail",
+            "value": 1,
+            "label": "Do not show reminders for this category",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
-            "finalResponse": 2
+            "finalResponse": 1
           },
           {
             "questionId": "Q5",
-            "value": 2,
-            "label": "Handle silently and avoid unnecessary detail",
+            "value": 1,
+            "label": "Do not show reminders for this category",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
-            "finalResponse": 2
+            "finalResponse": 1
           },
           {
             "questionId": "Q6",
-            "value": 2,
-            "label": "Handle silently and avoid unnecessary detail",
+            "value": 1,
+            "label": "Do not show reminders for this category",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
-            "finalResponse": 2
+            "finalResponse": 1
           },
           {
             "questionId": "Q7",
+            "value": 1,
+            "label": "Do not show a privacy reminder",
+            "firstViewedAt": "2026-01-01T00:00:00.000Z",
+            "answeredAt": "2026-01-01T00:00:00.000Z",
+            "changes": 0,
+            "finalResponse": 1
+          },
+          {
+            "questionId": "Q8",
             "value": 3,
-            "label": "Give a brief reminder",
+            "label": "Show reminders whenever this verified category is present",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
             "finalResponse": 3
           },
           {
-            "questionId": "Q8",
-            "value": 5,
-            "label": "Show every possible risk",
-            "firstViewedAt": "2026-01-01T00:00:00.000Z",
-            "answeredAt": "2026-01-01T00:00:00.000Z",
-            "changes": 0,
-            "finalResponse": 5
-          },
-          {
             "questionId": "Q9",
-            "value": 5,
-            "label": "Avoid using the information until approved",
+            "value": 3,
+            "label": "Show a brief privacy reminder",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
-            "finalResponse": 5
+            "finalResponse": 3
           },
           {
             "questionId": "Q10",
             "value": 1,
-            "label": "Do nothing",
+            "label": "Do not show a privacy reminder",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
@@ -3538,7 +3706,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 3,
-                "preferredAction": 1,
+                "preferredAction": 0,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -3552,7 +3720,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 3,
-                "preferredAction": 1,
+                "preferredAction": 0,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -3566,7 +3734,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 3,
-                "preferredAction": 1,
+                "preferredAction": 0,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -3580,7 +3748,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 3,
-                "preferredAction": 1,
+                "preferredAction": 0,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -3597,7 +3765,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 3,
-                "preferredAction": 1,
+                "preferredAction": 0,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -3619,7 +3787,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 3,
-                "preferredAction": 1,
+                "preferredAction": 0,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -3633,7 +3801,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 3,
-                "preferredAction": 1,
+                "preferredAction": 0,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -3649,7 +3817,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 3,
-                "preferredAction": 1,
+                "preferredAction": 0,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -3663,7 +3831,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 3,
-                "preferredAction": 1,
+                "preferredAction": 0,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -3685,7 +3853,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 3,
-                "preferredAction": 1,
+                "preferredAction": 0,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -3701,7 +3869,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 3,
-                "preferredAction": 1,
+                "preferredAction": 0,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -3720,7 +3888,7 @@
         }
       },
       "compiledPolicy": {
-        "algorithmVersion": "1.0.0",
+        "algorithmVersion": "3.0.0-three-option-trigger",
         "schemaVersion": "1.0.0",
         "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
         "aggregation": {
@@ -3731,22 +3899,22 @@
         "categories": {
           "biometric_data": {
             "categoryId": "biometric_data",
-            "q10Prior": 1,
-            "q10PriorLabel": "Handle silently and avoid unnecessary detail",
-            "generalAction": 1,
-            "generalActionLabel": "Handle silently",
+            "q10Prior": 0,
+            "q10PriorLabel": "Do not show reminders for this category",
+            "generalAction": 0,
+            "generalActionLabel": "Do not show reminders for this category",
             "contextActions": {
-              "private": 1,
-              "public": 1,
-              "semi-public": 1
+              "private": 0,
+              "public": 0,
+              "semi-public": 0
             },
             "observations": [
               {
                 "categoryId": "biometric_data",
                 "sceneId": "scene_private_family_party",
                 "scenarioType": "private",
-                "action": 1,
-                "actionLabel": "Handle it silently",
+                "action": 0,
+                "actionLabel": "Do not show reminders for this category",
                 "awarenessStatus": 3,
                 "spontaneouslySelected": false
               },
@@ -3754,8 +3922,8 @@
                 "categoryId": "biometric_data",
                 "sceneId": "scene_public_cafe",
                 "scenarioType": "public",
-                "action": 1,
-                "actionLabel": "Handle it silently",
+                "action": 0,
+                "actionLabel": "Do not show reminders for this category",
                 "awarenessStatus": 3,
                 "spontaneouslySelected": false
               },
@@ -3763,8 +3931,8 @@
                 "categoryId": "biometric_data",
                 "sceneId": "scene_semipublic_hospital",
                 "scenarioType": "semi-public",
-                "action": 1,
-                "actionLabel": "Handle it silently",
+                "action": 0,
+                "actionLabel": "Do not show reminders for this category",
                 "awarenessStatus": 3,
                 "spontaneouslySelected": false
               }
@@ -3778,21 +3946,21 @@
           },
           "children_images": {
             "categoryId": "children_images",
-            "q10Prior": 1,
-            "q10PriorLabel": "Handle silently and avoid unnecessary detail",
-            "generalAction": 1,
-            "generalActionLabel": "Handle silently",
+            "q10Prior": 0,
+            "q10PriorLabel": "Do not show reminders for this category",
+            "generalAction": 0,
+            "generalActionLabel": "Do not show reminders for this category",
             "contextActions": {
-              "private": 1,
-              "public": 1
+              "private": 0,
+              "public": 0
             },
             "observations": [
               {
                 "categoryId": "children_images",
                 "sceneId": "scene_private_family_party",
                 "scenarioType": "private",
-                "action": 1,
-                "actionLabel": "Handle it silently",
+                "action": 0,
+                "actionLabel": "Do not show reminders for this category",
                 "awarenessStatus": 3,
                 "spontaneouslySelected": false
               },
@@ -3800,8 +3968,8 @@
                 "categoryId": "children_images",
                 "sceneId": "scene_public_cafe",
                 "scenarioType": "public",
-                "action": 1,
-                "actionLabel": "Handle it silently",
+                "action": 0,
+                "actionLabel": "Do not show reminders for this category",
                 "awarenessStatus": 3,
                 "spontaneouslySelected": false
               }
@@ -3815,22 +3983,22 @@
           },
           "pii": {
             "categoryId": "pii",
-            "q10Prior": 1,
-            "q10PriorLabel": "Handle silently and avoid unnecessary detail",
-            "generalAction": 1,
-            "generalActionLabel": "Handle silently",
+            "q10Prior": 0,
+            "q10PriorLabel": "Do not show reminders for this category",
+            "generalAction": 0,
+            "generalActionLabel": "Do not show reminders for this category",
             "contextActions": {
-              "private": 1,
-              "public": 1,
-              "semi-public": 1
+              "private": 0,
+              "public": 0,
+              "semi-public": 0
             },
             "observations": [
               {
                 "categoryId": "pii",
                 "sceneId": "scene_private_family_party",
                 "scenarioType": "private",
-                "action": 1,
-                "actionLabel": "Handle it silently",
+                "action": 0,
+                "actionLabel": "Do not show reminders for this category",
                 "awarenessStatus": 3,
                 "spontaneouslySelected": false
               },
@@ -3838,8 +4006,8 @@
                 "categoryId": "pii",
                 "sceneId": "scene_public_cafe",
                 "scenarioType": "public",
-                "action": 1,
-                "actionLabel": "Handle it silently",
+                "action": 0,
+                "actionLabel": "Do not show reminders for this category",
                 "awarenessStatus": 3,
                 "spontaneouslySelected": false
               },
@@ -3847,8 +4015,8 @@
                 "categoryId": "pii",
                 "sceneId": "scene_semipublic_hospital",
                 "scenarioType": "semi-public",
-                "action": 1,
-                "actionLabel": "Handle it silently",
+                "action": 0,
+                "actionLabel": "Do not show reminders for this category",
                 "awarenessStatus": 3,
                 "spontaneouslySelected": false
               }
@@ -3862,20 +4030,20 @@
           },
           "legal_sensitivity_information": {
             "categoryId": "legal_sensitivity_information",
-            "q10Prior": 1,
-            "q10PriorLabel": "Handle silently and avoid unnecessary detail",
-            "generalAction": 1,
-            "generalActionLabel": "Handle silently",
+            "q10Prior": 0,
+            "q10PriorLabel": "Do not show reminders for this category",
+            "generalAction": 0,
+            "generalActionLabel": "Do not show reminders for this category",
             "contextActions": {
-              "private": 1
+              "private": 0
             },
             "observations": [
               {
                 "categoryId": "legal_sensitivity_information",
                 "sceneId": "scene_private_family_party",
                 "scenarioType": "private",
-                "action": 1,
-                "actionLabel": "Handle it silently",
+                "action": 0,
+                "actionLabel": "Do not show reminders for this category",
                 "awarenessStatus": 3,
                 "spontaneouslySelected": false
               }
@@ -3889,20 +4057,20 @@
           },
           "personal_life": {
             "categoryId": "personal_life",
-            "q10Prior": 1,
-            "q10PriorLabel": "Handle silently and avoid unnecessary detail",
-            "generalAction": 1,
-            "generalActionLabel": "Handle silently",
+            "q10Prior": 0,
+            "q10PriorLabel": "Do not show reminders for this category",
+            "generalAction": 0,
+            "generalActionLabel": "Do not show reminders for this category",
             "contextActions": {
-              "private": 1
+              "private": 0
             },
             "observations": [
               {
                 "categoryId": "personal_life",
                 "sceneId": "scene_private_family_party",
                 "scenarioType": "private",
-                "action": 1,
-                "actionLabel": "Handle it silently",
+                "action": 0,
+                "actionLabel": "Do not show reminders for this category",
                 "awarenessStatus": 3,
                 "spontaneouslySelected": false
               }
@@ -3916,20 +4084,20 @@
           },
           "background_individuals": {
             "categoryId": "background_individuals",
-            "q10Prior": 1,
-            "q10PriorLabel": "Handle silently and avoid unnecessary detail",
-            "generalAction": 1,
-            "generalActionLabel": "Handle silently",
+            "q10Prior": 0,
+            "q10PriorLabel": "Do not show reminders for this category",
+            "generalAction": 0,
+            "generalActionLabel": "Do not show reminders for this category",
             "contextActions": {
-              "public": 1
+              "public": 0
             },
             "observations": [
               {
                 "categoryId": "background_individuals",
                 "sceneId": "scene_public_cafe",
                 "scenarioType": "public",
-                "action": 1,
-                "actionLabel": "Handle it silently",
+                "action": 0,
+                "actionLabel": "Do not show reminders for this category",
                 "awarenessStatus": 3,
                 "spontaneouslySelected": false
               }
@@ -3943,9 +4111,9 @@
           }
         },
         "crossCutting": {
-          "inferenceRule": 3,
-          "reminderSensitivity": 5,
-          "uncertaintyRule": 5,
+          "inferenceRule": 1,
+          "unlistedCategoryTrigger": 2,
+          "uncertaintyRule": 3,
           "taskIrrelevantRule": 1
         },
         "confirmation": {
@@ -3966,6 +4134,7 @@
             "isUncertain": false,
             "taskRelevant": true,
             "explicitlyRequested": false,
+            "exposureLevel": "PRESENCE_ONLY",
             "likelihoodTier": 5,
             "severityTier": 4,
             "reasonCodes": [
@@ -3975,7 +4144,7 @@
               "faces_blurred_in_source"
             ]
           },
-          "expectedPreferenceRank": 1,
+          "expectedPreferenceRank": 0,
           "nonFilteredBaselineRank": 0,
           "personalizedDecision": {
             "status": "DECIDED",
@@ -3989,11 +4158,13 @@
             "scenarioType": "private",
             "likelihoodTier": 5,
             "severityTier": 4,
+            "exposureLevel": "PRESENCE_ONLY",
+            "preferenceTriggerLevel": 0,
             "awarenessGapTieBreak": true,
             "preferenceAction": {
-              "rank": 1,
-              "label": "Handle silently",
-              "presentation": "silent",
+              "rank": 0,
+              "label": "Do not show reminders for this category",
+              "presentation": "none",
               "sources": [
                 "probe_context:children_images",
                 "probe_context:personal_life"
@@ -4003,9 +4174,9 @@
               ]
             },
             "effectiveAction": {
-              "rank": 1,
-              "label": "Handle silently",
-              "presentation": "silent",
+              "rank": 0,
+              "label": "Do not show reminders for this category",
+              "presentation": "none",
               "sources": [
                 "probe_context:children_images",
                 "probe_context:personal_life"
@@ -4014,7 +4185,8 @@
                 "context_category_action"
               ]
             },
-            "reminderThreshold": 1,
+            "preferenceReminderDecision": "NO_REMINDER",
+            "effectiveReminderDecision": "NO_REMINDER",
             "floorApplied": false,
             "safetyWaiverApplied": false,
             "reasons": [
@@ -4026,7 +4198,7 @@
               "private_home_context",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "disabled-v1"
           },
@@ -4042,11 +4214,13 @@
             "scenarioType": "private",
             "likelihoodTier": 5,
             "severityTier": 4,
+            "exposureLevel": "PRESENCE_ONLY",
+            "preferenceTriggerLevel": 0,
             "awarenessGapTieBreak": true,
             "preferenceAction": {
-              "rank": 1,
-              "label": "Handle silently",
-              "presentation": "silent",
+              "rank": 0,
+              "label": "Do not show reminders for this category",
+              "presentation": "none",
               "sources": [
                 "probe_context:children_images",
                 "probe_context:personal_life"
@@ -4057,19 +4231,22 @@
             },
             "effectiveAction": {
               "rank": 2,
-              "label": "Notify",
+              "label": "Show reminders whenever this verified category is present",
               "presentation": "brief_reminder",
               "sources": [
                 "safety_floor"
               ],
               "reasons": [
+                "category_floor:children_images",
                 "high_confidence_severe_floor"
               ]
             },
-            "reminderThreshold": 1,
+            "preferenceReminderDecision": "NO_REMINDER",
+            "effectiveReminderDecision": "SHOW_REMINDER",
             "floorApplied": true,
             "safetyWaiverApplied": false,
             "reasons": [
+              "category_floor:children_images",
               "context_category_action",
               "high_confidence_severe_floor"
             ],
@@ -4079,7 +4256,7 @@
               "private_home_context",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "vprivcal-proof-of-concept-v1"
           }
@@ -4097,6 +4274,7 @@
             "isUncertain": true,
             "taskRelevant": false,
             "explicitlyRequested": false,
+            "exposureLevel": "PRESENCE_ONLY",
             "likelihoodTier": 3,
             "severityTier": 4,
             "reasonCodes": [
@@ -4106,7 +4284,7 @@
               "task_relevance_not_visually_established"
             ]
           },
-          "expectedPreferenceRank": 4,
+          "expectedPreferenceRank": 2,
           "nonFilteredBaselineRank": 0,
           "personalizedDecision": {
             "status": "DECIDED",
@@ -4120,37 +4298,42 @@
             "scenarioType": "private",
             "likelihoodTier": 3,
             "severityTier": 4,
+            "exposureLevel": "PRESENCE_ONLY",
+            "preferenceTriggerLevel": 2,
             "awarenessGapTieBreak": true,
             "preferenceAction": {
-              "rank": 4,
-              "label": "Avoid unless explicitly requested",
-              "presentation": "avoid",
+              "rank": 2,
+              "label": "Show reminders whenever this verified category is present",
+              "presentation": "brief_uncertain_reminder",
               "sources": [
-                "Q9"
+                "Q9",
+                "exposure_rule"
               ],
               "reasons": [
-                "avoid_uncertain_use_until_approved"
+                "brief_uncertain_reminder",
+                "verified_category_presence_threshold_met"
               ]
             },
             "effectiveAction": {
-              "rank": 4,
-              "label": "Avoid unless explicitly requested",
-              "presentation": "avoid",
+              "rank": 2,
+              "label": "Show reminders whenever this verified category is present",
+              "presentation": "brief_uncertain_reminder",
               "sources": [
-                "Q9"
+                "Q9",
+                "exposure_rule"
               ],
               "reasons": [
-                "avoid_uncertain_use_until_approved"
+                "brief_uncertain_reminder",
+                "verified_category_presence_threshold_met"
               ]
             },
-            "reminderThreshold": 1,
+            "preferenceReminderDecision": "SHOW_REMINDER",
+            "effectiveReminderDecision": "SHOW_REMINDER",
             "floorApplied": false,
             "safetyWaiverApplied": false,
             "reasons": [
-              "avoid_uncertain_use_until_approved",
-              "context_category_action",
-              "do_nothing_when_task_irrelevant",
-              "remind_for_inference"
+              "brief_uncertain_reminder",
+              "verified_category_presence_threshold_met"
             ],
             "reasonCodes": [
               "offering_or_ritual_inference_uncertain",
@@ -4158,7 +4341,7 @@
               "task_relevance_not_visually_established",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "disabled-v1"
           },
@@ -4174,37 +4357,42 @@
             "scenarioType": "private",
             "likelihoodTier": 3,
             "severityTier": 4,
+            "exposureLevel": "PRESENCE_ONLY",
+            "preferenceTriggerLevel": 2,
             "awarenessGapTieBreak": true,
             "preferenceAction": {
-              "rank": 4,
-              "label": "Avoid unless explicitly requested",
-              "presentation": "avoid",
+              "rank": 2,
+              "label": "Show reminders whenever this verified category is present",
+              "presentation": "brief_uncertain_reminder",
               "sources": [
-                "Q9"
+                "Q9",
+                "exposure_rule"
               ],
               "reasons": [
-                "avoid_uncertain_use_until_approved"
+                "brief_uncertain_reminder",
+                "verified_category_presence_threshold_met"
               ]
             },
             "effectiveAction": {
-              "rank": 4,
-              "label": "Avoid unless explicitly requested",
-              "presentation": "avoid",
+              "rank": 2,
+              "label": "Show reminders whenever this verified category is present",
+              "presentation": "brief_uncertain_reminder",
               "sources": [
-                "Q9"
+                "Q9",
+                "exposure_rule"
               ],
               "reasons": [
-                "avoid_uncertain_use_until_approved"
+                "brief_uncertain_reminder",
+                "verified_category_presence_threshold_met"
               ]
             },
-            "reminderThreshold": 1,
+            "preferenceReminderDecision": "SHOW_REMINDER",
+            "effectiveReminderDecision": "SHOW_REMINDER",
             "floorApplied": false,
             "safetyWaiverApplied": false,
             "reasons": [
-              "avoid_uncertain_use_until_approved",
-              "context_category_action",
-              "do_nothing_when_task_irrelevant",
-              "remind_for_inference"
+              "brief_uncertain_reminder",
+              "verified_category_presence_threshold_met"
             ],
             "reasonCodes": [
               "offering_or_ritual_inference_uncertain",
@@ -4212,7 +4400,7 @@
               "task_relevance_not_visually_established",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "vprivcal-proof-of-concept-v1"
           }
@@ -4229,6 +4417,7 @@
             "isUncertain": false,
             "taskRelevant": false,
             "explicitlyRequested": false,
+            "exposureLevel": "SENSITIVE_DETAIL_EXPOSED",
             "likelihoodTier": 5,
             "severityTier": 3,
             "reasonCodes": [
@@ -4238,7 +4427,7 @@
               "task_relevance_not_visually_established"
             ]
           },
-          "expectedPreferenceRank": 1,
+          "expectedPreferenceRank": 0,
           "nonFilteredBaselineRank": 0,
           "personalizedDecision": {
             "status": "DECIDED",
@@ -4251,35 +4440,42 @@
             "scenarioType": "private",
             "likelihoodTier": 5,
             "severityTier": 3,
+            "exposureLevel": "SENSITIVE_DETAIL_EXPOSED",
+            "preferenceTriggerLevel": 0,
             "awarenessGapTieBreak": true,
             "preferenceAction": {
-              "rank": 1,
-              "label": "Handle silently",
-              "presentation": "silent",
+              "rank": 0,
+              "label": "Do not show reminders for this category",
+              "presentation": "none",
               "sources": [
+                "Q10",
                 "probe_context:pii"
               ],
               "reasons": [
-                "context_category_action"
+                "context_category_action",
+                "no_reminder_when_task_irrelevant"
               ]
             },
             "effectiveAction": {
-              "rank": 1,
-              "label": "Handle silently",
-              "presentation": "silent",
+              "rank": 0,
+              "label": "Do not show reminders for this category",
+              "presentation": "none",
               "sources": [
+                "Q10",
                 "probe_context:pii"
               ],
               "reasons": [
-                "context_category_action"
+                "context_category_action",
+                "no_reminder_when_task_irrelevant"
               ]
             },
-            "reminderThreshold": 1,
+            "preferenceReminderDecision": "NO_REMINDER",
+            "effectiveReminderDecision": "NO_REMINDER",
             "floorApplied": false,
             "safetyWaiverApplied": false,
             "reasons": [
               "context_category_action",
-              "do_nothing_when_task_irrelevant"
+              "no_reminder_when_task_irrelevant"
             ],
             "reasonCodes": [
               "child_presence_not_observed",
@@ -4287,7 +4483,7 @@
               "task_relevance_not_visually_established",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "disabled-v1"
           },
@@ -4302,35 +4498,42 @@
             "scenarioType": "private",
             "likelihoodTier": 5,
             "severityTier": 3,
+            "exposureLevel": "SENSITIVE_DETAIL_EXPOSED",
+            "preferenceTriggerLevel": 0,
             "awarenessGapTieBreak": true,
             "preferenceAction": {
-              "rank": 1,
-              "label": "Handle silently",
-              "presentation": "silent",
+              "rank": 0,
+              "label": "Do not show reminders for this category",
+              "presentation": "none",
               "sources": [
+                "Q10",
                 "probe_context:pii"
               ],
               "reasons": [
-                "context_category_action"
+                "context_category_action",
+                "no_reminder_when_task_irrelevant"
               ]
             },
             "effectiveAction": {
-              "rank": 1,
-              "label": "Handle silently",
-              "presentation": "silent",
+              "rank": 0,
+              "label": "Do not show reminders for this category",
+              "presentation": "none",
               "sources": [
+                "Q10",
                 "probe_context:pii"
               ],
               "reasons": [
-                "context_category_action"
+                "context_category_action",
+                "no_reminder_when_task_irrelevant"
               ]
             },
-            "reminderThreshold": 1,
+            "preferenceReminderDecision": "NO_REMINDER",
+            "effectiveReminderDecision": "NO_REMINDER",
             "floorApplied": false,
             "safetyWaiverApplied": false,
             "reasons": [
               "context_category_action",
-              "do_nothing_when_task_irrelevant"
+              "no_reminder_when_task_irrelevant"
             ],
             "reasonCodes": [
               "child_presence_not_observed",
@@ -4338,7 +4541,7 @@
               "task_relevance_not_visually_established",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "vprivcal-proof-of-concept-v1"
           }
@@ -4356,6 +4559,7 @@
             "isUncertain": false,
             "taskRelevant": true,
             "explicitlyRequested": false,
+            "exposureLevel": "PRESENCE_ONLY",
             "likelihoodTier": 5,
             "severityTier": 3,
             "reasonCodes": [
@@ -4365,7 +4569,7 @@
               "face_detail_motion_blurred"
             ]
           },
-          "expectedPreferenceRank": 1,
+          "expectedPreferenceRank": 0,
           "nonFilteredBaselineRank": 0,
           "personalizedDecision": {
             "status": "DECIDED",
@@ -4379,11 +4583,13 @@
             "scenarioType": "public",
             "likelihoodTier": 5,
             "severityTier": 3,
+            "exposureLevel": "PRESENCE_ONLY",
+            "preferenceTriggerLevel": 0,
             "awarenessGapTieBreak": true,
             "preferenceAction": {
-              "rank": 1,
-              "label": "Handle silently",
-              "presentation": "silent",
+              "rank": 0,
+              "label": "Do not show reminders for this category",
+              "presentation": "none",
               "sources": [
                 "probe_context:background_individuals",
                 "probe_context:biometric_data"
@@ -4393,9 +4599,9 @@
               ]
             },
             "effectiveAction": {
-              "rank": 1,
-              "label": "Handle silently",
-              "presentation": "silent",
+              "rank": 0,
+              "label": "Do not show reminders for this category",
+              "presentation": "none",
               "sources": [
                 "probe_context:background_individuals",
                 "probe_context:biometric_data"
@@ -4404,7 +4610,8 @@
                 "context_category_action"
               ]
             },
-            "reminderThreshold": 1,
+            "preferenceReminderDecision": "NO_REMINDER",
+            "effectiveReminderDecision": "NO_REMINDER",
             "floorApplied": false,
             "safetyWaiverApplied": false,
             "reasons": [
@@ -4416,7 +4623,7 @@
               "public_shared_space",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "disabled-v1"
           },
@@ -4432,11 +4639,13 @@
             "scenarioType": "public",
             "likelihoodTier": 5,
             "severityTier": 3,
+            "exposureLevel": "PRESENCE_ONLY",
+            "preferenceTriggerLevel": 0,
             "awarenessGapTieBreak": true,
             "preferenceAction": {
-              "rank": 1,
-              "label": "Handle silently",
-              "presentation": "silent",
+              "rank": 0,
+              "label": "Do not show reminders for this category",
+              "presentation": "none",
               "sources": [
                 "probe_context:background_individuals",
                 "probe_context:biometric_data"
@@ -4446,21 +4655,19 @@
               ]
             },
             "effectiveAction": {
-              "rank": 1,
-              "label": "Handle silently",
-              "presentation": "silent",
+              "rank": 2,
+              "label": "Show reminders whenever this verified category is present",
+              "presentation": "brief_reminder",
               "sources": [
-                "probe_context:background_individuals",
-                "probe_context:biometric_data",
                 "safety_floor"
               ],
               "reasons": [
-                "category_floor:background_individuals",
-                "context_category_action"
+                "category_floor:background_individuals"
               ]
             },
-            "reminderThreshold": 1,
-            "floorApplied": false,
+            "preferenceReminderDecision": "NO_REMINDER",
+            "effectiveReminderDecision": "SHOW_REMINDER",
+            "floorApplied": true,
             "safetyWaiverApplied": false,
             "reasons": [
               "category_floor:background_individuals",
@@ -4472,7 +4679,7 @@
               "public_shared_space",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "vprivcal-proof-of-concept-v1"
           }
@@ -4481,9 +4688,9 @@
       "metrics": {
         "nonFilteredBaseline": {
           "observations": 4,
-          "exactAgreementCount": 0,
-          "exactAgreementRate": 0,
-          "meanAbsoluteRankError": 1.75
+          "exactAgreementCount": 3,
+          "exactAgreementRate": 0.75,
+          "meanAbsoluteRankError": 0.5
         },
         "personalizedPreference": {
           "observations": 4,
@@ -4493,21 +4700,21 @@
         },
         "personalizedWithProofOfConceptFloors": {
           "observations": 4,
-          "exactAgreementCount": 3,
-          "exactAgreementRate": 0.75,
-          "meanAbsoluteRankError": 0.25
+          "exactAgreementCount": 2,
+          "exactAgreementRate": 0.5,
+          "meanAbsoluteRankError": 1
         }
       }
     },
     {
-      "profileId": "sim_reminder_averse",
-      "label": "Reminder averse",
-      "rationale": "Requests reminders in principle but Q8 retains them only at risk tier five.",
+      "profileId": "sim_sensitive_detail_only",
+      "label": "Sensitive-detail only",
+      "rationale": "Requests reminders only when identifying or sensitive details are exposed.",
       "response": {
         "schemaVersion": "1.0.0",
         "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
-        "participantId": "simulated-profile:sim_reminder_averse",
-        "sessionId": "session:sim_reminder_averse",
+        "participantId": "simulated-profile:sim_sensitive_detail_only",
+        "sessionId": "session:sim_sensitive_detail_only",
         "startedAt": "2026-01-01T00:00:00.000Z",
         "completedAt": "2026-01-01T00:00:00.000Z",
         "userAgent": "deterministic-pre-expert-simulation",
@@ -4524,68 +4731,68 @@
         ],
         "consent": {
           "agreed": true,
-          "prolificId": "simulated-profile:sim_reminder_averse",
+          "prolificId": "simulated-profile:sim_sensitive_detail_only",
           "answeredAt": "2026-01-01T00:00:00.000Z"
         },
         "q10": [
           {
             "questionId": "Q1",
-            "value": 3,
-            "label": "Give a brief reminder",
+            "value": 2,
+            "label": "Show reminders only when identifying or sensitive details are exposed",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
-            "finalResponse": 3
+            "finalResponse": 2
           },
           {
             "questionId": "Q2",
-            "value": 3,
-            "label": "Give a brief reminder",
+            "value": 2,
+            "label": "Show reminders only when identifying or sensitive details are exposed",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
-            "finalResponse": 3
+            "finalResponse": 2
           },
           {
             "questionId": "Q3",
-            "value": 3,
-            "label": "Give a brief reminder",
+            "value": 2,
+            "label": "Show reminders only when identifying or sensitive details are exposed",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
-            "finalResponse": 3
+            "finalResponse": 2
           },
           {
             "questionId": "Q4",
-            "value": 3,
-            "label": "Give a brief reminder",
+            "value": 2,
+            "label": "Show reminders only when identifying or sensitive details are exposed",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
-            "finalResponse": 3
+            "finalResponse": 2
           },
           {
             "questionId": "Q5",
-            "value": 3,
-            "label": "Give a brief reminder",
+            "value": 2,
+            "label": "Show reminders only when identifying or sensitive details are exposed",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
-            "finalResponse": 3
+            "finalResponse": 2
           },
           {
             "questionId": "Q6",
-            "value": 3,
-            "label": "Give a brief reminder",
+            "value": 2,
+            "label": "Show reminders only when identifying or sensitive details are exposed",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
-            "finalResponse": 3
+            "finalResponse": 2
           },
           {
             "questionId": "Q7",
             "value": 1,
-            "label": "Ignore it",
+            "label": "Do not show a privacy reminder",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
@@ -4593,17 +4800,17 @@
           },
           {
             "questionId": "Q8",
-            "value": 1,
-            "label": "Show very few reminders",
+            "value": 2,
+            "label": "Show reminders only when identifying or sensitive details are exposed",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
-            "finalResponse": 1
+            "finalResponse": 2
           },
           {
             "questionId": "Q9",
             "value": 1,
-            "label": "Do nothing",
+            "label": "Do not show a privacy reminder",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
@@ -4612,7 +4819,7 @@
           {
             "questionId": "Q10",
             "value": 1,
-            "label": "Do nothing",
+            "label": "Do not show a privacy reminder",
             "firstViewedAt": "2026-01-01T00:00:00.000Z",
             "answeredAt": "2026-01-01T00:00:00.000Z",
             "changes": 0,
@@ -4635,7 +4842,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 1,
-                "preferredAction": 2,
+                "preferredAction": 1,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -4649,7 +4856,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 1,
-                "preferredAction": 2,
+                "preferredAction": 1,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -4663,7 +4870,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 1,
-                "preferredAction": 2,
+                "preferredAction": 1,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -4677,7 +4884,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 1,
-                "preferredAction": 2,
+                "preferredAction": 1,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -4694,7 +4901,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 1,
-                "preferredAction": 2,
+                "preferredAction": 1,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -4716,7 +4923,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 1,
-                "preferredAction": 2,
+                "preferredAction": 1,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -4730,7 +4937,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 1,
-                "preferredAction": 2,
+                "preferredAction": 1,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -4746,7 +4953,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 1,
-                "preferredAction": 2,
+                "preferredAction": 1,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -4760,7 +4967,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 1,
-                "preferredAction": 2,
+                "preferredAction": 1,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -4782,7 +4989,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 1,
-                "preferredAction": 2,
+                "preferredAction": 1,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -4798,7 +5005,7 @@
                 ],
                 "spontaneouslySelected": false,
                 "awarenessStatus": 1,
-                "preferredAction": 2,
+                "preferredAction": 1,
                 "evidenceOpened": false,
                 "evidenceToggleCount": 0,
                 "changes": 0,
@@ -4817,7 +5024,7 @@
         }
       },
       "compiledPolicy": {
-        "algorithmVersion": "1.0.0",
+        "algorithmVersion": "3.0.0-three-option-trigger",
         "schemaVersion": "1.0.0",
         "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
         "aggregation": {
@@ -4828,22 +5035,22 @@
         "categories": {
           "biometric_data": {
             "categoryId": "biometric_data",
-            "q10Prior": 2,
-            "q10PriorLabel": "Give a brief reminder",
-            "generalAction": 2,
-            "generalActionLabel": "Notify",
+            "q10Prior": 1,
+            "q10PriorLabel": "Show reminders only when identifying or sensitive details are exposed",
+            "generalAction": 1,
+            "generalActionLabel": "Show reminders only when identifying or sensitive details are exposed",
             "contextActions": {
-              "private": 2,
-              "public": 2,
-              "semi-public": 2
+              "private": 1,
+              "public": 1,
+              "semi-public": 1
             },
             "observations": [
               {
                 "categoryId": "biometric_data",
                 "sceneId": "scene_private_family_party",
                 "scenarioType": "private",
-                "action": 2,
-                "actionLabel": "Give a brief reminder",
+                "action": 1,
+                "actionLabel": "Show reminders only when identifying or sensitive details are exposed",
                 "awarenessStatus": 1,
                 "spontaneouslySelected": false
               },
@@ -4851,8 +5058,8 @@
                 "categoryId": "biometric_data",
                 "sceneId": "scene_public_cafe",
                 "scenarioType": "public",
-                "action": 2,
-                "actionLabel": "Give a brief reminder",
+                "action": 1,
+                "actionLabel": "Show reminders only when identifying or sensitive details are exposed",
                 "awarenessStatus": 1,
                 "spontaneouslySelected": false
               },
@@ -4860,8 +5067,8 @@
                 "categoryId": "biometric_data",
                 "sceneId": "scene_semipublic_hospital",
                 "scenarioType": "semi-public",
-                "action": 2,
-                "actionLabel": "Give a brief reminder",
+                "action": 1,
+                "actionLabel": "Show reminders only when identifying or sensitive details are exposed",
                 "awarenessStatus": 1,
                 "spontaneouslySelected": false
               }
@@ -4875,21 +5082,21 @@
           },
           "children_images": {
             "categoryId": "children_images",
-            "q10Prior": 2,
-            "q10PriorLabel": "Give a brief reminder",
-            "generalAction": 2,
-            "generalActionLabel": "Notify",
+            "q10Prior": 1,
+            "q10PriorLabel": "Show reminders only when identifying or sensitive details are exposed",
+            "generalAction": 1,
+            "generalActionLabel": "Show reminders only when identifying or sensitive details are exposed",
             "contextActions": {
-              "private": 2,
-              "public": 2
+              "private": 1,
+              "public": 1
             },
             "observations": [
               {
                 "categoryId": "children_images",
                 "sceneId": "scene_private_family_party",
                 "scenarioType": "private",
-                "action": 2,
-                "actionLabel": "Give a brief reminder",
+                "action": 1,
+                "actionLabel": "Show reminders only when identifying or sensitive details are exposed",
                 "awarenessStatus": 1,
                 "spontaneouslySelected": false
               },
@@ -4897,8 +5104,8 @@
                 "categoryId": "children_images",
                 "sceneId": "scene_public_cafe",
                 "scenarioType": "public",
-                "action": 2,
-                "actionLabel": "Give a brief reminder",
+                "action": 1,
+                "actionLabel": "Show reminders only when identifying or sensitive details are exposed",
                 "awarenessStatus": 1,
                 "spontaneouslySelected": false
               }
@@ -4912,22 +5119,22 @@
           },
           "pii": {
             "categoryId": "pii",
-            "q10Prior": 2,
-            "q10PriorLabel": "Give a brief reminder",
-            "generalAction": 2,
-            "generalActionLabel": "Notify",
+            "q10Prior": 1,
+            "q10PriorLabel": "Show reminders only when identifying or sensitive details are exposed",
+            "generalAction": 1,
+            "generalActionLabel": "Show reminders only when identifying or sensitive details are exposed",
             "contextActions": {
-              "private": 2,
-              "public": 2,
-              "semi-public": 2
+              "private": 1,
+              "public": 1,
+              "semi-public": 1
             },
             "observations": [
               {
                 "categoryId": "pii",
                 "sceneId": "scene_private_family_party",
                 "scenarioType": "private",
-                "action": 2,
-                "actionLabel": "Give a brief reminder",
+                "action": 1,
+                "actionLabel": "Show reminders only when identifying or sensitive details are exposed",
                 "awarenessStatus": 1,
                 "spontaneouslySelected": false
               },
@@ -4935,8 +5142,8 @@
                 "categoryId": "pii",
                 "sceneId": "scene_public_cafe",
                 "scenarioType": "public",
-                "action": 2,
-                "actionLabel": "Give a brief reminder",
+                "action": 1,
+                "actionLabel": "Show reminders only when identifying or sensitive details are exposed",
                 "awarenessStatus": 1,
                 "spontaneouslySelected": false
               },
@@ -4944,8 +5151,8 @@
                 "categoryId": "pii",
                 "sceneId": "scene_semipublic_hospital",
                 "scenarioType": "semi-public",
-                "action": 2,
-                "actionLabel": "Give a brief reminder",
+                "action": 1,
+                "actionLabel": "Show reminders only when identifying or sensitive details are exposed",
                 "awarenessStatus": 1,
                 "spontaneouslySelected": false
               }
@@ -4959,20 +5166,20 @@
           },
           "legal_sensitivity_information": {
             "categoryId": "legal_sensitivity_information",
-            "q10Prior": 2,
-            "q10PriorLabel": "Give a brief reminder",
-            "generalAction": 2,
-            "generalActionLabel": "Notify",
+            "q10Prior": 1,
+            "q10PriorLabel": "Show reminders only when identifying or sensitive details are exposed",
+            "generalAction": 1,
+            "generalActionLabel": "Show reminders only when identifying or sensitive details are exposed",
             "contextActions": {
-              "private": 2
+              "private": 1
             },
             "observations": [
               {
                 "categoryId": "legal_sensitivity_information",
                 "sceneId": "scene_private_family_party",
                 "scenarioType": "private",
-                "action": 2,
-                "actionLabel": "Give a brief reminder",
+                "action": 1,
+                "actionLabel": "Show reminders only when identifying or sensitive details are exposed",
                 "awarenessStatus": 1,
                 "spontaneouslySelected": false
               }
@@ -4986,20 +5193,20 @@
           },
           "personal_life": {
             "categoryId": "personal_life",
-            "q10Prior": 2,
-            "q10PriorLabel": "Give a brief reminder",
-            "generalAction": 2,
-            "generalActionLabel": "Notify",
+            "q10Prior": 1,
+            "q10PriorLabel": "Show reminders only when identifying or sensitive details are exposed",
+            "generalAction": 1,
+            "generalActionLabel": "Show reminders only when identifying or sensitive details are exposed",
             "contextActions": {
-              "private": 2
+              "private": 1
             },
             "observations": [
               {
                 "categoryId": "personal_life",
                 "sceneId": "scene_private_family_party",
                 "scenarioType": "private",
-                "action": 2,
-                "actionLabel": "Give a brief reminder",
+                "action": 1,
+                "actionLabel": "Show reminders only when identifying or sensitive details are exposed",
                 "awarenessStatus": 1,
                 "spontaneouslySelected": false
               }
@@ -5013,20 +5220,20 @@
           },
           "background_individuals": {
             "categoryId": "background_individuals",
-            "q10Prior": 2,
-            "q10PriorLabel": "Give a brief reminder",
-            "generalAction": 2,
-            "generalActionLabel": "Notify",
+            "q10Prior": 1,
+            "q10PriorLabel": "Show reminders only when identifying or sensitive details are exposed",
+            "generalAction": 1,
+            "generalActionLabel": "Show reminders only when identifying or sensitive details are exposed",
             "contextActions": {
-              "public": 2
+              "public": 1
             },
             "observations": [
               {
                 "categoryId": "background_individuals",
                 "sceneId": "scene_public_cafe",
                 "scenarioType": "public",
-                "action": 2,
-                "actionLabel": "Give a brief reminder",
+                "action": 1,
+                "actionLabel": "Show reminders only when identifying or sensitive details are exposed",
                 "awarenessStatus": 1,
                 "spontaneouslySelected": false
               }
@@ -5041,7 +5248,7 @@
         },
         "crossCutting": {
           "inferenceRule": 1,
-          "reminderSensitivity": 1,
+          "unlistedCategoryTrigger": 1,
           "uncertaintyRule": 1,
           "taskIrrelevantRule": 1
         },
@@ -5063,6 +5270,7 @@
             "isUncertain": false,
             "taskRelevant": true,
             "explicitlyRequested": false,
+            "exposureLevel": "PRESENCE_ONLY",
             "likelihoodTier": 5,
             "severityTier": 4,
             "reasonCodes": [
@@ -5072,7 +5280,7 @@
               "faces_blurred_in_source"
             ]
           },
-          "expectedPreferenceRank": 2,
+          "expectedPreferenceRank": 0,
           "nonFilteredBaselineRank": 0,
           "personalizedDecision": {
             "status": "DECIDED",
@@ -5086,36 +5294,44 @@
             "scenarioType": "private",
             "likelihoodTier": 5,
             "severityTier": 4,
+            "exposureLevel": "PRESENCE_ONLY",
+            "preferenceTriggerLevel": 1,
             "awarenessGapTieBreak": false,
             "preferenceAction": {
-              "rank": 2,
-              "label": "Notify",
-              "presentation": "brief_reminder",
+              "rank": 0,
+              "label": "Do not show reminders for this category",
+              "presentation": "none",
               "sources": [
+                "exposure_rule",
                 "probe_context:children_images",
                 "probe_context:personal_life"
               ],
               "reasons": [
-                "context_category_action"
+                "context_category_action",
+                "presence_only_below_selected_threshold"
               ]
             },
             "effectiveAction": {
-              "rank": 2,
-              "label": "Notify",
-              "presentation": "brief_reminder",
+              "rank": 0,
+              "label": "Do not show reminders for this category",
+              "presentation": "none",
               "sources": [
+                "exposure_rule",
                 "probe_context:children_images",
                 "probe_context:personal_life"
               ],
               "reasons": [
-                "context_category_action"
+                "context_category_action",
+                "presence_only_below_selected_threshold"
               ]
             },
-            "reminderThreshold": 5,
+            "preferenceReminderDecision": "NO_REMINDER",
+            "effectiveReminderDecision": "NO_REMINDER",
             "floorApplied": false,
             "safetyWaiverApplied": false,
             "reasons": [
-              "context_category_action"
+              "context_category_action",
+              "presence_only_below_selected_threshold"
             ],
             "reasonCodes": [
               "children_directly_visible",
@@ -5123,7 +5339,7 @@
               "private_home_context",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "disabled-v1"
           },
@@ -5139,39 +5355,44 @@
             "scenarioType": "private",
             "likelihoodTier": 5,
             "severityTier": 4,
+            "exposureLevel": "PRESENCE_ONLY",
+            "preferenceTriggerLevel": 1,
             "awarenessGapTieBreak": false,
             "preferenceAction": {
-              "rank": 2,
-              "label": "Notify",
-              "presentation": "brief_reminder",
+              "rank": 0,
+              "label": "Do not show reminders for this category",
+              "presentation": "none",
               "sources": [
+                "exposure_rule",
                 "probe_context:children_images",
                 "probe_context:personal_life"
               ],
               "reasons": [
-                "context_category_action"
+                "context_category_action",
+                "presence_only_below_selected_threshold"
               ]
             },
             "effectiveAction": {
               "rank": 2,
-              "label": "Notify",
+              "label": "Show reminders whenever this verified category is present",
               "presentation": "brief_reminder",
               "sources": [
-                "probe_context:children_images",
-                "probe_context:personal_life",
                 "safety_floor"
               ],
               "reasons": [
-                "context_category_action",
+                "category_floor:children_images",
                 "high_confidence_severe_floor"
               ]
             },
-            "reminderThreshold": 5,
-            "floorApplied": false,
+            "preferenceReminderDecision": "NO_REMINDER",
+            "effectiveReminderDecision": "SHOW_REMINDER",
+            "floorApplied": true,
             "safetyWaiverApplied": false,
             "reasons": [
+              "category_floor:children_images",
               "context_category_action",
-              "high_confidence_severe_floor"
+              "high_confidence_severe_floor",
+              "presence_only_below_selected_threshold"
             ],
             "reasonCodes": [
               "children_directly_visible",
@@ -5179,7 +5400,7 @@
               "private_home_context",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "vprivcal-proof-of-concept-v1"
           }
@@ -5197,6 +5418,7 @@
             "isUncertain": true,
             "taskRelevant": false,
             "explicitlyRequested": false,
+            "exposureLevel": "PRESENCE_ONLY",
             "likelihoodTier": 3,
             "severityTier": 4,
             "reasonCodes": [
@@ -5206,7 +5428,7 @@
               "task_relevance_not_visually_established"
             ]
           },
-          "expectedPreferenceRank": 1,
+          "expectedPreferenceRank": 0,
           "nonFilteredBaselineRank": 0,
           "personalizedDecision": {
             "status": "DECIDED",
@@ -5220,44 +5442,44 @@
             "scenarioType": "private",
             "likelihoodTier": 3,
             "severityTier": 4,
+            "exposureLevel": "PRESENCE_ONLY",
+            "preferenceTriggerLevel": 1,
             "awarenessGapTieBreak": false,
             "preferenceAction": {
-              "rank": 1,
-              "label": "Handle silently",
-              "presentation": "silent",
+              "rank": 0,
+              "label": "Do not show reminders for this category",
+              "presentation": "none",
               "sources": [
-                "Q8",
+                "exposure_rule",
                 "probe_context:legal_sensitivity_information",
                 "probe_context:personal_life"
               ],
               "reasons": [
                 "context_category_action",
-                "notification_filtered_by_Q8"
+                "presence_only_below_selected_threshold"
               ]
             },
             "effectiveAction": {
-              "rank": 1,
-              "label": "Handle silently",
-              "presentation": "silent",
+              "rank": 0,
+              "label": "Do not show reminders for this category",
+              "presentation": "none",
               "sources": [
-                "Q8",
+                "exposure_rule",
                 "probe_context:legal_sensitivity_information",
                 "probe_context:personal_life"
               ],
               "reasons": [
                 "context_category_action",
-                "notification_filtered_by_Q8"
+                "presence_only_below_selected_threshold"
               ]
             },
-            "reminderThreshold": 5,
+            "preferenceReminderDecision": "NO_REMINDER",
+            "effectiveReminderDecision": "NO_REMINDER",
             "floorApplied": false,
             "safetyWaiverApplied": false,
             "reasons": [
               "context_category_action",
-              "do_nothing_when_task_irrelevant",
-              "do_nothing_when_uncertain",
-              "ignore_inference",
-              "notification_filtered_by_Q8"
+              "presence_only_below_selected_threshold"
             ],
             "reasonCodes": [
               "offering_or_ritual_inference_uncertain",
@@ -5265,7 +5487,7 @@
               "task_relevance_not_visually_established",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "disabled-v1"
           },
@@ -5281,44 +5503,44 @@
             "scenarioType": "private",
             "likelihoodTier": 3,
             "severityTier": 4,
+            "exposureLevel": "PRESENCE_ONLY",
+            "preferenceTriggerLevel": 1,
             "awarenessGapTieBreak": false,
             "preferenceAction": {
-              "rank": 1,
-              "label": "Handle silently",
-              "presentation": "silent",
+              "rank": 0,
+              "label": "Do not show reminders for this category",
+              "presentation": "none",
               "sources": [
-                "Q8",
+                "exposure_rule",
                 "probe_context:legal_sensitivity_information",
                 "probe_context:personal_life"
               ],
               "reasons": [
                 "context_category_action",
-                "notification_filtered_by_Q8"
+                "presence_only_below_selected_threshold"
               ]
             },
             "effectiveAction": {
-              "rank": 1,
-              "label": "Handle silently",
-              "presentation": "silent",
+              "rank": 0,
+              "label": "Do not show reminders for this category",
+              "presentation": "none",
               "sources": [
-                "Q8",
+                "exposure_rule",
                 "probe_context:legal_sensitivity_information",
                 "probe_context:personal_life"
               ],
               "reasons": [
                 "context_category_action",
-                "notification_filtered_by_Q8"
+                "presence_only_below_selected_threshold"
               ]
             },
-            "reminderThreshold": 5,
+            "preferenceReminderDecision": "NO_REMINDER",
+            "effectiveReminderDecision": "NO_REMINDER",
             "floorApplied": false,
             "safetyWaiverApplied": false,
             "reasons": [
               "context_category_action",
-              "do_nothing_when_task_irrelevant",
-              "do_nothing_when_uncertain",
-              "ignore_inference",
-              "notification_filtered_by_Q8"
+              "presence_only_below_selected_threshold"
             ],
             "reasonCodes": [
               "offering_or_ritual_inference_uncertain",
@@ -5326,7 +5548,7 @@
               "task_relevance_not_visually_established",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "vprivcal-proof-of-concept-v1"
           }
@@ -5343,6 +5565,7 @@
             "isUncertain": false,
             "taskRelevant": false,
             "explicitlyRequested": false,
+            "exposureLevel": "SENSITIVE_DETAIL_EXPOSED",
             "likelihoodTier": 5,
             "severityTier": 3,
             "reasonCodes": [
@@ -5365,35 +5588,42 @@
             "scenarioType": "private",
             "likelihoodTier": 5,
             "severityTier": 3,
+            "exposureLevel": "SENSITIVE_DETAIL_EXPOSED",
+            "preferenceTriggerLevel": 1,
             "awarenessGapTieBreak": false,
             "preferenceAction": {
               "rank": 2,
-              "label": "Notify",
+              "label": "Show reminders whenever this verified category is present",
               "presentation": "brief_reminder",
               "sources": [
+                "exposure_rule",
                 "probe_context:pii"
               ],
               "reasons": [
-                "context_category_action"
+                "context_category_action",
+                "sensitive_detail_threshold_met"
               ]
             },
             "effectiveAction": {
               "rank": 2,
-              "label": "Notify",
+              "label": "Show reminders whenever this verified category is present",
               "presentation": "brief_reminder",
               "sources": [
+                "exposure_rule",
                 "probe_context:pii"
               ],
               "reasons": [
-                "context_category_action"
+                "context_category_action",
+                "sensitive_detail_threshold_met"
               ]
             },
-            "reminderThreshold": 5,
+            "preferenceReminderDecision": "SHOW_REMINDER",
+            "effectiveReminderDecision": "SHOW_REMINDER",
             "floorApplied": false,
             "safetyWaiverApplied": false,
             "reasons": [
               "context_category_action",
-              "do_nothing_when_task_irrelevant"
+              "sensitive_detail_threshold_met"
             ],
             "reasonCodes": [
               "child_presence_not_observed",
@@ -5401,7 +5631,7 @@
               "task_relevance_not_visually_established",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "disabled-v1"
           },
@@ -5416,35 +5646,42 @@
             "scenarioType": "private",
             "likelihoodTier": 5,
             "severityTier": 3,
+            "exposureLevel": "SENSITIVE_DETAIL_EXPOSED",
+            "preferenceTriggerLevel": 1,
             "awarenessGapTieBreak": false,
             "preferenceAction": {
               "rank": 2,
-              "label": "Notify",
+              "label": "Show reminders whenever this verified category is present",
               "presentation": "brief_reminder",
               "sources": [
+                "exposure_rule",
                 "probe_context:pii"
               ],
               "reasons": [
-                "context_category_action"
+                "context_category_action",
+                "sensitive_detail_threshold_met"
               ]
             },
             "effectiveAction": {
               "rank": 2,
-              "label": "Notify",
+              "label": "Show reminders whenever this verified category is present",
               "presentation": "brief_reminder",
               "sources": [
+                "exposure_rule",
                 "probe_context:pii"
               ],
               "reasons": [
-                "context_category_action"
+                "context_category_action",
+                "sensitive_detail_threshold_met"
               ]
             },
-            "reminderThreshold": 5,
+            "preferenceReminderDecision": "SHOW_REMINDER",
+            "effectiveReminderDecision": "SHOW_REMINDER",
             "floorApplied": false,
             "safetyWaiverApplied": false,
             "reasons": [
               "context_category_action",
-              "do_nothing_when_task_irrelevant"
+              "sensitive_detail_threshold_met"
             ],
             "reasonCodes": [
               "child_presence_not_observed",
@@ -5452,7 +5689,7 @@
               "task_relevance_not_visually_established",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "vprivcal-proof-of-concept-v1"
           }
@@ -5470,6 +5707,7 @@
             "isUncertain": false,
             "taskRelevant": true,
             "explicitlyRequested": false,
+            "exposureLevel": "PRESENCE_ONLY",
             "likelihoodTier": 5,
             "severityTier": 3,
             "reasonCodes": [
@@ -5479,7 +5717,7 @@
               "face_detail_motion_blurred"
             ]
           },
-          "expectedPreferenceRank": 2,
+          "expectedPreferenceRank": 0,
           "nonFilteredBaselineRank": 0,
           "personalizedDecision": {
             "status": "DECIDED",
@@ -5493,36 +5731,44 @@
             "scenarioType": "public",
             "likelihoodTier": 5,
             "severityTier": 3,
+            "exposureLevel": "PRESENCE_ONLY",
+            "preferenceTriggerLevel": 1,
             "awarenessGapTieBreak": false,
             "preferenceAction": {
-              "rank": 2,
-              "label": "Notify",
-              "presentation": "brief_reminder",
+              "rank": 0,
+              "label": "Do not show reminders for this category",
+              "presentation": "none",
               "sources": [
+                "exposure_rule",
                 "probe_context:background_individuals",
                 "probe_context:biometric_data"
               ],
               "reasons": [
-                "context_category_action"
+                "context_category_action",
+                "presence_only_below_selected_threshold"
               ]
             },
             "effectiveAction": {
-              "rank": 2,
-              "label": "Notify",
-              "presentation": "brief_reminder",
+              "rank": 0,
+              "label": "Do not show reminders for this category",
+              "presentation": "none",
               "sources": [
+                "exposure_rule",
                 "probe_context:background_individuals",
                 "probe_context:biometric_data"
               ],
               "reasons": [
-                "context_category_action"
+                "context_category_action",
+                "presence_only_below_selected_threshold"
               ]
             },
-            "reminderThreshold": 5,
+            "preferenceReminderDecision": "NO_REMINDER",
+            "effectiveReminderDecision": "NO_REMINDER",
             "floorApplied": false,
             "safetyWaiverApplied": false,
             "reasons": [
-              "context_category_action"
+              "context_category_action",
+              "presence_only_below_selected_threshold"
             ],
             "reasonCodes": [
               "face_detail_motion_blurred",
@@ -5530,7 +5776,7 @@
               "public_shared_space",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "disabled-v1"
           },
@@ -5546,37 +5792,42 @@
             "scenarioType": "public",
             "likelihoodTier": 5,
             "severityTier": 3,
+            "exposureLevel": "PRESENCE_ONLY",
+            "preferenceTriggerLevel": 1,
             "awarenessGapTieBreak": false,
             "preferenceAction": {
-              "rank": 2,
-              "label": "Notify",
-              "presentation": "brief_reminder",
+              "rank": 0,
+              "label": "Do not show reminders for this category",
+              "presentation": "none",
               "sources": [
+                "exposure_rule",
                 "probe_context:background_individuals",
                 "probe_context:biometric_data"
               ],
               "reasons": [
-                "context_category_action"
+                "context_category_action",
+                "presence_only_below_selected_threshold"
               ]
             },
             "effectiveAction": {
               "rank": 2,
-              "label": "Notify",
+              "label": "Show reminders whenever this verified category is present",
               "presentation": "brief_reminder",
               "sources": [
-                "probe_context:background_individuals",
-                "probe_context:biometric_data"
+                "safety_floor"
               ],
               "reasons": [
-                "context_category_action"
+                "category_floor:background_individuals"
               ]
             },
-            "reminderThreshold": 5,
-            "floorApplied": false,
+            "preferenceReminderDecision": "NO_REMINDER",
+            "effectiveReminderDecision": "SHOW_REMINDER",
+            "floorApplied": true,
             "safetyWaiverApplied": false,
             "reasons": [
               "category_floor:background_individuals",
-              "context_category_action"
+              "context_category_action",
+              "presence_only_below_selected_threshold"
             ],
             "reasonCodes": [
               "face_detail_motion_blurred",
@@ -5584,7 +5835,7 @@
               "public_shared_space",
               "vlm_visual_review"
             ],
-            "policyVersion": "1.0.0",
+            "policyVersion": "3.0.0-three-option-trigger",
             "studyVersion": "vprivcal-pre-expert-simulation-1.0.0",
             "guardrailConfigId": "vprivcal-proof-of-concept-v1"
           }
@@ -5593,9 +5844,9 @@
       "metrics": {
         "nonFilteredBaseline": {
           "observations": 4,
-          "exactAgreementCount": 0,
-          "exactAgreementRate": 0,
-          "meanAbsoluteRankError": 1.75
+          "exactAgreementCount": 3,
+          "exactAgreementRate": 0.75,
+          "meanAbsoluteRankError": 0.5
         },
         "personalizedPreference": {
           "observations": 4,
@@ -5605,9 +5856,9 @@
         },
         "personalizedWithProofOfConceptFloors": {
           "observations": 4,
-          "exactAgreementCount": 4,
-          "exactAgreementRate": 1,
-          "meanAbsoluteRankError": 0
+          "exactAgreementCount": 2,
+          "exactAgreementRate": 0.5,
+          "meanAbsoluteRankError": 1
         }
       }
     }
@@ -5615,9 +5866,9 @@
   "aggregateMetrics": {
     "nonFilteredBaseline": {
       "observations": 20,
-      "exactAgreementCount": 4,
-      "exactAgreementRate": 0.2,
-      "meanAbsoluteRankError": 2.05
+      "exactAgreementCount": 11,
+      "exactAgreementRate": 0.55,
+      "meanAbsoluteRankError": 0.9
     },
     "personalizedPreference": {
       "observations": 20,
@@ -5627,20 +5878,20 @@
     },
     "personalizedWithProofOfConceptFloors": {
       "observations": 20,
-      "exactAgreementCount": 17,
-      "exactAgreementRate": 0.85,
-      "meanAbsoluteRankError": 0.2
+      "exactAgreementCount": 14,
+      "exactAgreementRate": 0.7,
+      "meanAbsoluteRankError": 0.6
     }
   },
   "ruleChecks": {
     "strictnessOrderingHighProtectionAtLeastLowIntervention": true,
-    "unknownCategoryFallbackRank": 3,
+    "unknownCategoryFallbackRank": 2,
     "unknownCategoryFallbackStatus": "DECIDED_WITH_FALLBACK",
-    "q8FilteredDecisionCount": 1,
+    "exposureFilteredDecisionCount": 3,
     "q7ReasonObserved": true,
     "q9ReasonObserved": true,
     "q10ReasonObserved": true,
-    "safetyFloorAppliedDecisionCount": 3,
+    "safetyFloorAppliedDecisionCount": 6,
     "negativeControlExcludedFromPolicyCandidates": true
   }
 }

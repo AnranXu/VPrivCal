@@ -75,6 +75,7 @@
         "isUncertain": false,
         "taskRelevant": true,
         "explicitlyRequested": false,
+        "exposureLevel": "PRESENCE_ONLY",
         "likelihoodTier": 5,
         "severityTier": 4,
         "reasonCodes": [
@@ -132,6 +133,7 @@
         "isUncertain": true,
         "taskRelevant": false,
         "explicitlyRequested": false,
+        "exposureLevel": "PRESENCE_ONLY",
         "likelihoodTier": 3,
         "severityTier": 4,
         "reasonCodes": [
@@ -187,6 +189,7 @@
         "isUncertain": false,
         "taskRelevant": false,
         "explicitlyRequested": false,
+        "exposureLevel": "SENSITIVE_DETAIL_EXPOSED",
         "likelihoodTier": 5,
         "severityTier": 3,
         "reasonCodes": [
@@ -244,6 +247,7 @@
         "isUncertain": false,
         "taskRelevant": true,
         "explicitlyRequested": false,
+        "exposureLevel": "PRESENCE_ONLY",
         "likelihoodTier": 5,
         "severityTier": 3,
         "reasonCodes": [

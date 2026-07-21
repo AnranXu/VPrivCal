@@ -168,7 +168,7 @@ For each category:
 4. If one detection belongs to several categories, it may be highlighted for each relevant category.
 5. Ask the exact two Probe questions from the research-plan document:
    - awareness status;
-   - preferred future action.
+   - preferred reminder trigger.
 6. Require both responses before marking that category complete.
 7. Allow the participant to return to earlier category cards.
 
@@ -179,13 +179,13 @@ The awareness question must distinguish:
 - not noticed or did not realize the VLM could detect/infer it;
 - not considered a privacy concern in this situation.
 
-The preferred-action question must use the ordered five-level policy scale:
+The preferred-trigger question must use the ordered three-level scale:
 
-- no intervention;
-- silent handling;
-- brief reminder;
-- ask before use;
-- avoid unless explicitly requested.
+- do not show reminders for this category;
+- show reminders only when identifying or sensitive details are exposed;
+- show reminders whenever the expert-verified category is present.
+
+The visible reminder itself must use one standardized presentation. Each controlled-study candidate must be expert verified and labeled `PRESENCE_ONLY` or `SENSITIVE_DETAIL_EXPOSED` before the rule is evaluated.
 
 For every category-image pair, record:
 

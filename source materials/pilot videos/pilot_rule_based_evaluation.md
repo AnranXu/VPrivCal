@@ -1,78 +1,78 @@
-# VPrivCal pilot rule-based evaluation
+# VPrivCal pilot three-option trigger evaluation
 
 Date: 2026-07-21
 
-## Scope
+## Scope and interpretation
 
-This is a deterministic, non-empirical pre-expert verification. Six cut pilot videos were reviewed with integrated visual capability using contact sheets sampled at approximately two-second intervals. Full-resolution frames were additionally inspected where text or small scene details mattered. The resulting cue metadata was applied to five deliberately contrasting simulated VPrivCal response profiles.
+This is a non-empirical software and rule-path verification. Six cut pilot videos were visually reviewed, and the resulting cue metadata was applied to five deliberately contrasting synthetic VPrivCal response profiles. Participant-facing calibration answers use three trigger levels: never remind, remind only for sensitive-detail exposure, or remind whenever the verified category is present. Runtime output remains binary: **no reminder** or **show the standardized reminder**.
 
-The review and simulation do not measure VLM accuracy, real participant satisfaction, deployment safety, or real-world effectiveness. Four positive labels still require independent human confirmation.
+These simulations verify implementation behavior and exercise rule paths. They do not measure real participant acceptance, VLM accuracy, deployment safety, long-term behavior, or real-world effectiveness. Four positive cue labels still require independent human confirmation.
 
 ## Visual review result
 
 | Pilot cut | VLM-supported result | Policy categories | Runtime characterization |
 |---|---|---|---|
-| Children in home | Positive: two children are directly visible; faces are already blurred | `children_images`, `personal_life` | Private, direct, certain, risk tier 5 |
-| Garden arrangement | Positive but interpretation uncertain: food-like bowl/plate and a small flame suggest an offering or household ritual | `legal_sensitivity_information`, `personal_life` | Private, inferred, uncertain, risk tier 4 |
-| Handmade craft | Positive: the personal name `GABRIELE` is readable; no child is visible | `pii` | Private, direct, certain, risk tier 5 |
-| Basketball court | Positive: another player is directly visible; fine face detail is motion-blurred | `background_individuals`, `biometric_data` | Public, direct, certain, risk tier 5 |
-| Laboratory display | Negative for the current taxonomy: operational controls are visible but no readable PII is present | None | Excluded; exposes a missing confidential-workplace-data category |
+| Children in home | Positive: two children are directly visible; faces are already blurred | `children_images`, `personal_life` | Proposed `PRESENCE_ONLY`; human confirmation pending |
+| Garden arrangement | Positive but interpretation uncertain: a food-like bowl/plate and small flame suggest an offering or household ritual | `legal_sensitivity_information`, `personal_life` | Proposed `PRESENCE_ONLY`; human confirmation pending |
+| Handmade craft | Positive: the personal name `GABRIELE` is readable; no child is visible | `pii` | Proposed `SENSITIVE_DETAIL_EXPOSED`; human confirmation pending |
+| Basketball court | Positive: another player is directly visible; fine face detail is motion-blurred | `background_individuals`, `biometric_data` | Proposed `PRESENCE_ONLY`; human confirmation pending |
+| Laboratory display | Negative for the current taxonomy: operational controls are visible but no readable PII is present | None | Excluded; indicates a possible confidential-workplace-data category gap |
 | Gaming display | Negative: no wearer face, reflected face, or readable account information is visible | None | Excluded false positive |
 
-## Simulated profiles
+## Deterministic simulated profiles
 
-The generated response artifact contains five complete synthetic VPrivCal exports:
+The response artifact contains five complete synthetic exports: low intervention, reminders for every cue, context dependent, uncertainty sensitive, and sensitive-detail only. These are constructed test cases, not people or demographic personas.
 
-1. Low intervention
-2. High protection
-3. Context dependent
-4. Uncertainty sensitive
-5. Reminder averse
+Five profiles applied to four positive cues produced 20 binary decisions.
 
-These are deliberately constructed profiles, not people and not inferred demographic personas.
-
-## Results
-
-Five profiles applied to four positive cues produced 20 deterministic decisions.
-
-| Condition | Exact target-action agreement | Mean absolute rank error |
+| Condition | Exact binary-decision agreement | Mean absolute internal-code error |
 |---|---:|---:|
-| No-filter rank-0 baseline | 4/20 (20%) | 2.05 |
+| No-reminder baseline | 11/20 (55%) | 0.90 |
 | Personalized preference rule | 20/20 (100%) | 0.00 |
-| Personalized rule plus proof-of-concept safety floors | 17/20 (85%) | 0.20 |
+| Personalized rule plus proof-of-concept safety floors | 14/20 (70%) | 0.60 |
 
-The personalized preference rule matched every declared synthetic target. This is an implementation-correctness result: targets were deliberately specified to test the policy semantics, so 100% must not be reported as an empirical effect size.
+The 100% personalized result is expected because the synthetic targets were declared specifically to verify the policy semantics. It is not an empirical effect size. Six guardrail overrides changed a synthetic no-reminder preference to a reminder; those are auditable policy overrides, not participant acceptance findings.
 
-The safety-floor condition intentionally differed from preference in three decisions:
+Rule-path checks exercised Q7 inference, the Q8 unlisted-category fallback, Q9 uncertainty, Q10 task relevance, three exposure-threshold suppressions, safety floors, negative-control exclusion, and deterministic regeneration.
 
-- Low-intervention profile, children in home: rank 0 to rank 2 because of the high-confidence/severe floor.
-- Low-intervention profile, basketball player: rank 0 to rank 1 because of the `background_individuals` category floor.
-- Uncertainty-sensitive profile, children in home: rank 1 to rank 2 because of the high-confidence/severe floor.
+## Seeded randomized-profile stress test
 
-These are auditable guardrail overrides, not rule failures. Whether those floors are normatively appropriate still requires expert and ethics review.
+A second simulation used seed `20260721` to generate 500 correlated but substantially varied synthetic profiles. Each profile sampled a continuous reminder preference, independent Q1–Q10 noise, private/public/semi-public context biases, scene-level Probe noise, awareness, evidence use, response changes, and timing.
 
-## Rule-path checks
+- Profiles compiled: 500/500; invalid profiles: 0.
+- Policy decisions: 2,000/2,000; invalid decisions: 0.
+- Unique four-cue preference signatures: 14 of 16 possible binary runtime signatures.
+- Unique signatures after proof-of-concept floors: 4.
+- Every cue produced both participant-facing decisions across the profiles.
+- No reminder: 911/2,000 (45.6%).
+- Show reminder: 1,089/2,000 (54.5%).
+- Sensitive-detail threshold suppressed 414 presence-only reminders.
+- Safety-floor overrides: 671/2,000 (33.6%).
+- Q7 contributed to 293 decisions; Q9 contributed to 282; Q10 contributed to 701.
 
-All requested implementation checks passed:
+| Pilot cue | No reminder | Show reminder | Safety-floor overrides |
+|---|---:|---:|---:|
+| Children in home | 331 (66.2%) | 169 (33.8%) | 331 |
+| Garden arrangement | 89 (17.8%) | 411 (82.2%) | 0 |
+| Handmade craft | 151 (30.2%) | 349 (69.8%) | 0 |
+| Basketball player | 340 (68.0%) | 160 (32.0%) | 340 |
 
-- High-protection actions were never less strict than low-intervention actions for the same cue.
-- An unknown category produced the declared rank-3 `DECIDED_WITH_FALLBACK` result.
-- Q7 inference handling was exercised.
-- Q8 reminder filtering was exercised once on the uncertain garden cue.
-- Q9 uncertainty handling was exercised.
-- Q10 task-relevance handling was exercised.
-- Three proof-of-concept safety-floor overrides were recorded.
-- Both negative controls were excluded from policy candidates.
-- Repeated generation remained deterministic under the automated test suite.
+The reduction from 14 preference signatures to 4 effective signatures shows that safety floors compress much of the three-level trigger personalization, especially for children and background individuals. Whether that loss of personalization is acceptable is an expert and ethics question.
 
-## Verification
+Across seeds `20260719` through `20260723`, reminder decisions ranged from 52.2% to 56.1%, safety-floor overrides from 32.8% to 35.4%, exposure filtering occurred 383-429 times per run, and 13-15 of the 16 possible four-cue runtime signatures appeared. This supports software robustness under profile randomness, not claims about a participant population.
 
-`npm run check` passed on 2026-07-21:
+## User-study outcomes that remain to be measured
 
-- ESLint: passed with zero warnings.
-- Vitest: 18 test files and 67 tests passed.
-- TypeScript and production Vite build: passed.
+For every held-out cue, collect:
+
+1. the policy condition (`generic`, `Q10-only`, or `full VPrivCal`);
+2. the system's binary reminder decision;
+3. the participant's preferred binary decision;
+4. immediate decision acceptance on a 1–5 scale; and
+5. optional reminder burden when a reminder was shown.
+
+Report binary agreement, false-reminder rate, missed-reminder rate, mean acceptance, and reminder burden by condition. Short clips support immediate cue-level acceptance claims only; they cannot distinguish long-term silent handling from uninterrupted use and cannot establish long-term effectiveness.
 
 ## Pre-expert gate status
 
-The software pre-verification passes for this constructed pilot set. The research pre-expert gate remains open because the four positive VLM labels need independent human confirmation, the risk tiers are heuristic rather than calibrated, and the current taxonomy does not represent confidential workplace or laboratory operational data.
+The three-option trigger implementation passes this constructed software pre-verification. The research gate remains open until two experts independently confirm each positive cue and exposure level, the safety floors receive expert and ethics review, and real participants complete the held-out acceptance task.

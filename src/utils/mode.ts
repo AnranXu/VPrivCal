@@ -50,7 +50,6 @@ export function canonicalizeEntryUrl(): void {
   if (typeof window === 'undefined') return;
   const url = new URL(window.location.href);
   const original = url.href;
-  const hashRoute = url.hash.slice(1).split('?')[0];
   const hashQuery = hashParams(url);
 
   if (isExpertReviewUrl(url.href) && !expertReviewFlag(url.searchParams)) {
@@ -60,12 +59,10 @@ export function canonicalizeEntryUrl(): void {
     );
   }
 
-  if (hashRoute === '' || hashRoute === '/') {
-    hashQuery.forEach((value, key) => {
-      if (!url.searchParams.has(key)) url.searchParams.set(key, value);
-    });
-    url.hash = '';
-  }
+  hashQuery.forEach((value, key) => {
+    if (!url.searchParams.has(key)) url.searchParams.set(key, value);
+  });
+  url.hash = '';
 
   if (url.href !== original) window.history.replaceState(window.history.state, '', url);
 }

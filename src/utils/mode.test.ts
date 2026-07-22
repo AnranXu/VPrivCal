@@ -51,4 +51,25 @@ describe('interface mode URLs', () => {
     expect(window.location.hash).toBe('');
     expect(window.location.search).toBe('?expert_review=probe');
   });
+
+  it('removes a manually entered stage hash without changing query controls', () => {
+    window.history.replaceState({}, '', '/VPrivCal/?expert_review=true#/probe/instructions');
+    canonicalizeEntryUrl();
+    expect(window.location.pathname).toBe('/VPrivCal/');
+    expect(window.location.search).toBe('?expert_review=true');
+    expect(window.location.hash).toBe('');
+  });
+
+  it('migrates legacy hash query controls but never keeps the hash stage', () => {
+    window.history.replaceState(
+      {},
+      '',
+      '/#/probe/scene_public_cafe?expert_review=probe&scene=scene_public_cafe',
+    );
+    canonicalizeEntryUrl();
+    expect(window.location.search).toBe(
+      '?expert_review=probe&scene=scene_public_cafe',
+    );
+    expect(window.location.hash).toBe('');
+  });
 });

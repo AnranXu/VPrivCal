@@ -35,8 +35,8 @@ This version replaces the former five-action design. Legacy actions such as sile
 - Q1-Q6 use the shared three-option scale and store displayed values `1`, `2`, and `3`.
 - Probe uses the same labels and stores internal trigger values `0`, `1`, and `2`.
 - Q7-Q10 use one five-point agreement scale and store values `1` through `5`.
-- Q8 is the general show/hide sensitivity score and applies to every verified privacy cue.
-- Q7, Q9, and Q10 apply additionally when a cue is inferred, uncertain, or task-irrelevant, respectively.
+- Q7 is the general show/hide sensitivity score and applies to every verified privacy cue.
+- Q8, Q9, and Q10 apply additionally when a cue is inferred, uncertain, or task-irrelevant, respectively.
 - The compiler normalizes only Q1-Q6 with `displayedValue - 1`.
 
 Awareness responses are kept separate from reminder preferences. A participant can notice a cue but prefer no reminder, or miss a cue but still prefer no reminder after review.
@@ -117,8 +117,8 @@ For a verified cue:
 trigger = strictest applicable participant trigger
 combinedRiskScore = likelihoodTier + severityTier
 
-evaluate Q8 for every cue
-evaluate Q7 when isInference is true
+evaluate Q7 for every cue
+evaluate Q8 when isInference is true
 evaluate Q9 when isUncertain is true
 evaluate Q10 when taskRelevant is false
 
@@ -141,7 +141,7 @@ else:
 effective decision = apply any approved safety floor after the preference decision
 ```
 
-Q8 supplies a general threshold for every verified privacy threat, including a verified category missing from Q1-Q6. Applicable Q7, Q9, or Q10 answers can raise the trigger for inferred, uncertain, or task-irrelevant cues. They cannot silently lower a stricter category or Probe trigger.
+Q7 supplies a general threshold for every verified privacy threat, including a verified category missing from Q1-Q6. Applicable Q8, Q9, or Q10 answers can raise the trigger for inferred, uncertain, or task-irrelevant cues. They cannot silently lower a stricter category or Probe trigger.
 
 When duplicate detections merge into one cue, the merged cue is labeled `SENSITIVE_DETAIL_EXPOSED` if any verified member has that label. Category IDs and reason codes are deduplicated, and the maximum likelihood and severity tiers are retained for safety-floor auditing.
 
@@ -186,7 +186,7 @@ Held-out evaluation records, for every verified cue and condition:
 - pre-reminder cue awareness;
 - policy condition and exposure level.
 
-Primary summaries are immediate acceptance, binary agreement, false-reminder rate, missed-reminder rate, and awareness by condition. Reminder frequency is a burden measure. Outcomes should also be stratified by exposure level to test whether the middle category trigger behaves differently from the always-remind option. The exported Q8 and Q10 values plus per-cue evaluations permit a prespecified analysis of whether general sensitivity and task relevance predict acceptance; a non-informative Q10 result can support removing that item in a later version, but does not change the current rule post hoc.
+Primary summaries are immediate acceptance, binary agreement, false-reminder rate, missed-reminder rate, and awareness by condition. Reminder frequency is a burden measure. Outcomes should also be stratified by exposure level to test whether the middle category trigger behaves differently from the always-remind option. The exported Q7 and Q10 values plus per-cue evaluations permit a prespecified analysis of whether general sensitivity and task relevance predict acceptance; a non-informative Q10 result can support removing that item in a later version, but does not change the current rule post hoc.
 
 Short clips support immediate cue-level claims only. They cannot establish long-term acceptance, memory, behavior change, or real-world effectiveness.
 

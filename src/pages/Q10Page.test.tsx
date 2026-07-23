@@ -48,7 +48,7 @@ describe('Q10Page', () => {
     expect(screen.getAllByRole('radio')).toHaveLength(5);
     expect(screen.getByText('How much do you agree with the following statement?')).toBeVisible();
     expect(screen.getByText(
-      'The assistant should show a privacy reminder when a visual cue supports a sensitive inference.',
+      'In general, the assistant should show detected privacy threats to the user.',
     )).toBeVisible();
     expect(screen.getByRole('radio', { name: 'Strongly agree' })).toBeVisible();
     expect(screen.queryByText('1', { exact: true })).not.toBeInTheDocument();

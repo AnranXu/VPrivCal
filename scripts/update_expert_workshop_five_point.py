@@ -207,7 +207,7 @@ def main() -> None:
         (
             "Generic versus Q10-only versus full VPrivCal under the same expert-verified cue "
             "set and standardized reminder; participants report cue awareness, immediate "
-            "acceptance, and preferred binary decision. Q8 is the general show/hide score; "
+            "acceptance, and preferred binary decision. Q7 is the general show/hide score; "
             "Q10 is retained provisionally so its relationship with acceptance can be tested."
         ),
     )
@@ -236,7 +236,7 @@ def main() -> None:
             "Strongly disagree | Disagree | Neither agree nor disagree | Agree | Strongly agree\n"
             "Distinct rule thresholds (minimum likelihood + severity score): "
             "11 [never] | 9 | 7 | 5 | 2 [any verified cue]. The observed score ranges from "
-            "2 to 10. Q8 applies generally to every verified privacy threat; Q7, Q9, and Q10 "
+            "2 to 10. Q7 applies generally to every verified privacy threat; Q8, Q9, and Q10 "
             "apply when the cue is inferred, uncertain, or task-irrelevant."
         ),
     )
@@ -248,15 +248,16 @@ def main() -> None:
 
     # Item-specific prompts: all four use the same agreement question format.
     replacements = {
+        "Q7. Inferred risks": "Q7. General reminder sensitivity",
         "When a visual cue supports a sensitive inference, should the assistant show a brief privacy reminder?": (
+            "How much do you agree with the following statement?\n"
+            '"In general, the assistant should show detected privacy threats to the user."'
+        ),
+        "Q8. Other verified privacy categories": "Q8. Inferred risks",
+        "If experts verify a privacy category not covered above, when should the assistant show a reminder?": (
             "How much do you agree with the following statement?\n"
             '"The assistant should show a privacy reminder when a visual cue supports a '
             'sensitive inference."'
-        ),
-        "Q8. Other verified privacy categories": "Q8. General reminder sensitivity",
-        "If experts verify a privacy category not covered above, when should the assistant show a reminder?": (
-            "How much do you agree with the following statement?\n"
-            '"In general, the assistant should show detected privacy threats to the user."'
         ),
         "When the assistant is unsure whether a cue is privacy-sensitive, should it show a brief privacy reminder?": (
             "How much do you agree with the following statement?\n"
@@ -293,7 +294,7 @@ def main() -> None:
         0,
         (
             "Treat simulations as software checks and short-video outcomes as immediate only; "
-            "prespecify whether Q8 and Q10 values predict acceptance before considering later "
+        "prespecify whether Q7 and Q10 values predict acceptance before considering later "
             "Q10 removal."
         ),
     )
@@ -317,7 +318,7 @@ def main() -> None:
         "Expert review of five-point cross-cutting agreement thresholds and binary reminders"
     )
     document.core_properties.comments = (
-        "Updated from v6.3: unified Q7-Q10 agreement format, Q8 general sensitivity, "
+        "Updated from v6.3: unified Q7-Q10 agreement format, Q7 general sensitivity, "
         "distinct five-level risk thresholds, provisional Q10 retention, and study background."
     )
     document.save(OUTPUT)

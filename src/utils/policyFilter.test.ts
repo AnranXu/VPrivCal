@@ -276,7 +276,7 @@ describe('runtime cue filtering', () => {
     expect(result.unresolvedCategoryIds).toEqual(['unknown-sensitive']);
     expect(result.effectiveAction.rank).toBe(2);
     expect(result.crossCuttingEvaluations).toEqual([
-      expect.objectContaining({ questionId: 'Q8', minimumCombinedRiskScore: 7, triggeredReminder: true }),
+      expect.objectContaining({ questionId: 'Q7', minimumCombinedRiskScore: 7, triggeredReminder: true }),
     ]);
   });
 
@@ -304,11 +304,11 @@ describe('runtime cue filtering', () => {
     ]);
   });
 
-  it('uses Q8 as the general show-or-hide threshold and keeps Q10 conditional on task relevance', () => {
+  it('uses Q7 as the general show-or-hide threshold and keeps Q10 conditional on task relevance', () => {
     const response = makeCompleteResponse();
     setProbe(response, 'scene_private_family_party', 'legal_sensitivity_information', 0);
-    setQ10(response, 'Q7', 1);
-    setQ10(response, 'Q8', 3);
+    setQ10(response, 'Q7', 3);
+    setQ10(response, 'Q8', 1);
     setQ10(response, 'Q9', 1);
     setQ10(response, 'Q10', 5);
     const base = {
@@ -320,10 +320,10 @@ describe('runtime cue filtering', () => {
     const general = decided(filterCandidateCue(candidate({ ...base, taskRelevant: true }), readyPolicy(response)));
     expect(general.preferenceAction.rank).toBe(2);
     expect(general.crossCuttingEvaluations).toEqual([
-      expect.objectContaining({ questionId: 'Q8', agreementLevel: 3, triggeredReminder: true }),
+      expect.objectContaining({ questionId: 'Q7', agreementLevel: 3, triggeredReminder: true }),
     ]);
 
-    setQ10(response, 'Q8', 1);
+    setQ10(response, 'Q7', 1);
     const taskIrrelevant = decided(filterCandidateCue(candidate({
       ...base,
       likelihoodTier: 1,
@@ -339,8 +339,8 @@ describe('runtime cue filtering', () => {
   it('uses agreement rules as minimums while keeping one reminder presentation', () => {
     const response = makeCompleteResponse();
     setProbe(response, 'scene_private_family_party', 'legal_sensitivity_information', 2);
-    setQ10(response, 'Q7', 1);
-    setQ10(response, 'Q8', 3);
+    setQ10(response, 'Q7', 3);
+    setQ10(response, 'Q8', 1);
     setQ10(response, 'Q9', 3);
     const policy = readyPolicy(response);
     const minimum = decided(filterCandidateCue(candidate({
@@ -396,7 +396,7 @@ describe('runtime cue filtering', () => {
 
   it('reports proof-of-concept safety floors separately and applies them after trigger resolution', () => {
     const response = makeCompleteResponse();
-    setQ10(response, 'Q8', 1);
+    setQ10(response, 'Q7', 1);
     setQ10(response, 'Q9', 1);
     setProbe(response, 'scene_public_cafe', 'children_images', 0);
     setProbe(response, 'scene_private_family_party', 'legal_sensitivity_information', 0);

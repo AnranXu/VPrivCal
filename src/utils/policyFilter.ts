@@ -649,8 +649,8 @@ export function buildParticipantPolicy(
       },
       categories,
       crossCutting: {
-        inferenceReminderAgreement: agreementQ10Value(response, 'Q7'),
-        generalReminderAgreement: agreementQ10Value(response, 'Q8'),
+        inferenceReminderAgreement: agreementQ10Value(response, 'Q8'),
+        generalReminderAgreement: agreementQ10Value(response, 'Q7'),
         uncertainDetectionReminderAgreement: agreementQ10Value(response, 'Q9'),
         taskIrrelevantReminderAgreement: agreementQ10Value(response, 'Q10'),
       },
@@ -695,9 +695,9 @@ export function mapInferenceRule(
   likelihoodTier: RiskTier,
   severityTier: RiskTier = likelihoodTier,
 ): PolicyAction {
-  if (!isAgreementLevel(value)) throw new Error('Q7 must use an agreement value from 1 to 5.');
+  if (!isAgreementLevel(value)) throw new Error('Q8 must use an agreement value from 1 to 5.');
   return actionForAgreementEvaluation(
-    evaluateCrossCuttingAgreement('Q7', value, likelihoodTier, severityTier),
+    evaluateCrossCuttingAgreement('Q8', value, likelihoodTier, severityTier),
     'inference_reminder',
   );
 }
@@ -941,7 +941,7 @@ export function filterCandidateCue(
     applicable.push(actionForAgreementEvaluation(evaluation, reasonPrefix, presentation));
   };
   evaluateAndApplyAgreement(
-    'Q8',
+    'Q7',
     policy.crossCutting.generalReminderAgreement,
     unresolvedCategoryIds.length > 0
       ? `general_reminder_sensitivity:unlisted_verified_category:${unresolvedCategoryIds.join(',')}`
@@ -949,7 +949,7 @@ export function filterCandidateCue(
   );
   if (candidate.isInference) {
     evaluateAndApplyAgreement(
-      'Q7',
+      'Q8',
       policy.crossCutting.inferenceReminderAgreement,
       'inference_reminder',
     );

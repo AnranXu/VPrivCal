@@ -81,20 +81,20 @@ export const q10Questions: Q10Question[] = [
   },
   {
     id: 'Q7',
-    title: 'Inferred risks',
-    prompt: 'How much do you agree with the following statement?',
-    statement:
-      'The assistant should show a privacy reminder when a visual cue supports a sensitive inference.',
-    policyParameter: 'inference_reminder_agreement',
-    options: sharedAgreementScale,
-  },
-  {
-    id: 'Q8',
     title: 'General reminder sensitivity',
     prompt: 'How much do you agree with the following statement?',
     statement:
       'In general, the assistant should show detected privacy threats to the user.',
     policyParameter: 'general_reminder_agreement',
+    options: sharedAgreementScale,
+  },
+  {
+    id: 'Q8',
+    title: 'Inferred risks',
+    prompt: 'How much do you agree with the following statement?',
+    statement:
+      'The assistant should show a privacy reminder when a visual cue supports a sensitive inference.',
+    policyParameter: 'inference_reminder_agreement',
     options: sharedAgreementScale,
   },
   {

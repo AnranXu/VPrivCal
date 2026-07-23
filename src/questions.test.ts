@@ -22,10 +22,12 @@ describe('Q10 question options', () => {
       'Strongly agree',
     ]);
     expect(agreementQuestions.every(({ statement }) => Boolean(statement))).toBe(true);
-    expect(agreementQuestions[1].title).toBe('General reminder sensitivity');
-    expect(agreementQuestions[1].statement).toBe(
+    expect(agreementQuestions[0].title).toBe('General reminder sensitivity');
+    expect(agreementQuestions[0].statement).toBe(
       'In general, the assistant should show detected privacy threats to the user.',
     );
-    expect(agreementQuestions[1].policyParameter).toBe('general_reminder_agreement');
+    expect(agreementQuestions[0].policyParameter).toBe('general_reminder_agreement');
+    expect(agreementQuestions[1].title).toBe('Inferred risks');
+    expect(agreementQuestions[1].policyParameter).toBe('inference_reminder_agreement');
   });
 });

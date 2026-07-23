@@ -13,7 +13,8 @@
     "preexpert:simulate": "node scripts/generate_pre_expert_report.mjs",
     "preexpert:randomized": "node scripts/generate_randomized_profile_report.mjs",
     "lint": "eslint . --max-warnings=0",
-    "check": "npm run lint && npm run test && npm run build"
+    "check": "npm run lint && npm run test && npm run build",
+    "deploy": "npm run check && git push origin main"
   },
   "dependencies": {
     "react": "^18.3.1",

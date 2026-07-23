@@ -1,3 +1,5 @@
+/* global Request, URL */
+
 export default {
   async fetch(request, env) {
     const response = await env.ASSETS.fetch(request);

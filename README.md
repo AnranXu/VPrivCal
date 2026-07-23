@@ -306,6 +306,14 @@ The repository includes `.github/workflows/deploy-pages.yml`.
 3. Push to `main` or run the workflow manually.
 4. The workflow installs from `package-lock.json`, runs lint/tests/build, and publishes `dist/`.
 
+For subsequent deployments, commit your changes and run:
+
+```bash
+npm run deploy
+```
+
+This runs the local quality checks, then pushes `main` to trigger the GitHub Pages workflow.
+
 Relative assets and hash routes make repository subpaths work without a custom `404.html` workaround. Provide `VITE_API_BASE_URL` as a workflow environment variable when enabling participant persistence.
 
 ### Netlify

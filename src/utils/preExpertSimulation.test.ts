@@ -1,6 +1,6 @@
 import datasetJson from '../../public/data/vprivcal_detections.json';
-import pilotDetectionJson from '../../source materials/pilot videos/vlm_detections.json';
 import { describe, expect, it } from 'vitest';
+import { pilotDetectionsFixture } from '../test/fixtures/pilotDetections';
 import type { VPrivCalDataset } from '../types';
 import type { CandidateCue } from './policyFilter';
 import {
@@ -9,7 +9,7 @@ import {
 } from './preExpertSimulation';
 
 const dataset = datasetJson as unknown as VPrivCalDataset;
-const pilotDetections = pilotDetectionJson as unknown as CandidateDetectionDocument;
+const pilotDetections = pilotDetectionsFixture;
 
 function cue(overrides: Partial<CandidateCue> & Pick<CandidateCue, 'candidateId'>): CandidateCue {
   return {

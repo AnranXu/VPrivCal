@@ -81,11 +81,11 @@ The pre-expert gate is complete only when candidate visibility has been manually
 
 The same static build provides two deliberately different entry experiences:
 
-- **Participant study:** open only the normal site URL, for example `https://example.org/vprivcal/`. No `/#/` suffix is needed. It shows study information, a required Prolific ID field, and an explicit consent checkbox before the study interface.
+- **Participant study:** open only the normal site URL, for example `https://example.org/vprivcal/`. It shows study information, a required Prolific ID field, and an explicit consent checkbox before the study interface. Stage changes happen inside the application and are not exposed in the URL.
 - **Expert review demo:** append `?expert_review=true`, for example `https://example.org/vprivcal/?expert_review=true`. It presents the workflow and a chooser for any of the three Probe scenes. Demo answers are never stored and every reload starts from scratch.
 - **Direct expert Probe review:** append `?expert_review=probe`, for example `https://example.org/vprivcal/?expert_review=probe`. This opens the three-scene chooser directly. Add `&scene=scene_public_cafe`, `&scene=scene_private_family_party`, or `&scene=scene_semipublic_hospital` to open a specific fresh scene.
 
-Legacy root links ending in `/#/` are canonicalized to the plain site URL. Expert review has no browser or remote persistence, so a demonstration cannot overwrite participant data.
+Legacy links containing `#/...` are canonicalized to the plain site URL. Hash paths cannot open participant stages. Expert review has no browser or remote persistence, so a demonstration cannot overwrite participant data.
 
 ## Requirements and setup
 
@@ -115,15 +115,15 @@ npm run check
 
 | Screen | Hash route | Purpose |
 |---|---|---|
-| Participant consent | `/` | Study information, required Prolific ID, and voluntary agreement |
+| Participant entry URL | `/` | Opens the participant consent stage |
 | Expert workflow overview | `?expert_review=true` | Whole-method sequence, review focus, and demo launch |
 | Direct expert Probe review | `?expert_review=probe` | Opens the three-scene chooser with a fresh in-memory demo |
-| Consent alias | `#/participant` | Returns to the same participant consent page |
-| Q10 | `#/q10` | One required policy question at a time, with Back navigation |
-| Probe instructions | `#/probe/instructions` | Explains point-first marking and neutral linked-content review |
-| Probe scene | `#/probe/:sceneId` | Phase A pointing followed by sequential, category-hidden review items |
-| Profile (disabled by default) | `#/profile` | Redirects to Complete while `showProfilePage` is `false`; the legacy simpler summary appears only if enabled |
-| Complete | `#/complete` | Validated JSON and category-pair CSV downloads |
+| Participant consent stage | Internal stage | Study information, required Prolific ID, and voluntary agreement |
+| Q10 | Internal stage | One required policy question at a time, with Back navigation |
+| Probe instructions | Internal stage | Explains point-first marking and neutral linked-content review |
+| Probe scene | Internal stage | Phase A pointing followed by sequential, category-hidden review items |
+| Profile (disabled by default) | Internal stage | Continues to Complete while `showProfilePage` is `false`; the legacy simpler summary appears only if enabled |
+| Complete | Internal stage | Validated JSON and category-pair CSV downloads |
 
 The original scene order and deterministically shuffled display order are stored. The Prolific ID seeds shuffling. Category cards are deterministically shuffled per scene. Response options are never shuffled. The global top bar is intentionally omitted; Q10 and Probe screens show progress in their own question and scene controls.
 

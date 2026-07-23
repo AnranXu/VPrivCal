@@ -1,12 +1,11 @@
 import datasetJson from '../../public/data/vprivcal_detections.json';
-import pilotDetectionJson from '../../source materials/pilot videos/vlm_detections.json';
 import { describe, expect, it } from 'vitest';
+import { pilotDetectionsFixture } from '../test/fixtures/pilotDetections';
 import type { VPrivCalDataset } from '../types';
-import type { CandidateDetectionDocument } from './preExpertSimulation';
 import { runRandomizedProfileSimulation } from './randomizedProfileSimulation';
 
 const dataset = datasetJson as unknown as VPrivCalDataset;
-const detections = pilotDetectionJson as unknown as CandidateDetectionDocument;
+const detections = pilotDetectionsFixture;
 
 describe('seeded randomized VPrivCal profile simulation', () => {
   it('is exactly reproducible for the same seed', () => {

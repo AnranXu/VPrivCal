@@ -13,7 +13,7 @@ import { WelcomePage } from './pages/WelcomePage';
 import { ExpertReviewWelcomePage } from './pages/ExpertReviewWelcomePage';
 import { ExpertProbeEntry } from './pages/ExpertProbeEntry';
 import { useStudy } from './context/StudyContext';
-import { isDirectProbeReviewUrl } from './utils/mode';
+import { isDirectProbeReviewUrl, readEvaluationStudy } from './utils/mode';
 import {
   EvaluationPrototypeLandingPage,
   StudyOneEvaluationPage,
@@ -23,6 +23,19 @@ import {
 function ConsentRequired({ children }: { children: ReactNode }) {
   const { session, expertReview } = useStudy();
   return expertReview || session.consent?.agreed ? children : <Navigate to="/" replace />;
+}
+
+function AssignedStudyRequired({
+  study,
+  children,
+}: {
+  study: 'study-1' | 'study-2';
+  children: ReactNode;
+}) {
+  const assignedStudy = readEvaluationStudy();
+  if (!assignedStudy) return <Navigate to="/evaluation" replace />;
+  if (assignedStudy !== study) return <Navigate to={`/evaluation/${assignedStudy}`} replace />;
+  return children;
 }
 
 export function App() {
@@ -85,8 +98,22 @@ export function App() {
             }
           />
           <Route path="/evaluation" element={<ConsentRequired><EvaluationPrototypeLandingPage /></ConsentRequired>} />
-          <Route path="/evaluation/study-1" element={<ConsentRequired><StudyOneEvaluationPage /></ConsentRequired>} />
-          <Route path="/evaluation/study-2" element={<ConsentRequired><StudyTwoEvaluationPage /></ConsentRequired>} />
+          <Route
+            path="/evaluation/study-1"
+            element={
+              <ConsentRequired>
+                <AssignedStudyRequired study="study-1"><StudyOneEvaluationPage /></AssignedStudyRequired>
+              </ConsentRequired>
+            }
+          />
+          <Route
+            path="/evaluation/study-2"
+            element={
+              <ConsentRequired>
+                <AssignedStudyRequired study="study-2"><StudyTwoEvaluationPage /></AssignedStudyRequired>
+              </ConsentRequired>
+            }
+          />
           <Route path="/complete" element={<ConsentRequired><CompletePage /></ConsentRequired>} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>

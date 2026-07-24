@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDataset } from '../context/DataContext';
 import { useStudy } from '../context/StudyContext';
+import { readEvaluationStudy } from '../utils/mode';
 
 type StudyOneDecision = boolean | undefined;
 
@@ -197,6 +198,7 @@ export function EvaluationPrototypeLandingPage() {
   const navigate = useNavigate();
   const { dataset } = useDataset();
   const { session, expertReview } = useStudy();
+  const assignedStudy = readEvaluationStudy();
   const calibrationComplete =
     Object.keys(session.q10Responses).length === 10 &&
     (dataset?.images.every((scene) => Boolean(session.probeScenes[scene.id]?.completedAt)) ?? false);
@@ -214,15 +216,36 @@ export function EvaluationPrototypeLandingPage() {
     );
   }
 
+  if (!assignedStudy) {
+    return (
+      <section className="content-card narrow-card">
+        <p className="eyebrow">Evaluation assignment required</p>
+        <h1>This study link is incomplete</h1>
+        <p>
+          Participants must receive a recruitment link ending in <code>?study=1</code> or{' '}
+          <code>?study=2</code>. The interface does not allow participants to choose a study.
+        </p>
+      </section>
+    );
+  }
+
+  const studyOneAssigned = assignedStudy === 'study-1';
+
   return (
     <div className="page-stack evaluation-landing">
       <header className="evaluation-hero">
         <div>
-          <p className="eyebrow">Profile ready · Evaluation prototype</p>
-          <h1>Choose a two-study evaluation flow</h1>
+          <p className="eyebrow">
+            Profile ready · {studyOneAssigned ? 'Study 1' : 'Study 2'} assigned
+          </p>
+          <h1>
+            {studyOneAssigned
+              ? 'Predictive effectiveness evaluation'
+              : 'Reminder experience evaluation'}
+          </h1>
           <p>
-            The calibrated policy is ready for evaluation. Participants would enter only the study
-            assigned through recruitment; this launcher exposes both flows for prototype review.
+            The calibrated policy is ready. This recruitment link opens only the assigned
+            evaluation; the other study is not shown or accessible from this session.
           </p>
         </div>
         <div className="profile-ready-badge">
@@ -232,40 +255,53 @@ export function EvaluationPrototypeLandingPage() {
         </div>
       </header>
 
-      <section className="evaluation-study-grid" aria-label="Evaluation study prototypes">
-        <article className="evaluation-study-card">
-          <span className="study-number">Study 1</span>
-          <h2>Predictive effectiveness</h2>
-          <p>
-            Participants review every held-out candidate, build a fully informed target
-            configuration, revise the final load, and complete an unannounced reliability check.
-          </p>
-          <ul>
-            <li>No personalized policy output is shown</li>
-            <li>Neutral candidate descriptions and optional evidence</li>
-            <li>Final selected and suppressed counts before confirmation</li>
-          </ul>
-          <button className="button button-primary" type="button" onClick={() => navigate('/evaluation/study-1')}>
-            Open Study 1 prototype
-          </button>
-        </article>
-
-        <article className="evaluation-study-card study-two-card">
-          <span className="study-number">Study 2</span>
-          <h2>Reminder experience</h2>
-          <p>
-            Participants receive one hidden policy, complete the same visual task, rate reminder
-            behavior after each clip, and report their overall experience before debriefing.
-          </p>
-          <ul>
-            <li>Random assignment occurs after calibration</li>
-            <li>Reminder appearance stays identical between conditions</li>
-            <li>Seven-point usefulness and annoyance measures</li>
-          </ul>
-          <button className="button button-primary green-button" type="button" onClick={() => navigate('/evaluation/study-2')}>
-            Open Study 2 prototype
-          </button>
-        </article>
+      <section
+        className="evaluation-study-grid single-study-grid"
+        aria-label="Assigned evaluation study"
+      >
+        {studyOneAssigned ? (
+          <article className="evaluation-study-card">
+            <span className="study-number">Study 1</span>
+            <h2>Predictive effectiveness</h2>
+            <p>
+              Review every held-out candidate, build a fully informed target configuration,
+              revise the final load, and complete an unannounced reliability check.
+            </p>
+            <ul>
+              <li>No personalized policy output is shown</li>
+              <li>Neutral candidate descriptions and optional evidence</li>
+              <li>Final selected and suppressed counts before confirmation</li>
+            </ul>
+            <button
+              className="button button-primary"
+              type="button"
+              onClick={() => navigate('/evaluation/study-1')}
+            >
+              Continue to Study 1
+            </button>
+          </article>
+        ) : (
+          <article className="evaluation-study-card study-two-card">
+            <span className="study-number">Study 2</span>
+            <h2>Reminder experience</h2>
+            <p>
+              Experience one hidden policy, complete the visual task, rate reminder behavior
+              after each clip, and report the overall experience before debriefing.
+            </p>
+            <ul>
+              <li>Random assignment occurs after calibration</li>
+              <li>Reminder appearance stays identical between conditions</li>
+              <li>Seven-point usefulness and annoyance measures</li>
+            </ul>
+            <button
+              className="button button-primary green-button"
+              type="button"
+              onClick={() => navigate('/evaluation/study-2')}
+            >
+              Continue to Study 2
+            </button>
+          </article>
+        )}
       </section>
 
       <aside className="prototype-note">

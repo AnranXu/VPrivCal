@@ -3,6 +3,7 @@ import {
   canonicalizeEntryUrl,
   isDirectProbeReviewUrl,
   isExpertReviewUrl,
+  readEvaluationStudy,
   readExpertSceneId,
   readProlificId,
   showsResearcherControls,
@@ -22,6 +23,12 @@ describe('interface mode URLs', () => {
     expect(isDirectProbeReviewUrl('https://study.example/?expert_review=true&probe=true')).toBe(true);
     expect(isDirectProbeReviewUrl('https://study.example/?expert_review=probe')).toBe(true);
     expect(isDirectProbeReviewUrl('https://study.example/?expert_review=true')).toBe(false);
+  });
+
+  it('reads separate Study 1 and Study 2 recruitment postfixes', () => {
+    expect(readEvaluationStudy('https://study.example/?study=1')).toBe('study-1');
+    expect(readEvaluationStudy('https://study.example/?study=2')).toBe('study-2');
+    expect(readEvaluationStudy('https://study.example/')).toBeNull();
   });
 
   it('reads an optional expert Probe scene selection', () => {

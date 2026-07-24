@@ -37,16 +37,25 @@ function renderRoute(element: ReactNode) {
 describe('two-study evaluation prototype', () => {
   beforeEach(() => {
     cleanup();
+    window.history.replaceState({}, '', '/?study=1');
     testState.updateSession.mockReset();
     testState.session.evaluationPrototype = null;
   });
 
-  it('offers separate predictive and experiential study flows after calibration', () => {
+  it('shows only Study 1 for the Study 1 recruitment postfix', () => {
     renderRoute(<EvaluationPrototypeLandingPage />);
 
     expect(screen.getByRole('heading', { name: 'Predictive effectiveness' })).toBeVisible();
-    expect(screen.getByRole('heading', { name: 'Reminder experience' })).toBeVisible();
+    expect(screen.queryByRole('heading', { name: 'Reminder experience' })).not.toBeInTheDocument();
     expect(screen.getByText('Profile details remain hidden')).toBeVisible();
+  });
+
+  it('shows only Study 2 for the Study 2 recruitment postfix', () => {
+    window.history.replaceState({}, '', '/?study=2');
+    renderRoute(<EvaluationPrototypeLandingPage />);
+
+    expect(screen.getByRole('heading', { name: 'Reminder experience' })).toBeVisible();
+    expect(screen.queryByRole('heading', { name: 'Predictive effectiveness' })).not.toBeInTheDocument();
   });
 
   it('keeps policy output hidden while Study 1 collects target decisions', () => {

@@ -6,6 +6,7 @@ import { ProbeHintMode } from '../components/ProbeHintMode';
 import { ProbeInterfaceHint } from '../components/ProbeInterfaceHint';
 import { ResponsiveImageCanvas } from '../components/ResponsiveImageCanvas';
 import { studyConfig } from '../config';
+import { readEvaluationStudy } from '../utils/mode';
 import { useDataset } from '../context/DataContext';
 import { useStudy } from '../context/StudyContext';
 import { probeQuestionPrompts } from '../questions';
@@ -509,13 +510,14 @@ export function ProbeScenePage() {
         },
       };
     });
+    const assignedStudy = readEvaluationStudy();
     navigate(
       nextScene
         ? `/probe/${nextScene}`
         : studyConfig.showProfilePage
           ? '/profile'
-          : studyConfig.evaluationPrototypeEnabled
-            ? '/evaluation'
+          : assignedStudy
+            ? `/evaluation/${assignedStudy}`
             : '/complete',
     );
   };

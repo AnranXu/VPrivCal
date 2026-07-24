@@ -14,6 +14,22 @@ function hashParams(url: URL): URLSearchParams {
     : new URLSearchParams();
 }
 
+export type EvaluationStudy = 'study-1' | 'study-2';
+
+function evaluationStudyFrom(params: URLSearchParams): EvaluationStudy | null {
+  const value = params.get('study')?.trim().toLowerCase();
+  if (value === '1' || value === 'study1' || value === 'study-1') return 'study-1';
+  if (value === '2' || value === 'study2' || value === 'study-2') return 'study-2';
+  return null;
+}
+
+export function readEvaluationStudy(
+  value = typeof window === 'undefined' ? 'http://localhost/' : window.location.href,
+): EvaluationStudy | null {
+  const url = new URL(value, 'http://localhost/');
+  return evaluationStudyFrom(url.searchParams) ?? evaluationStudyFrom(hashParams(url));
+}
+
 export function isExpertReviewUrl(
   value = typeof window === 'undefined' ? 'http://localhost/' : window.location.href,
 ): boolean {

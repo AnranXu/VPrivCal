@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useStudy } from '../context/StudyContext';
+import { readEvaluationStudy } from '../utils/mode';
 
 const workflow = [
   {
@@ -28,15 +29,16 @@ const workflow = [
   },
   {
     number: '05',
-    title: 'Two-study evaluation',
-    detail: 'Study 1 builds a fully informed target set; Study 2 tests one hidden policy during task experience.',
-    meta: 'Predictive + experiential',
+    title: 'Assigned evaluation study',
+    detail: 'The recruitment URL sends each participant to either Study 1 or Study 2, never a study chooser.',
+    meta: 'One study per participant',
   },
 ];
 
 export function ExpertReviewWelcomePage() {
   const navigate = useNavigate();
   const { session, configureParticipant } = useStudy();
+  const assignedStudy = readEvaluationStudy();
   const hasProgress =
     Object.keys(session.q10Responses).length > 0 ||
     Object.values(session.probeScenes).some((scene) => scene.startedAt);
@@ -58,10 +60,11 @@ export function ExpertReviewWelcomePage() {
   };
 
   const openEvaluation = async () => {
+    if (!assignedStudy) return;
     if (session.randomizedSceneOrder.length === 0) {
       await configureParticipant('expert-review-demo');
     }
-    navigate('/evaluation');
+    navigate(`/evaluation/${assignedStudy}`);
   };
 
   return (
@@ -106,7 +109,10 @@ export function ExpertReviewWelcomePage() {
       <section className="expert-launch-card">
         <div>
           <h2>Open the interface for review</h2>
-          <p>Start from VPrivCal-Q10, open the Probe, or review both post-calibration evaluation studies.</p>
+          <p>
+            Start from VPrivCal-Q10, open the Probe, or review the evaluation assigned by this
+            study-specific URL.
+          </p>
         </div>
         <div className="expert-launch-actions">
           <button
@@ -123,13 +129,15 @@ export function ExpertReviewWelcomePage() {
           >
             Go directly to Probe
           </button>
-          <button
-            className="button button-secondary"
-            type="button"
-            onClick={openEvaluation}
-          >
-            Review evaluation studies
-          </button>
+          {assignedStudy ? (
+            <button
+              className="button button-secondary"
+              type="button"
+              onClick={openEvaluation}
+            >
+              Review assigned {assignedStudy === 'study-1' ? 'Study 1' : 'Study 2'}
+            </button>
+          ) : null}
         </div>
       </section>
     </div>

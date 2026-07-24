@@ -73,6 +73,7 @@ export function buildResponseExport(
     q10,
     probe,
     profileConfirmation: session.profileConfirmation,
+    evaluationPrototype: session.evaluationPrototype ?? null,
     timing: {
       q10DurationMs: durationBetween(session.q10StartedAt, session.q10CompletedAt),
       probeStartedAt,

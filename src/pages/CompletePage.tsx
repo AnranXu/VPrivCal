@@ -87,6 +87,12 @@ export function CompletePage() {
           <span>Category-image pairs</span>
         </article>
         <article><strong>{formatDuration(response.timing.totalDurationMs)}</strong><span>Total duration</span></article>
+        {session.evaluationPrototype ? (
+          <article>
+            <strong>{session.evaluationPrototype.study === 'study-1' ? 'Study 1' : 'Study 2'}</strong>
+            <span>Evaluation prototype</span>
+          </article>
+        ) : null}
       </section>
 
       {validation?.valid ? (

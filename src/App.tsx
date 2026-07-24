@@ -14,6 +14,11 @@ import { ExpertReviewWelcomePage } from './pages/ExpertReviewWelcomePage';
 import { ExpertProbeEntry } from './pages/ExpertProbeEntry';
 import { useStudy } from './context/StudyContext';
 import { isDirectProbeReviewUrl } from './utils/mode';
+import {
+  EvaluationPrototypeLandingPage,
+  StudyOneEvaluationPage,
+  StudyTwoEvaluationPage,
+} from './pages/EvaluationPrototypePage';
 
 function ConsentRequired({ children }: { children: ReactNode }) {
   const { session, expertReview } = useStudy();
@@ -79,6 +84,9 @@ export function App() {
               </ConsentRequired>
             }
           />
+          <Route path="/evaluation" element={<ConsentRequired><EvaluationPrototypeLandingPage /></ConsentRequired>} />
+          <Route path="/evaluation/study-1" element={<ConsentRequired><StudyOneEvaluationPage /></ConsentRequired>} />
+          <Route path="/evaluation/study-2" element={<ConsentRequired><StudyTwoEvaluationPage /></ConsentRequired>} />
           <Route path="/complete" element={<ConsentRequired><CompletePage /></ConsentRequired>} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>

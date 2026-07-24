@@ -22,15 +22,15 @@ const workflow = [
   },
   {
     number: '04',
-    title: 'Policy profile',
-    detail: 'Questionnaire defaults and contextual corrections are summarized by privacy category.',
-    meta: 'Participant confirmation',
+    title: 'Calibrated policy',
+    detail: 'Questionnaire settings and Probe corrections create a hidden participant-specific policy.',
+    meta: 'No profile display',
   },
   {
     number: '05',
-    title: 'Completion',
-    detail: 'The completed response record can be inspected through the same export interface used in the study.',
-    meta: 'JSON + category-pair CSV',
+    title: 'Two-study evaluation',
+    detail: 'Study 1 builds a fully informed target set; Study 2 tests one hidden policy during task experience.',
+    meta: 'Predictive + experiential',
   },
 ];
 
@@ -55,6 +55,13 @@ export function ExpertReviewWelcomePage() {
       await configureParticipant('expert-review-demo');
     }
     navigate('/probe/instructions');
+  };
+
+  const openEvaluation = async () => {
+    if (session.randomizedSceneOrder.length === 0) {
+      await configureParticipant('expert-review-demo');
+    }
+    navigate('/evaluation');
   };
 
   return (
@@ -99,7 +106,7 @@ export function ExpertReviewWelcomePage() {
       <section className="expert-launch-card">
         <div>
           <h2>Open the interface for review</h2>
-          <p>Start from VPrivCal-Q10 or go directly to the VPrivCal-Probe instructions.</p>
+          <p>Start from VPrivCal-Q10, open the Probe, or review both post-calibration evaluation studies.</p>
         </div>
         <div className="expert-launch-actions">
           <button
@@ -115,6 +122,13 @@ export function ExpertReviewWelcomePage() {
             onClick={openProbe}
           >
             Go directly to Probe
+          </button>
+          <button
+            className="button button-secondary"
+            type="button"
+            onClick={openEvaluation}
+          >
+            Review evaluation studies
           </button>
         </div>
       </section>

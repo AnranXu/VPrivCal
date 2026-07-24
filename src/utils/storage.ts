@@ -36,6 +36,7 @@ export function createEmptySession(sceneIds: readonly string[] = []): StudySessi
     probeScenes: {},
     consent: null,
     profileConfirmation: null,
+    evaluationPrototype: null,
     lastRoute: '/',
   };
 }
@@ -96,6 +97,7 @@ export function initializeParticipantSession(
     probeCompletedAt: null,
     probeScenes,
     profileConfirmation: null,
+    evaluationPrototype: null,
     completedAt: null,
     lastRoute: '/q10',
   };

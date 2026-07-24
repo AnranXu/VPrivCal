@@ -509,7 +509,15 @@ export function ProbeScenePage() {
         },
       };
     });
-    navigate(nextScene ? `/probe/${nextScene}` : studyConfig.showProfilePage ? '/profile' : '/complete');
+    navigate(
+      nextScene
+        ? `/probe/${nextScene}`
+        : studyConfig.showProfilePage
+          ? '/profile'
+          : studyConfig.evaluationPrototypeEnabled
+            ? '/evaluation'
+            : '/complete',
+    );
   };
 
   if (!activeCategory || !activeResponse) {

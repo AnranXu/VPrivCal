@@ -160,6 +160,25 @@ export interface StudyConsent {
   answeredAt: string;
 }
 
+export interface EvaluationPrototypeState {
+  study: 'study-1' | 'study-2';
+  condition: 'generic' | 'full-vprivcal' | null;
+  startedAt: string;
+  completedAt: string | null;
+  studyOne?: {
+    targetSelections: Record<string, boolean>;
+    finalLoadConfirmedAt: string | null;
+    reliabilityDecision: boolean | null;
+  };
+  studyTwo?: {
+    taskAnswers: Record<string, string>;
+    clipRatings: Record<string, Record<string, number>>;
+    postSessionRatings: Record<string, number>;
+    openFeedback: string;
+    debriefViewedAt: string | null;
+  };
+}
+
 export interface ViewportRecord {
   width: number;
   height: number;
@@ -188,6 +207,7 @@ export interface StudySession {
   probeScenes: Record<string, ProbeSceneState>;
   consent: StudyConsent | null;
   profileConfirmation: ProfileConfirmation | null;
+  evaluationPrototype?: EvaluationPrototypeState | null;
   lastRoute: string;
 }
 
@@ -223,6 +243,7 @@ export interface VPrivCalResponseExport {
     }>;
   }>;
   profileConfirmation: ProfileConfirmation | null;
+  evaluationPrototype?: EvaluationPrototypeState | null;
   timing: {
     q10DurationMs: number;
     probeStartedAt: string | null;
